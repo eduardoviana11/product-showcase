@@ -46,6 +46,7 @@ class Product(ABC):
     def to_dict(self):
         """Polymorphic serialization without isinstance checks."""
         return {
+            "type": "product",
             "name": self.name,
             "artist": self.artist,
             "description": self.description,
@@ -58,6 +59,50 @@ class Product(ABC):
             "action_label": self.action_label,
             "cover_variant": self.cover_variant,
         }
+
+    @classmethod
+    def from_dict(cls, data):
+        """Factory method to instantiate the proper Product subclass from a dict/JSON."""
+        product_type = data.get("type", "physical").lower()
+        if product_type == "vinyl":
+            return VinylProduct(
+                name=data["name"],
+                artist=data.get("artist", ""),
+                description=data.get("description", ""),
+                price=float(data["price"]),
+                image=data.get("image", "placeholder.svg"),
+                category=data.get("category", "Todos"),
+                weight_grams=int(data.get("weight_grams", 180)),
+                tracks_count=int(data.get("tracks_count", 10)),
+                pickup_location=data.get("pickup_location", "Estúdio ZUNO"),
+                cover_variant=data.get("cover_variant", "coastal-bands"),
+            )
+        elif product_type == "digital":
+            return DigitalProduct(
+                name=data["name"],
+                description=data.get("description", ""),
+                price=float(data["price"]),
+                image=data.get("image", "placeholder.svg"),
+                file_format=data.get("file_format", "PDF"),
+                category=data.get("category", "Digital"),
+                specs_meta=data.get("specs_meta", ""),
+                artist=data.get("artist", ""),
+                action_label=data.get("action_label", "Ver edição"),
+                cover_variant=data.get("cover_variant", "digital-minimal"),
+            )
+        else:
+            return PhysicalProduct(
+                name=data["name"],
+                description=data.get("description", ""),
+                price=float(data["price"]),
+                image=data.get("image", "placeholder.svg"),
+                pickup_location=data.get("pickup_location", "Loja ZUNO"),
+                category=data.get("category", "Objetos"),
+                specs_meta=data.get("specs_meta", ""),
+                artist=data.get("artist", ""),
+                action_label=data.get("action_label", "Ver objeto"),
+                cover_variant=data.get("cover_variant", "object-minimal"),
+            )
 
 
 class PhysicalProduct(Product):
@@ -90,6 +135,14 @@ class PhysicalProduct(Product):
     def delivery(self):
         return f"Envio físico ou retirada: {self.pickup_location}."
 
+    def to_dict(self):
+        base = super().to_dict()
+        base.update({
+            "type": "physical",
+            "pickup_location": self.pickup_location,
+        })
+        return base
+
 
 class DigitalProduct(Product):
     def __init__(
@@ -120,6 +173,14 @@ class DigitalProduct(Product):
 
     def delivery(self):
         return f"Entrega digital em formato {self.file_format}."
+
+    def to_dict(self):
+        base = super().to_dict()
+        base.update({
+            "type": "digital",
+            "file_format": self.file_format,
+        })
+        return base
 
 
 class VinylProduct(PhysicalProduct):
@@ -154,3 +215,13 @@ class VinylProduct(PhysicalProduct):
 
     def delivery(self):
         return f"Prensagem {self.weight_grams}g ({self.tracks_count} faixas) · Retirada ou envio: {self.pickup_location}."
+
+    def to_dict(self):
+        base = super().to_dict()
+        base.update({
+            "type": "vinyl",
+            "weight_grams": self.weight_grams,
+            "tracks_count": self.tracks_count,
+            "pickup_location": self.pickup_location,
+        })
+        return base

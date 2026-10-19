@@ -1,0 +1,96 @@
+{
+  "_instrucoes": "Edite este arquivo para adicionar, alterar ou remover discos e produtos da ZUNO. Cada item é carregado dinamicamente pelo backend.",
+  "vinyl_records": [
+    {
+      "type": "vinyl",
+      "name": "CLUBE DA ESQUINA",
+      "artist": "Milton Nascimento & Lô Borges",
+      "description": "Marco da música brasileira gravado em 1972, unindo harmonias mineiras, canção popular, bossa nova e psicodelia.",
+      "price": 249.9,
+      "image": "https://media.pitchfork.com/photos/5b894e5ddb74e05a6446ffd1/1:1/w_320,c_limit/clube%20da%20esquina.jpg%20.jpg",
+      "category": "MPB",
+      "weight_grams": 180,
+      "tracks_count": 21,
+      "pickup_location": "Estúdio ZUNO",
+      "cover_variant": "coastal-bands",
+      "_comentario": "-> ITEM DE EXEMPLO REAL: use este formato como base para os seus novos discos."
+    },
+    {
+      "type": "vinyl",
+      "name": "ACABOU CHORARE",
+      "artist": "Novos Baianos",
+      "description": "Fusão clássica de samba, rock psicodélico, violão de João Gilberto e poesia tropicalista.",
+      "price": 199.9,
+      "image": "https://s2-g1.glbimg.com/6decO-W6pm8HCNM5ZubgXSQidMc=/0x0:1500x1500/924x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2022/v/v/sIqlXeTTWdgokE2oJEEA/novosbaianoscapa1972.jpg",
+      "category": "Psicodelia",
+      "weight_grams": 180,
+      "tracks_count": 10,
+      "pickup_location": "Estúdio ZUNO",
+      "cover_variant": "orange-stripes"
+    },
+    {
+      "type": "vinyl",
+      "name": "Igor",
+      "artist": "Tyler, the Creator",
+      "description": "O sexto álbum de Tyler, the Creator é impressionista e carregado de emoção, resultado de um artista que refina seu estilo e expõe mais de sua alma do que nunca.",
+      "price": 257.66,
+      "image": "https://media.pitchfork.com/photos/6454f9ce60430f8f9be0fb09/1:1/w_320,c_limit/Tyler-the-Creator-Igor.jpg",
+      "category": "Rap",
+      "weight_grams": 322,
+      "tracks_count": 12,
+      "pickup_location": "Estúdio ZUNO",
+      "cover_variant": "purple-circle"
+    },
+    {
+      "type": "vinyl",
+      "name": "Bad (Remastered)",
+      "artist": "Michael Jackson",
+      "description": "O álbum Bad de Michael Jackson ganhou uma remasterização oficial em 2012 (relançada também na comemoração do Bad 25), com 11 faixas originais remasterizadas pela MJJ Productions Inc",
+      "price": 330.0,
+      "image": "https://cdn-images.dzcdn.net/images/cover/cad261eafd0c6c15811200d5039b5b50/500x500-000000-80-0-0.jpg",
+      "category": "Pop",
+      "weight_grams": 100,
+      "tracks_count": 11,
+      "pickup_location": "Estúdio ZUNO",
+      "cover_variant": "diagonal-split"
+    }
+  ],
+  "scene_objects": [
+    {
+      "type": "physical",
+      "name": "BOLSA ESCUTA LIVRE",
+      "description": "Para carregar até 15 LPs com reforço duplo na alça.",
+      "price": 69.9,
+      "image": "placeholder.svg",
+      "pickup_location": "Loja ZUNO",
+      "category": "Objetos",
+      "specs_meta": "ALGODÃO CRU · SERIGRAFIA · 38 × 42 CM",
+      "action_label": "Ver objeto",
+      "cover_variant": "tote-bag"
+    },
+    {
+      "type": "physical",
+      "name": "CARTAZ FREQUÊNCIA COMUM",
+      "description": "Tiragem numerada impressa manualmente em papel encorpado.",
+      "price": 89.9,
+      "image": "placeholder.svg",
+      "pickup_location": "Loja ZUNO",
+      "category": "Objetos",
+      "specs_meta": "SERIGRAFIA EM 2 CORES · 30 × 42 CM",
+      "action_label": "Ver objeto",
+      "cover_variant": "screenprint-poster"
+    },
+    {
+      "type": "digital",
+      "name": "CADERNO DE ESCUTA - VOL. 01",
+      "description": "Ensaios curtos, fichas de prensagem e notas de estúdio.",
+      "price": 39.9,
+      "image": "placeholder.svg",
+      "file_format": "Impresso + PDF",
+      "category": "Objetos",
+      "specs_meta": "PUBLICAÇÃO INDEPENDENTE · 64 PÁGINAS",
+      "action_label": "Ver objeto",
+      "cover_variant": "listening-notebook"
+    }
+  ]
+}

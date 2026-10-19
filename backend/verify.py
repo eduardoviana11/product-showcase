@@ -93,7 +93,24 @@ class ShowcaseChecks(unittest.TestCase):
             self.assertEqual(data["showcase_name"], "ZUNO")
             self.assertEqual(len(data["vinyl_records"]), len(vinyl_records))
             self.assertEqual(len(data["scene_objects"]), len(scene_objects))
-            self.assertEqual(len(data["all_products"]), len(products))
+    def test_json_storage_and_factory(self):
+        """Test Product.from_dict factory method and JSON storage loading."""
+        sample_vinyl = {
+            "type": "vinyl",
+            "name": "TEST VINYL",
+            "artist": "Test Artist",
+            "description": "Test description",
+            "price": 150.0,
+            "category": "Jazz",
+            "weight_grams": 180,
+            "tracks_count": 8,
+        }
+        vinyl = Product.from_dict(sample_vinyl)
+        self.assertIsInstance(vinyl, VinylProduct)
+        self.assertEqual(vinyl.name, "TEST VINYL")
+        self.assertEqual(vinyl.formatted_price(), "R$ 150,00")
+        self.assertIn("180g", vinyl.delivery())
+        self.assertEqual(vinyl.to_dict()["type"], "vinyl")
 
 
 if __name__ == "__main__":

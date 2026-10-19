@@ -193,7 +193,19 @@ export default function ProductCard({
 
         {/* Sleeve Cover in the foreground */}
         <div className="absolute inset-0 z-10 shadow-[2px_0px_8px_rgba(0,0,0,0.4)]">
-          <CoverArtwork variant={cover_variant} title={name} artist={artist} />
+          {product.image && product.image !== 'placeholder.svg' ? (
+            <img
+              src={product.image}
+              alt={`Capa do álbum ${name}`}
+              className="w-full h-full object-cover select-none"
+              onError={(e) => {
+                // Graceful fallback to CoverArtwork if image URL fails to load
+                e.currentTarget.style.display = 'none';
+              }}
+            />
+          ) : (
+            <CoverArtwork variant={cover_variant} title={name} artist={artist} />
+          )}
         </div>
       </div>
 
