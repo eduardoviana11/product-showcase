@@ -51,7 +51,10 @@ export default function App() {
     setTimeout(() => setToastMessage(''), 3000);
   };
 
-  const categories = ['Todos', 'Canção', 'Psicodelia', 'Eletrônica', 'Jazz'];
+  const categories = [
+    'Todos',
+    ...Array.from(new Set(vinylRecords.map((r) => r.category).filter(Boolean))),
+  ];
 
   // Filter vinyl records by active category & search query
   const filteredRecords = vinylRecords.filter((record) => {
