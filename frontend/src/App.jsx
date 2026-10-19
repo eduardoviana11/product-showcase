@@ -738,8 +738,7 @@ export default function App() {
 
         {/* Bottom copyright line */}
         <div className="max-w-[1440px] mx-auto pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 font-['IBM_Plex_Mono'] text-[11px] text-[#DADCD3]/60">
-          <p>© 2026 ZUNO DISCOS · TODOS OS DIREITOS RESERVADOS</p>
-          <p>EDITORIAL ÁCIDO COM FORMAS DE CORTE</p>
+          <p>© 2026 ZUNO · TODOS OS DIREITOS RESERVADOS</p>
         </div>
       </footer>
     </div>

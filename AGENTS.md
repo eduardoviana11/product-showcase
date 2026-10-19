@@ -29,7 +29,14 @@
 - Keep the activity's BRL price format (R$ 59,90) unless a currency change is requested.
 - Prefer small, explained changes. Do not publish, configure remotes, or push
   without a request.
-- Install: `py -m venv .venv` and
-  `.\.venv\Scripts\python.exe -m pip install -r requirements.txt`.
-- Run: `.\.venv\Scripts\python.exe -m flask --app app run --debug`.
-- Verify: `.\.venv\Scripts\python.exe verify.py`.
+- Backend Setup & Run:
+  - `cd backend`
+  - Install: `py -m venv .venv` and `.\.venv\Scripts\python.exe -m pip install -r requirements.txt`.
+  - Run: `.\.venv\Scripts\python.exe -m flask --app app run --debug`.
+  - Verify: `.\.venv\Scripts\python.exe verify.py`.
+- Frontend Setup & Run:
+  - `cd frontend`
+  - Install: `npm install`
+  - Run dev: `npm run dev`
+  - Build: `npm run build`
+

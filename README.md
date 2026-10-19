@@ -16,8 +16,29 @@ commit continuam em inglês.
 
 ## Comece por aqui
 
-Os comandos deste README são executados na raiz deste repositório, onde estão
-`app.py` e `requirements.txt`.
+O projeto é estruturado de forma desacoplada em:
+- **`backend/`**: API REST em Flask com os modelos de Programação Orientada a Objetos e `.venv` próprio.
+- **`frontend/`**: Aplicação React com Vite e Tailwind CSS v4.
+
+### 1. Backend (Flask)
+```powershell
+cd .\backend
+.\.venv\Scripts\python.exe -m flask --app app run --debug
+```
+Para rodar a verificação de testes do backend:
+```powershell
+cd .\backend
+.\.venv\Scripts\python.exe verify.py
+```
+
+### 2. Frontend (React + Vite)
+```powershell
+cd .\frontend
+npm install
+npm run dev
+```
+Acesse `http://localhost:5173` no navegador.
+
 
 1. **Antes da aula:** siga a [preparação do computador](docs/setup.md).
 2. **Durante a aula:** abra o [passo a passo guiado](docs/walkthrough.md).

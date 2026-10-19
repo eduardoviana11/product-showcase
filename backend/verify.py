@@ -1,6 +1,11 @@
 """Run with the .venv Python executable; no external test framework is needed."""
 
+import os
+import sys
 import unittest
+
+# Ensure backend directory is in sys.path
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from app import app, products, vinyl_records, scene_objects
 from models.product import DigitalProduct, PhysicalProduct, Product, VinylProduct
