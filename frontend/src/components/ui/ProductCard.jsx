@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import VinylDisc from '../shapes/VinylDisc';
+import { resolveAssetUrl } from '../../utils/assets';
 
 // Clean geometric fallback artworks for when a local or external image is not available
 function CoverArtwork({ variant, title, artist }) {
@@ -145,6 +146,10 @@ export default function ProductCard({
     cover_variant = 'coastal-bands',
     image,
     delivery,
+    vinyl_image,
+    vinyl_scale = 1.0,
+    featured,
+    is_new,
   } = product;
 
   // Build clean subtitle matching the reference image: "Linha d'Água · vinil preto · 180 g"
@@ -160,7 +165,8 @@ export default function ProductCard({
     subtitle = specs_meta || delivery || (category ? `Objetos · ${category}` : 'Edição ZUNO');
   }
 
-  const hasRealImage = image && image !== 'placeholder.svg' && !imageError;
+  const resolvedCoverSrc = resolveAssetUrl(image);
+  const hasRealImage = Boolean(resolvedCoverSrc) && !imageError;
 
   return (
     <article
@@ -171,24 +177,47 @@ export default function ProductCard({
     >
       {/* 1. TOP CONTAINER WITH SOFT NEUTRAL BACKGROUND */}
       <div className="w-full bg-[#E5E6DF] aspect-[1.14/1] p-5 sm:p-6 flex items-center justify-center relative overflow-hidden">
+        {/* Store badges */}
+        {(is_new || featured) && (
+          <div className="absolute top-3 left-3 z-20 flex flex-col items-start gap-1">
+            {is_new && (
+              <span className="bg-[#C5F43B] text-[#141512] border border-[#141512] font-['IBM_Plex_Mono'] text-[10px] font-semibold uppercase tracking-[0.06em] px-2 py-0.5">
+                Novo
+              </span>
+            )}
+            {featured && (
+              <span className="bg-[#141512] text-[#F4F2E9] border border-[#141512] font-['IBM_Plex_Mono'] text-[10px] font-semibold uppercase tracking-[0.06em] px-2 py-0.5">
+                Destaque
+              </span>
+            )}
+          </div>
+        )}
         {/* Cover + Vinyl Sleeve Center Unit */}
-        <div className="relative aspect-square w-[75%] max-w-[240px] flex items-center justify-center">
+        <div className="relative aspect-square w-[64%] max-w-[220px] flex items-center justify-center">
           {/* Sliding Vinyl Record behind the sleeve */}
           {isVinyl && (
             <div
               className={`absolute inset-y-1 right-0 aspect-square transition-transform duration-300 ease-out pointer-events-none z-0 vinyl-slide-element ${
-                isHovered ? 'translate-x-[26%]' : 'translate-x-0'
+                isHovered ? 'translate-x-[25%]' : 'translate-x-0'
               }`}
             >
-              <VinylDisc labelText={artist ? artist.split(' ')[0] : 'ZUNO'} />
+              <VinylDisc
+                labelText={artist ? artist.split(' ')[0] : 'ZUNO'}
+                image={vinyl_image}
+                scale={vinyl_scale}
+              />
             </div>
           )}
 
           {/* Sleeve Cover in the foreground */}
-          <div className="relative z-10 w-full h-full aspect-square bg-[#141512] shadow-[0px_4px_16px_rgba(0,0,0,0.18)] overflow-hidden border border-black/10">
+          <div
+            className={`relative z-10 w-full h-full aspect-square bg-[#141512] shadow-[0px_4px_16px_rgba(0,0,0,0.18)] overflow-hidden border border-black/10 transition-transform duration-300 ease-out ${
+              isVinyl ? 'cover-slide-element' : ''
+            } ${isVinyl && isHovered ? '-translate-x-[25%]' : 'translate-x-0'}`}
+          >
             {hasRealImage ? (
               <img
-                src={image}
+                src={resolvedCoverSrc}
                 alt={`Capa do álbum ${name}`}
                 className="w-full h-full object-cover select-none pointer-events-none"
                 onError={() => setImageError(true)}

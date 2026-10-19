@@ -15,6 +15,10 @@ class Product(ABC):
         artist="",
         action_label="Ver disco",
         cover_variant="coastal-bands",
+        featured=False,
+        is_new=False,
+        vinyl_image="",
+        vinyl_scale=1.0,
     ):
         self.name = name
         self.description = description
@@ -25,6 +29,11 @@ class Product(ABC):
         self.artist = artist
         self.action_label = action_label
         self.cover_variant = cover_variant
+        # Store merchandising flags and optional custom vinyl disc artwork.
+        self.featured = featured
+        self.is_new = is_new
+        self.vinyl_image = vinyl_image
+        self.vinyl_scale = float(vinyl_scale)
 
     @property
     def price(self):
@@ -58,12 +67,22 @@ class Product(ABC):
             "delivery": self.delivery(),
             "action_label": self.action_label,
             "cover_variant": self.cover_variant,
+            "featured": self.featured,
+            "is_new": self.is_new,
+            "vinyl_image": self.vinyl_image,
+            "vinyl_scale": self.vinyl_scale,
         }
 
     @classmethod
     def from_dict(cls, data):
         """Factory method to instantiate the proper Product subclass from a dict/JSON."""
         product_type = data.get("type", "physical").lower()
+        store_flags = {
+            "featured": bool(data.get("featured", False)),
+            "is_new": bool(data.get("is_new", False)),
+            "vinyl_image": data.get("vinyl_image", ""),
+            "vinyl_scale": float(data.get("vinyl_scale", 1.0)),
+        }
         if product_type == "vinyl":
             return VinylProduct(
                 name=data["name"],
@@ -76,6 +95,7 @@ class Product(ABC):
                 tracks_count=int(data.get("tracks_count", 10)),
                 pickup_location=data.get("pickup_location", "Estúdio ZUNO"),
                 cover_variant=data.get("cover_variant", "coastal-bands"),
+                **store_flags,
             )
         elif product_type == "digital":
             return DigitalProduct(
@@ -89,6 +109,7 @@ class Product(ABC):
                 artist=data.get("artist", ""),
                 action_label=data.get("action_label", "Ver edição"),
                 cover_variant=data.get("cover_variant", "digital-minimal"),
+                **store_flags,
             )
         else:
             return PhysicalProduct(
@@ -102,6 +123,7 @@ class Product(ABC):
                 artist=data.get("artist", ""),
                 action_label=data.get("action_label", "Ver objeto"),
                 cover_variant=data.get("cover_variant", "object-minimal"),
+                **store_flags,
             )
 
 
@@ -118,6 +140,10 @@ class PhysicalProduct(Product):
         artist="",
         action_label="Ver objeto",
         cover_variant="object-minimal",
+        featured=False,
+        is_new=False,
+        vinyl_image="",
+        vinyl_scale=1.0,
     ):
         super().__init__(
             name,
@@ -129,6 +155,10 @@ class PhysicalProduct(Product):
             artist=artist,
             action_label=action_label,
             cover_variant=cover_variant,
+            featured=featured,
+            is_new=is_new,
+            vinyl_image=vinyl_image,
+            vinyl_scale=vinyl_scale,
         )
         self.pickup_location = pickup_location
 
@@ -157,6 +187,10 @@ class DigitalProduct(Product):
         artist="",
         action_label="Ver edição",
         cover_variant="digital-minimal",
+        featured=False,
+        is_new=False,
+        vinyl_image="",
+        vinyl_scale=1.0,
     ):
         super().__init__(
             name,
@@ -168,6 +202,10 @@ class DigitalProduct(Product):
             artist=artist,
             action_label=action_label,
             cover_variant=cover_variant,
+            featured=featured,
+            is_new=is_new,
+            vinyl_image=vinyl_image,
+            vinyl_scale=vinyl_scale,
         )
         self.file_format = file_format
 
@@ -196,6 +234,10 @@ class VinylProduct(PhysicalProduct):
         tracks_count=10,
         pickup_location="Estúdio ZUNO",
         cover_variant="coastal-bands",
+        featured=False,
+        is_new=False,
+        vinyl_image="",
+        vinyl_scale=1.0,
     ):
         specs_meta = f"VINIL PRETO · {weight_grams} G · {tracks_count} FAIXAS"
         super().__init__(
@@ -209,6 +251,10 @@ class VinylProduct(PhysicalProduct):
             artist=artist,
             action_label="Ver disco",
             cover_variant=cover_variant,
+            featured=featured,
+            is_new=is_new,
+            vinyl_image=vinyl_image,
+            vinyl_scale=vinyl_scale,
         )
         self.weight_grams = weight_grams
         self.tracks_count = tracks_count

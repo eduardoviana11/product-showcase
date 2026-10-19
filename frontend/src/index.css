@@ -59,6 +59,9 @@ body {
   .vinyl-slide-element {
     transform: translateX(18%) !important;
   }
+  .cover-slide-element {
+    transform: translateX(-18%) !important;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

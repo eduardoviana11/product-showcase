@@ -1,6 +1,40 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { resolveAssetUrl } from '../../utils/assets';
 
-export default function VinylDisc({ className = '', size = 'w-full h-full', labelText = 'ZUNO' }) {
+export default function VinylDisc({
+  className = '',
+  size = 'w-full h-full',
+  labelText = 'ZUNO',
+  image = '',
+  scale = 1.0,
+}) {
+  const [imageError, setImageError] = useState(false);
+
+  useEffect(() => {
+    setImageError(false);
+  }, [image]);
+
+  const resolvedSrc = resolveAssetUrl(image);
+  const hasCustomImage = Boolean(resolvedSrc) && !imageError;
+
+  // Custom vinyl artwork (colored/picture discs). Falls back to the generic black disc.
+  if (hasCustomImage) {
+    return (
+      <div
+        className={`rounded-full relative flex items-center justify-center overflow-hidden drop-shadow-xl ${size} ${className}`}
+        aria-hidden="true"
+      >
+        <img
+          src={resolvedSrc}
+          alt=""
+          style={{ transform: `scale(${scale})` }}
+          className="w-full h-full object-contain select-none pointer-events-none transition-transform duration-200"
+          onError={() => setImageError(true)}
+        />
+      </div>
+    );
+  }
+
   return (
     <div
       className={`rounded-full relative flex items-center justify-center vinyl-grooves shadow-xl border border-black/50 ${size} ${className}`}
@@ -18,7 +52,6 @@ export default function VinylDisc({ className = '', size = 'w-full h-full', labe
         <span className="font-['IBM_Plex_Mono'] text-[6.5px] text-[#141512]/80 leading-none">
           33⅓ RPM
         </span>
-        <div className="w-2 h-2 rounded-full bg-[#F4F2E9] border border-[#141512] mt-0.5" />
       </div>
     </div>
   );

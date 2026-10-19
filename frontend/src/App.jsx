@@ -14,11 +14,41 @@ import OffsetCutout from './components/shapes/OffsetCutout';
 import Button from './components/ui/Button';
 import ProductCard from './components/ui/ProductCard';
 
+// Store sections shown as tabs in the catalog.
+const STORE_TABS = [
+  {
+    id: 'all',
+    label: 'Todos os discos',
+    blurb: 'Todo o acervo ZUNO em um só lugar.',
+  },
+  {
+    id: 'featured',
+    label: 'Em destaque',
+    blurb: 'Seleção da curadoria: discos que não podem faltar na estante.',
+  },
+  {
+    id: 'new',
+    label: 'Novidades',
+    blurb: 'Acabaram de chegar na loja.',
+  },
+];
+
+const SORT_OPTIONS = [
+  { id: 'relevance', label: 'Relevância' },
+  { id: 'price-asc', label: 'Menor preço' },
+  { id: 'price-desc', label: 'Maior preço' },
+  { id: 'name', label: 'A – Z' },
+];
+
+const PAGE_SIZE = 8;
+
 export default function App() {
   const [vinylRecords, setVinylRecords] = useState(fallbackVinylRecords);
   const [sceneObjects, setSceneObjects] = useState(fallbackSceneObjects);
   const [activeCategory, setActiveCategory] = useState('Todos');
-  const [carouselIndex, setCarouselIndex] = useState(0);
+  const [storeTab, setStoreTab] = useState('all');
+  const [sortBy, setSortBy] = useState('relevance');
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
   const [searchQuery, setSearchQuery] = useState('');
   const [cartCount, setCartCount] = useState(0);
   const [toastMessage, setToastMessage] = useState('');
@@ -51,13 +81,28 @@ export default function App() {
     setTimeout(() => setToastMessage(''), 3000);
   };
 
+  const isInTab = (record, tabId) =>
+    tabId === 'all' ||
+    (tabId === 'featured' && record.featured) ||
+    (tabId === 'new' && record.is_new);
+
+  const tabCounts = Object.fromEntries(
+    STORE_TABS.map((tab) => [
+      tab.id,
+      vinylRecords.filter((record) => isInTab(record, tab.id)).length,
+    ])
+  );
+  const activeTab = STORE_TABS.find((tab) => tab.id === storeTab) || STORE_TABS[0];
+  const tabRecords = vinylRecords.filter((record) => isInTab(record, storeTab));
+
+  // Genre chips only list genres that exist in the current tab
   const categories = [
     'Todos',
-    ...Array.from(new Set(vinylRecords.map((r) => r.category).filter(Boolean))),
+    ...Array.from(new Set(tabRecords.map((r) => r.category).filter(Boolean))),
   ];
 
-  // Filter vinyl records by active category & search query
-  const filteredRecords = vinylRecords.filter((record) => {
+  // Filter by genre and search query
+  const filteredRecords = tabRecords.filter((record) => {
     const matchesCategory =
       activeCategory === 'Todos' || record.category === activeCategory;
     const matchesSearch =
@@ -67,16 +112,23 @@ export default function App() {
     return matchesCategory && matchesSearch;
   });
 
-  // Carousel pagination: 4 cards visible on desktop, 1 on mobile
-  const visibleCardsCount = 4;
-  const maxIndex = Math.max(0, filteredRecords.length - visibleCardsCount);
+  const sortedRecords = [...filteredRecords].sort((a, b) => {
+    if (sortBy === 'price-asc') return a.price - b.price;
+    if (sortBy === 'price-desc') return b.price - a.price;
+    if (sortBy === 'name') return a.name.localeCompare(b.name, 'pt-BR');
+    return 0; // relevance keeps the order from products.json
+  });
 
-  const handlePrev = () => {
-    setCarouselIndex((prev) => Math.max(0, prev - 1));
+  const selectStoreTab = (tabId) => {
+    setStoreTab(tabId);
+    setActiveCategory('Todos');
+    setVisibleCount(PAGE_SIZE);
   };
 
-  const handleNext = () => {
-    setCarouselIndex((prev) => Math.min(maxIndex, prev + 1));
+  // Used by header links: open a tab and scroll to the catalog
+  const goToCatalog = (tabId) => {
+    selectStoreTab(tabId);
+    document.getElementById('catalogo')?.scrollIntoView({ behavior: 'smooth' });
   };
 
   const handleSubscribe = (e) => {
@@ -121,18 +173,20 @@ export default function App() {
 
             {/* Nav Links */}
             <nav className="hidden lg:flex items-center gap-6" aria-label="Navegação principal">
-              <a
-                href="#catalogo"
-                className="font-['Inter'] text-sm font-semibold text-[#141512] hover:underline underline-offset-4"
+              <button
+                type="button"
+                onClick={() => goToCatalog('new')}
+                className="font-['Inter'] text-sm font-semibold text-[#141512] hover:underline underline-offset-4 cursor-pointer"
               >
                 Novidades
-              </a>
-              <a
-                href="#catalogo"
-                className="font-['Inter'] text-sm font-semibold text-[#141512] hover:underline underline-offset-4"
+              </button>
+              <button
+                type="button"
+                onClick={() => goToCatalog('all')}
+                className="font-['Inter'] text-sm font-semibold text-[#141512] hover:underline underline-offset-4 cursor-pointer"
               >
                 Discos
-              </a>
+              </button>
               <a
                 href="#colecoes"
                 className="font-['Inter'] text-sm font-semibold text-[#141512] hover:underline underline-offset-4"
@@ -296,87 +350,107 @@ export default function App() {
         </div>
       </section>
 
-      {/* 5. CATALOG SECTION */}
+      {/* 5. CATALOG SECTION (STORE TABS) */}
       <section id="catalogo" className="border-b-2 border-[#141512] py-16 px-6 sm:px-12 lg:px-16 bg-[#F4F2E9]">
         <div className="max-w-[1440px] mx-auto">
-          {/* Header & Filter Row */}
-          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-10 pb-6 border-b-2 border-[#141512]">
-            <div>
-              <span className="font-['IBM_Plex_Mono'] text-xs font-semibold text-[#141512] uppercase tracking-[0.08em] block mb-2">
-                GARIMPO FRESCO · EDIÇÕES DE 2026
-              </span>
-              <h2 className="font-['Anton'] text-4xl sm:text-6xl text-[#141512] uppercase tracking-wide leading-none">
-                CHEGOU. É PRA OUVIR.
-              </h2>
-            </div>
+          {/* Section heading */}
+          <div className="mb-8">
+            <span className="font-['IBM_Plex_Mono'] text-xs font-semibold text-[#141512] uppercase tracking-[0.08em] block mb-2">
+              GARIMPO FRESCO · EDIÇÕES DE 2026
+            </span>
+            <h2 className="font-['Anton'] text-4xl sm:text-6xl text-[#141512] uppercase tracking-wide leading-none">
+              CHEGOU. É PRA OUVIR.
+            </h2>
+          </div>
 
-            {/* Filter Chips */}
-            <div className="flex flex-wrap items-center gap-2" role="tablist" aria-label="Filtro de gêneros">
+          {/* Store tabs: Todos / Em destaque / Novidades */}
+          <div
+            className="flex flex-wrap gap-x-8 gap-y-2 border-b-2 border-[#141512]"
+            role="tablist"
+            aria-label="Seções da loja"
+          >
+            {STORE_TABS.map((tab) => {
+              const isActive = storeTab === tab.id;
+              return (
+                <button
+                  key={tab.id}
+                  type="button"
+                  role="tab"
+                  aria-selected={isActive}
+                  onClick={() => selectStoreTab(tab.id)}
+                  className={`font-['Inter'] text-sm sm:text-base font-semibold pb-3 -mb-[2px] border-b-4 transition-colors cursor-pointer ${
+                    isActive
+                      ? 'border-[#141512] text-[#141512]'
+                      : 'border-transparent text-[#141512]/55 hover:text-[#141512]'
+                  }`}
+                >
+                  {tab.label}
+                  <span className="font-['IBM_Plex_Mono'] text-[11px] ml-2 align-middle">
+                    {String(tabCounts[tab.id]).padStart(2, '0')}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+
+          <p className="font-['Inter'] text-sm text-[#141512]/75 mt-4 mb-6">
+            {activeTab.blurb}
+          </p>
+
+          {/* Genre chips + sort */}
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+            <div className="flex flex-wrap items-center gap-2" role="group" aria-label="Filtro de gêneros">
               {categories.map((cat) => {
                 const isActive = activeCategory === cat;
                 return (
                   <button
                     key={cat}
+                    type="button"
                     onClick={() => {
                       setActiveCategory(cat);
-                      setCarouselIndex(0);
+                      setVisibleCount(PAGE_SIZE);
                     }}
-                    role="tab"
-                    aria-selected={isActive}
-                    className={`font-['IBM_Plex_Mono'] text-xs font-semibold uppercase tracking-wider px-4 py-2 border-2 border-[#141512] transition-colors cursor-pointer ${isActive
+                    aria-pressed={isActive}
+                    className={`font-['IBM_Plex_Mono'] text-[11px] font-semibold uppercase tracking-wider px-3 py-1.5 border-2 border-[#141512] transition-colors cursor-pointer ${
+                      isActive
                         ? 'bg-[#141512] text-[#F4F2E9]'
                         : 'bg-transparent text-[#141512] hover:bg-[#DADCD3]'
-                      }`}
+                    }`}
                   >
                     {cat}
                   </button>
                 );
               })}
             </div>
-          </div>
 
-          {/* Carousel Navigation Indicator & Controls */}
-          <div className="flex items-center justify-between mb-6">
-            <span className="font-['IBM_Plex_Mono'] text-xs font-semibold uppercase tracking-[0.08em] text-[#141512]">
-              {filteredRecords.length > 0
-                ? `${String(carouselIndex + 1).padStart(2, '0')} A ${String(
-                  Math.min(carouselIndex + visibleCardsCount, filteredRecords.length)
-                ).padStart(2, '0')} DE ${String(filteredRecords.length).padStart(2, '0')} DISCOS`
-                : 'NENHUM DISCO ENCONTRADO'}
-            </span>
-
-            {/* Functional Circular Carousel Navigation */}
-            <div className="flex items-center gap-2">
-              <Button
-                variant="circular"
-                onClick={handlePrev}
-                disabled={carouselIndex === 0}
-                ariaLabel="Ver discos anteriores"
+            <div className="flex items-center gap-3">
+              <span className="font-['IBM_Plex_Mono'] text-xs font-semibold uppercase tracking-[0.08em] text-[#141512]">
+                {String(sortedRecords.length).padStart(2, '0')}{' '}
+                {sortedRecords.length === 1 ? 'DISCO' : 'DISCOS'}
+              </span>
+              <label htmlFor="sort-select" className="sr-only">
+                Ordenar discos
+              </label>
+              <select
+                id="sort-select"
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value)}
+                className="bg-[#F4F2E9] border-2 border-[#141512] px-3 py-1.5 font-['IBM_Plex_Mono'] text-[11px] font-semibold uppercase tracking-wider text-[#141512] cursor-pointer"
               >
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                  <path d="M15 18l-6-6 6-6" />
-                </svg>
-              </Button>
-
-              <Button
-                variant="circular"
-                onClick={handleNext}
-                disabled={carouselIndex >= maxIndex}
-                ariaLabel="Ver próximos discos"
-              >
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                  <path d="M9 18l6-6-6-6" />
-                </svg>
-              </Button>
+                {SORT_OPTIONS.map((option) => (
+                  <option key={option.id} value={option.id}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
             </div>
           </div>
 
-          {/* Horizontal Product Grid / Carousel */}
-          {filteredRecords.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {filteredRecords
-                .slice(carouselIndex, carouselIndex + visibleCardsCount)
-                .map((product) => (
+          {/* Product grid */}
+          {sortedRecords.length > 0 ? (
+            <>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-10">
+                {sortedRecords.slice(0, visibleCount).map((product) => (
                   <ProductCard
                     key={product.name}
                     product={product}
@@ -384,11 +458,24 @@ export default function App() {
                     onAction={handleAddToCart}
                   />
                 ))}
-            </div>
+              </div>
+
+              {visibleCount < sortedRecords.length && (
+                <div className="mt-12 flex justify-center">
+                  <Button
+                    variant="secondary"
+                    size="lg"
+                    onClick={() => setVisibleCount((prev) => prev + PAGE_SIZE)}
+                  >
+                    Ver mais discos
+                  </Button>
+                </div>
+              )}
+            </>
           ) : (
             <div className="py-16 text-center border-2 border-dashed border-[#141512] p-8">
               <p className="font-['IBM_Plex_Mono'] text-sm uppercase text-[#141512]">
-                Nenhum título encontrado com este filtro.
+                Nenhum disco encontrado com estes filtros.
               </p>
               <Button
                 variant="secondary"
@@ -397,6 +484,7 @@ export default function App() {
                 onClick={() => {
                   setActiveCategory('Todos');
                   setSearchQuery('');
+                  setStoreTab('all');
                 }}
               >
                 Limpar filtros

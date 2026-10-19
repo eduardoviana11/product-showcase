@@ -1,6 +1,6 @@
 import json
 import os
-from flask import Flask, jsonify
+from flask import Flask, jsonify, send_from_directory
 from models.product import Product
 
 app = Flask(__name__)
@@ -9,7 +9,8 @@ SHOWCASE_NAME = "ZUNO"
 SHOWCASE_DESCRIPTION = "Uma loja independente para quem nunca termina de descobrir música."
 AUTHOR_NAME = "Curadoria ZUNO"
 
-DATA_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "products.json")
+DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
+DATA_FILE = os.path.join(DATA_DIR, "products.json")
 
 
 def load_catalog_from_json():
@@ -55,6 +56,14 @@ def get_products():
     current_vinyl, current_scene = load_catalog_from_json()
     all_current = current_vinyl + current_scene
     return jsonify([p.to_dict() for p in all_current])
+
+
+@app.route("/api/media/<path:filename>")
+def get_media(filename):
+    """Serve uploaded/custom media files (discs, covers, assets) from backend/data."""
+    response = send_from_directory(DATA_DIR, filename)
+    response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+    return response
 
 
 @app.route("/api/showcase")

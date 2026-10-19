@@ -93,6 +93,14 @@ class ShowcaseChecks(unittest.TestCase):
             self.assertEqual(data["showcase_name"], "ZUNO")
             self.assertEqual(len(data["vinyl_records"]), len(vinyl_records))
             self.assertEqual(len(data["scene_objects"]), len(scene_objects))
+
+    def test_api_media(self):
+        """GET /api/media/<filename> serves uploaded assets from backend/data."""
+        with app.test_client() as client:
+            response = client.get("/api/media/laufey-disc.png")
+            self.assertEqual(response.status_code, 200)
+            self.assertTrue(len(response.data) > 0)
+
     def test_json_storage_and_factory(self):
         """Test Product.from_dict factory method and JSON storage loading."""
         sample_vinyl = {
@@ -111,6 +119,21 @@ class ShowcaseChecks(unittest.TestCase):
         self.assertEqual(vinyl.formatted_price(), "R$ 150,00")
         self.assertIn("180g", vinyl.delivery())
         self.assertEqual(vinyl.to_dict()["type"], "vinyl")
+        # Store flags default to False / empty
+        self.assertFalse(vinyl.featured)
+        self.assertFalse(vinyl.is_new)
+        self.assertEqual(vinyl.to_dict()["vinyl_image"], "")
+
+        flagged = Product.from_dict({
+            **sample_vinyl,
+            "featured": True,
+            "is_new": True,
+            "vinyl_image": "https://example.com/disc.png",
+        })
+        data = flagged.to_dict()
+        self.assertTrue(data["featured"])
+        self.assertTrue(data["is_new"])
+        self.assertEqual(data["vinyl_image"], "https://example.com/disc.png")
 
 
 if __name__ == "__main__":

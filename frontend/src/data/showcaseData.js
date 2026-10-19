@@ -26,6 +26,9 @@ export const fallbackVinylRecords = [
     delivery: "Prensagem 180g (21 faixas) · Retirada ou envio: Estúdio ZUNO.",
     action_label: "Ver disco",
     cover_variant: "coastal-bands",
+    featured: true,
+    is_new: false,
+    vinyl_image: "",
   },
   {
     name: "ACABOU CHORARE",
@@ -39,6 +42,9 @@ export const fallbackVinylRecords = [
     delivery: "Prensagem 180g (10 faixas) · Retirada ou envio: Estúdio ZUNO.",
     action_label: "Ver disco",
     cover_variant: "orange-stripes",
+    featured: true,
+    is_new: false,
+    vinyl_image: "",
   },
   {
     name: "[NOME DO SEU DISCO AQUI]",
@@ -52,6 +58,9 @@ export const fallbackVinylRecords = [
     delivery: "Prensagem 180g (10 faixas) · Retirada ou envio: Estúdio ZUNO.",
     action_label: "Ver disco",
     cover_variant: "purple-circle",
+    featured: true,
+    is_new: true,
+    vinyl_image: "",
   },
   {
     name: "[OUTRO DISCO PLACEHOLDER]",
@@ -65,6 +74,9 @@ export const fallbackVinylRecords = [
     delivery: "Prensagem 180g (9 faixas) · Retirada ou envio: Estúdio ZUNO.",
     action_label: "Ver disco",
     cover_variant: "diagonal-split",
+    featured: false,
+    is_new: true,
+    vinyl_image: "",
   },
 ];
 

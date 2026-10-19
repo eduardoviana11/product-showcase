@@ -13,7 +13,11 @@
       "tracks_count": 21,
       "pickup_location": "Estúdio ZUNO",
       "cover_variant": "coastal-bands",
-      "_comentario": "-> ITEM DE EXEMPLO REAL: use este formato como base para os seus novos discos."
+      "featured": true,
+      "is_new": false,
+      "vinyl_image": "",
+      "vinyl_scale": 1.0,
+      "_comentario": "-> ITEM DE EXEMPLO: featured/is_new definem as abas da loja. vinyl_image aponta para a imagem do vinil. vinyl_scale (opcional, padrão 1.0) permite redimensionar o disco (ex: 1.08 ou 1.12) para ajustar perfeitamente ao tamanho da capa."
     },
     {
       "type": "vinyl",
@@ -26,7 +30,9 @@
       "weight_grams": 180,
       "tracks_count": 10,
       "pickup_location": "Estúdio ZUNO",
-      "cover_variant": "orange-stripes"
+      "cover_variant": "orange-stripes",
+      "featured": true,
+      "is_new": false
     },
     {
       "type": "vinyl",
@@ -39,7 +45,9 @@
       "weight_grams": 322,
       "tracks_count": 12,
       "pickup_location": "Estúdio ZUNO",
-      "cover_variant": "purple-circle"
+      "cover_variant": "purple-circle",
+      "featured": true,
+      "is_new": true
     },
     {
       "type": "vinyl",
@@ -52,7 +60,26 @@
       "weight_grams": 100,
       "tracks_count": 11,
       "pickup_location": "Estúdio ZUNO",
-      "cover_variant": "diagonal-split"
+      "cover_variant": "diagonal-split",
+      "featured": false,
+      "is_new": true
+    },
+    {
+      "type": "vinyl",
+      "name": "Bewitched: The Goddess Edition",
+      "artist": "Laufey",
+      "description": "O adorado álbum de 2023 da jazzista islandesa com 4 faixas extras.",
+      "price": 397.74,
+      "image": "https://cdn-images.dzcdn.net/images/cover/d24bc027d049dca1591200130a54dd8f/500x500-000000-80-0-0.jpg",
+      "category": "Jazz",
+      "weight_grams": 590,
+      "tracks_count": 18,
+      "pickup_location": "Estúdio ZUNO",
+      "cover_variant": "diagonal-split",
+      "featured": false,
+      "is_new": true,
+      "vinyl_image": "laufey-disc.png",
+      "vinyl_scale": 1.12
     }
   ],
   "scene_objects": [
