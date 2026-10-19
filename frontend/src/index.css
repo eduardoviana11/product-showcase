@@ -1,0 +1,71 @@
+@import "tailwindcss";
+
+@theme {
+  --font-title: "Anton", sans-serif;
+  --font-body: "Inter", sans-serif;
+  --font-meta: "IBM Plex Mono", monospace;
+  --color-vinyl-black: #141512;
+  --color-warm-paper: #F4F2E9;
+  --color-acid-green: #C5F43B;
+  --color-concrete-gray: #DADCD3;
+}
+
+:root {
+  --preto-vinil: #141512;
+  --papel-quente: #F4F2E9;
+  --verde-acido: #C5F43B;
+  --cinza-concreto: #DADCD3;
+  --font-titulo: "Anton", sans-serif;
+  --font-texto: "Inter", sans-serif;
+  --font-meta: "IBM Plex Mono", monospace;
+  --espaco: 8px;
+  --margem-pagina: 64px;
+  --largura-max: 1440px;
+}
+
+@media (max-width: 768px) {
+  :root {
+    --margem-pagina: 24px;
+  }
+}
+
+body {
+  background-color: var(--papel-quente);
+  color: var(--preto-vinil);
+  font-family: var(--font-texto);
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Visible keyboard focus ring */
+*:focus-visible {
+  outline: 3px solid var(--preto-vinil);
+  outline-offset: 3px;
+}
+
+/* Vinyl concentric grooves surface */
+.vinyl-grooves {
+  background: repeating-radial-gradient(
+    circle at center,
+    #141512 0px,
+    #141512 3px,
+    #252722 4px,
+    #141512 5px
+  );
+}
+
+/* Touch devices without hover show the vinyl partially out by default */
+@media (hover: none) {
+  .vinyl-slide-element {
+    transform: translateX(18%) !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

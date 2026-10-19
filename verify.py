@@ -2,75 +2,93 @@
 
 import unittest
 
-from markupsafe import escape
-
-from app import app, products
-from models.product import DigitalProduct, PhysicalProduct, Product
+from app import app, products, vinyl_records, scene_objects
+from models.product import DigitalProduct, PhysicalProduct, Product, VinylProduct
 
 
 class ShowcaseChecks(unittest.TestCase):
-    def test_page_and_content(self):
-        response = app.test_client().get("/")
-        self.assertEqual(response.status_code, 200)
-        html = response.get_data(as_text=True)
-        self.assertIn('<html lang="en">', html)
-        self.assertEqual(html.count('<article class="card">'), len(products))
-        for product in products:
-            # Match Jinja's automatic HTML escaping.
-            for text in (product.name, product.formatted_price(), product.delivery()):
-                self.assertIn(str(escape(text)), html)
-            self.assertIn(f'/static/images/{product.image}', html)
-
-    def test_static_files(self):
-        with app.test_client() as client:
-            for path, mime_type in (
-                ("/static/css/style.css", "text/css"),
-                ("/static/images/placeholder.svg", "image/svg+xml"),
-            ):
-                response = client.get(path)
-                self.assertEqual(response.status_code, 200)
-                self.assertEqual(response.mimetype, mime_type)
-                self.assertTrue(response.data)
-                if path.endswith(".svg"):
-                    self.assertIn("Your photo here", response.get_data(as_text=True))
-                response.close()
-
     def test_abstraction(self):
+        """Product is an abstract base class and cannot be instantiated."""
         with self.assertRaises(TypeError):
-            Product(name="Test", description="Test", price=1, image="placeholder.svg")
+            Product(name="Test", description="Test", price=100, image="placeholder.svg")
 
-    def test_models(self):
+    def test_models_and_encapsulation(self):
+        """Encapsulation: price cannot be negative, formatted_price uses BRL."""
         for product_class, extra in (
-            (PhysicalProduct, {"pickup_location": "Library"}),
+            (PhysicalProduct, {"pickup_location": "Estúdio ZUNO"}),
             (DigitalProduct, {"file_format": "PDF"}),
+            (VinylProduct, {"artist": "Artista Teste", "category": "Canção"}),
         ):
             with self.subTest(product_class=product_class.__name__):
-                arguments = dict(name="Test", description="Test", image="placeholder.svg", **extra)
+                arguments = dict(name="Test", description="Test", price=59.90, image="placeholder.svg", **extra)
                 with self.assertRaisesRegex(ValueError, "The price cannot be negative."):
-                    product_class(price=-1, **arguments)
-                product = product_class(price=59.90, **arguments)
+                    product_class(**{**arguments, "price": -1})
+
+                product = product_class(**arguments)
                 self.assertIsInstance(product, Product)
                 self.assertEqual(product.formatted_price(), "R$ 59,90")
+
                 with self.assertRaisesRegex(ValueError, "The price cannot be negative."):
-                    product.price = -1
+                    product.price = -10
                 self.assertEqual(product.price, 59.90)
+
                 product.price = 0
                 self.assertEqual(product.formatted_price(), "R$ 0,00")
-                product.price = 12.50
-                self.assertEqual(product.formatted_price(), "R$ 12,50")
+                product.price = 189.90
+                self.assertEqual(product.formatted_price(), "R$ 189,90")
 
     def test_polymorphism(self):
+        """Polymorphism: each subclass implements its own delivery specification."""
         physical = PhysicalProduct(
-            name="Test", description="Test", price=1,
-            image="placeholder.svg", pickup_location="Library",
+            name="Bolsa", description="Test", price=69.90, image="placeholder.svg", pickup_location="Loja ZUNO"
         )
         digital = DigitalProduct(
-            name="Test", description="Test", price=1,
-            image="placeholder.svg", file_format="PDF",
+            name="Caderno", description="Test", price=39.90, image="placeholder.svg", file_format="PDF"
         )
-        self.assertNotEqual(physical.delivery(), digital.delivery())
-        self.assertIn("Library", physical.delivery())
+        vinyl = VinylProduct(
+            name="Disco", artist="Artista", description="Test", price=189.90, image="placeholder.svg",
+            category="Jazz", weight_grams=180, tracks_count=10, pickup_location="Estúdio ZUNO"
+        )
+
+        deliveries = [physical.delivery(), digital.delivery(), vinyl.delivery()]
+        self.assertEqual(len(set(deliveries)), 3, "All delivery outputs must be distinct")
+        self.assertIn("Loja ZUNO", physical.delivery())
         self.assertIn("PDF", digital.delivery())
+        self.assertIn("180g", vinyl.delivery())
+
+    def test_to_dict_serialization(self):
+        """Polymorphic serialization includes delivery and formatted price."""
+        for p in products:
+            data = p.to_dict()
+            self.assertIsInstance(data, dict)
+            self.assertIn("name", data)
+            self.assertIn("price", data)
+            self.assertIn("formatted_price", data)
+            self.assertIn("delivery", data)
+            self.assertEqual(data["delivery"], p.delivery())
+            self.assertEqual(data["formatted_price"], p.formatted_price())
+
+    def test_api_products(self):
+        """GET /api/products returns JSON list of all serialized products."""
+        with app.test_client() as client:
+            response = client.get("/api/products")
+            self.assertEqual(response.status_code, 200)
+            self.assertEqual(response.mimetype, "application/json")
+            data = response.get_json()
+            self.assertIsInstance(data, list)
+            self.assertEqual(len(data), len(products))
+
+    def test_api_showcase(self):
+        """GET /api/showcase returns complete showcase payload."""
+        with app.test_client() as client:
+            response = client.get("/api/showcase")
+            self.assertEqual(response.status_code, 200)
+            self.assertEqual(response.mimetype, "application/json")
+            data = response.get_json()
+            self.assertEqual(data["showcase_name"], "ZUNO")
+            self.assertEqual(len(data["vinyl_records"]), len(vinyl_records))
+            self.assertEqual(len(data["scene_objects"]), len(scene_objects))
+            self.assertEqual(len(data["all_products"]), len(products))
 
 
 if __name__ == "__main__":
