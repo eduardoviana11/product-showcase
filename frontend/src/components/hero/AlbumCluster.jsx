@@ -10,8 +10,8 @@ const DEFAULT_FEATURED = [
       'https://media.pitchfork.com/photos/5b894e5ddb74e05a6446ffd1/1:1/w_320,c_limit/clube%20da%20esquina.jpg%20.jpg',
     position: 'center',
     containerClasses:
-      'absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 w-28 h-28 sm:w-34 sm:h-34 md:w-38 md:h-38 lg:w-42 lg:h-42 rotate-0',
-    shadowClasses: 'shadow-[6px_6px_0px_#141512] group-hover:shadow-[8px_8px_0px_#141512]',
+      'absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 w-32 h-32 sm:w-38 sm:h-38 md:w-42 md:h-42 lg:w-46 lg:h-46 xl:w-50 xl:h-50 rotate-0',
+    shadowClasses: 'shadow-[6px_6px_0px_#141512]',
   },
   // 2. Top-Left (Smaller, straight/subtle)
   {
@@ -21,7 +21,7 @@ const DEFAULT_FEATURED = [
       'https://s2-g1.glbimg.com/6decO-W6pm8HCNM5ZubgXSQidMc=/0x0:1500x1500/924x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2022/v/v/sIqlXeTTWdgokE2oJEEA/novosbaianoscapa1972.jpg',
     position: 'top-left',
     containerClasses:
-      'absolute top-[4%] left-[4%] z-10 w-18 h-18 sm:w-22 sm:h-22 md:w-26 md:h-26 lg:w-28 lg:h-28 rotate-0',
+      'absolute top-[4%] left-[4%] z-10 w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-30 lg:h-30 xl:w-34 xl:h-34 rotate-0',
     shadowClasses: 'shadow-[4px_4px_0px_#141512]',
   },
   // 3. Top-Right (Tilted counter-clockwise)
@@ -32,7 +32,7 @@ const DEFAULT_FEATURED = [
       'https://media.pitchfork.com/photos/6454f9ce60430f8f9be0fb09/1:1/w_320,c_limit/Tyler-the-Creator-Igor.jpg',
     position: 'top-right',
     containerClasses:
-      'absolute top-[3%] right-[4%] z-10 w-18 h-18 sm:w-22 sm:h-22 md:w-26 md:h-26 lg:w-28 lg:h-28 -rotate-8 sm:-rotate-10',
+      'absolute top-[3%] right-[4%] z-10 w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-30 lg:h-30 xl:w-34 xl:h-34 -rotate-8 sm:-rotate-10',
     shadowClasses: 'shadow-[4px_4px_0px_#141512]',
   },
   // 4. Bottom-Left (Tilted clockwise)
@@ -43,7 +43,7 @@ const DEFAULT_FEATURED = [
       'https://cdn-images.dzcdn.net/images/cover/cad261eafd0c6c15811200d5039b5b50/500x500-000000-80-0-0.jpg',
     position: 'bottom-left',
     containerClasses:
-      'absolute bottom-[4%] left-[4%] z-10 w-18 h-18 sm:w-22 sm:h-22 md:w-26 md:h-26 lg:w-28 lg:h-28 rotate-8 sm:rotate-10',
+      'absolute bottom-[4%] left-[4%] z-10 w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-30 lg:h-30 xl:w-34 xl:h-34 rotate-8 sm:rotate-10',
     shadowClasses: 'shadow-[4px_4px_0px_#141512]',
   },
   // 5. Bottom-Right (Tilted counter-clockwise)
@@ -54,7 +54,7 @@ const DEFAULT_FEATURED = [
       'https://cdn-images.dzcdn.net/images/cover/d24bc027d049dca1591200130a54dd8f/500x500-000000-80-0-0.jpg',
     position: 'bottom-right',
     containerClasses:
-      'absolute bottom-[3%] right-[4%] z-10 w-18 h-18 sm:w-22 sm:h-22 md:w-26 md:h-26 lg:w-28 lg:h-28 -rotate-8 sm:-rotate-10',
+      'absolute bottom-[3%] right-[4%] z-10 w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-30 lg:h-30 xl:w-34 xl:h-34 -rotate-8 sm:-rotate-10',
     shadowClasses: 'shadow-[4px_4px_0px_#141512]',
   },
 ];
@@ -75,17 +75,17 @@ export default function AlbumCluster({ albums = [] }) {
   });
 
   return (
-    <div className="relative w-full max-w-[320px] sm:max-w-[360px] md:max-w-[400px] lg:max-w-[430px] xl:max-w-[460px] aspect-square mx-auto flex items-center justify-center select-none group">
+    <div className="relative w-full max-w-[340px] sm:max-w-[400px] md:max-w-[450px] lg:max-w-[480px] xl:max-w-[520px] aspect-square mx-auto flex items-center justify-center select-none transition-transform duration-300 ease-out group-hover:scale-105 will-change-transform [transform:translateZ(0)] [backface-visibility:hidden]">
       {/* Floating editorial badge */}
-      <div className="absolute -top-3 sm:-top-5 right-1 sm:right-4 z-40 pointer-events-none">
+      <div className="absolute -top-4 sm:-top-5 right-2 sm:right-5 z-40 pointer-events-none">
         <TiltedTape>COLEÇÃO EM DESTAQUE ↗</TiltedTape>
       </div>
 
       {/* 5-Album Spaced Arrangement */}
       {displayItems.map((album, idx) => (
         <div
-          key={album.title + idx}
-          className={`${album.containerClasses} transition-all duration-300 group-hover:scale-105 hover:!scale-110 hover:!z-30 hover:rotate-0 cursor-pointer`}
+          key={`cluster-slot-${idx}`}
+          className={`${album.containerClasses} [transform:translateZ(0)] [backface-visibility:hidden]`}
           title={`${album.title} · ${album.artist}`}
         >
           <div
@@ -94,7 +94,7 @@ export default function AlbumCluster({ albums = [] }) {
             <img
               src={album.image}
               alt={`${album.title} - ${album.artist}`}
-              className="w-full h-full object-cover select-none pointer-events-none"
+              className="w-full h-full object-cover select-none pointer-events-none [backface-visibility:hidden] [transform:translateZ(0)]"
               loading="lazy"
             />
           </div>

@@ -23,18 +23,14 @@ export default function Home({
     <div className="flex flex-col">
       {/* 1. ANIMATED HERO SECTION */}
       <section className="border-b-2 border-[#141512] bg-[#F4F2E9] overflow-hidden lg:min-h-[calc(100vh-112px)] flex flex-col justify-center">
-        <div className="max-w-[1440px] w-full mx-auto px-6 sm:px-12 lg:px-16 py-8 sm:py-10 lg:py-8 xl:py-10 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+        <div className="max-w-[1440px] w-full mx-auto px-6 sm:px-12 lg:px-16 py-8 sm:py-10 lg:py-8 xl:py-10 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-14 xl:gap-20 items-center">
           {/* Animated Text Column */}
           <div
-            className="flex flex-col items-start animate-slide-up opacity-0"
+            className="flex flex-col items-start lg:justify-self-start animate-slide-up opacity-0"
             style={{ animationFillMode: 'forwards' }}
           >
-            <span className="font-['IBM_Plex_Mono'] text-[11px] sm:text-xs font-semibold text-[#141512] uppercase tracking-[0.1em] mb-2.5 sm:mb-3 bg-[#DADCD3] px-2.5 py-0.5 border border-[#141512]">
-              PARA OUVIR POR INTEIRO
-            </span>
-
-            <h1 className="font-['Anton'] text-[42px] sm:text-[58px] md:text-[68px] lg:text-[76px] xl:text-[88px] 2xl:text-[98px] text-[#141512] uppercase leading-[0.92] tracking-normal mb-3 sm:mb-4 lg:mb-5">
-              O SEU PRÓXIMO<br className="hidden sm:inline" /> DISCO FAVORITO<br className="hidden sm:inline" /> ESTÁ AQUI.
+            <h1 className="font-['Anton'] text-[44px] sm:text-[62px] md:text-[72px] lg:text-[82px] xl:text-[92px] 2xl:text-[102px] text-[#141512] uppercase leading-[1.05] tracking-normal mb-4 sm:mb-5 lg:mb-6">
+              O SEU PRÓXIMO<br className="hidden sm:inline" /> DISCO FAVORITO<br className="hidden sm:inline" /> ESTÁ AQUI
             </h1>
 
             <p className="font-['Inter'] text-sm sm:text-base lg:text-[16px] text-[#141512]/85 max-w-lg leading-relaxed mb-5 sm:mb-6 font-normal">
@@ -61,12 +57,12 @@ export default function Home({
 
           {/* Animated Album Cluster */}
           <div
-            className="relative w-full flex items-center justify-center animate-slide-up opacity-0"
+            className="relative w-full flex items-center justify-center lg:justify-end animate-slide-up opacity-0"
             style={{ animationDelay: '200ms', animationFillMode: 'forwards' }}
           >
             <Link
               to="/discos?filter=em-destaque"
-              className="block w-full cursor-pointer hover:scale-[1.02] transition-transform duration-300"
+              className="group block w-full max-w-[480px] xl:max-w-[520px] mx-auto lg:ml-auto lg:mr-0 cursor-pointer"
               aria-label="Ver discos em destaque"
             >
               <AlbumCluster albums={vinylRecords} />
