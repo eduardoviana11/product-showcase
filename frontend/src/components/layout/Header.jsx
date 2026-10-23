@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 
 export default function Header({ cartCount = 0, onCartClick, searchQuery = '', onSearchChange }) {
   const [internalQuery, setInternalQuery] = useState(searchQuery);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
@@ -13,7 +14,12 @@ export default function Header({ cartCount = 0, onCartClick, searchQuery = '', o
     navigate(`/discos?q=${encodeURIComponent(internalQuery.trim())}`);
   };
 
-  const navLinkClasses = ({ isActive }) =>
+  const isNewActive = location.pathname === '/discos' && location.search.includes('tab=new');
+  const isDiscosActive = location.pathname === '/discos' && !location.search.includes('tab=new');
+  const isObjetosActive = location.pathname === '/objetos';
+  const isNewsletterActive = location.pathname === '/newsletter';
+
+  const getLinkClasses = (isActive) =>
     `font-['Inter'] text-sm font-semibold transition-colors cursor-pointer ${
       isActive
         ? 'text-[#141512] underline underline-offset-4 decoration-2 decoration-[#141512]'
@@ -46,18 +52,18 @@ export default function Header({ cartCount = 0, onCartClick, searchQuery = '', o
 
             {/* Nav Links */}
             <nav className="hidden lg:flex items-center gap-6" aria-label="Navegação principal">
-              <NavLink to="/discos" className={navLinkClasses}>
+              <Link to="/discos" className={getLinkClasses(isDiscosActive)}>
                 Discos
-              </NavLink>
-              <NavLink to="/discos?tab=new" className={navLinkClasses}>
+              </Link>
+              <Link to="/discos?tab=new" className={getLinkClasses(isNewActive)}>
                 Novidades
-              </NavLink>
-              <NavLink to="/objetos" className={navLinkClasses}>
+              </Link>
+              <Link to="/objetos" className={getLinkClasses(isObjetosActive)}>
                 Objetos
-              </NavLink>
-              <NavLink to="/newsletter" className={navLinkClasses}>
+              </Link>
+              <Link to="/newsletter" className={getLinkClasses(isNewsletterActive)}>
                 Newsletter
-              </NavLink>
+              </Link>
             </nav>
           </div>
 

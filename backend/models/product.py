@@ -118,6 +118,7 @@ class Product(ABC):
                 price=float(data["price"]),
                 image=data.get("image", "placeholder.svg"),
                 frequency=data.get("frequency", "quinzenal"),
+                file_format=data.get("file_format", "Email/PDF"),
                 category=data.get("category", "Assinatura"),
                 specs_meta=data.get("specs_meta", ""),
                 artist=data.get("artist", ""),
@@ -287,7 +288,7 @@ class VinylProduct(PhysicalProduct):
         return base
 
 
-class SubscriptionProduct(Product):
+class SubscriptionProduct(DigitalProduct):
     def __init__(
         self,
         name,
@@ -295,6 +296,7 @@ class SubscriptionProduct(Product):
         price,
         image,
         frequency="quinzenal",
+        file_format="Email/PDF",
         category="Assinatura",
         specs_meta="",
         artist="",
@@ -306,10 +308,11 @@ class SubscriptionProduct(Product):
         vinyl_scale=1.0,
     ):
         super().__init__(
-            name,
-            description,
-            price,
-            image,
+            name=name,
+            description=description,
+            price=price,
+            image=image,
+            file_format=file_format,
             category=category,
             specs_meta=specs_meta,
             artist=artist,

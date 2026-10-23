@@ -58,6 +58,7 @@ class ShowcaseChecks(unittest.TestCase):
         subscription = SubscriptionProduct(
             name="Newsletter", description="Test", price=29.90, image="placeholder.svg", frequency="quinzenal"
         )
+        self.assertIsInstance(subscription, DigitalProduct)
 
         deliveries = [physical.delivery(), digital.delivery(), vinyl.delivery(), subscription.delivery()]
         self.assertEqual(len(set(deliveries)), 4, "All delivery outputs must be distinct")

@@ -173,7 +173,6 @@ export default function ProductCard({
       className="group flex flex-col justify-between transition-all duration-200 select-none cursor-pointer"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      onClick={() => onAction && onAction(product)}
     >
       {/* 1. TOP CONTAINER WITH SOFT NEUTRAL BACKGROUND */}
       <div className="w-full bg-[#E5E6DF] aspect-[1.14/1] p-5 sm:p-6 flex items-center justify-center relative overflow-hidden">
@@ -243,22 +242,18 @@ export default function ProductCard({
           </p>
         </div>
 
-        {/* 3. FULL-WIDTH CTA BUTTON WITH HOVER STATE MATCHING REFERENCE IMAGE */}
+        {/* 3. FULL-WIDTH CTA BUTTON WITH DIRECT BUTTON HOVER */}
         <button
           type="button"
           onClick={(e) => {
             e.stopPropagation();
             onAction && onAction(product);
           }}
-          className={`w-full py-2.5 sm:py-3 px-4 border border-[#141512] font-['Inter'] text-xs sm:text-sm font-semibold flex items-center justify-center transition-colors duration-150 cursor-pointer ${
-            isHovered
-              ? 'bg-[#C5F43B] text-[#141512]'
-              : 'bg-transparent text-[#141512]'
-          }`}
-          aria-label={`${isHovered ? 'Adicionar' : action_label}: ${name}`}
+          className="w-full py-2.5 sm:py-3 px-4 border border-[#141512] font-['Inter'] text-xs sm:text-sm font-semibold flex items-center justify-center bg-transparent text-[#141512] hover:bg-[#C5F43B] hover:text-[#141512] transition-colors duration-150 cursor-pointer"
+          aria-label={`Adicionar ao carrinho: ${name}`}
         >
           <span>
-            {formatted_price} · {isHovered ? 'Adicionar ↗' : `${action_label} ↗`}
+            {formatted_price} · Adicionar ↗
           </span>
         </button>
       </div>
