@@ -119,5 +119,19 @@
       "action_label": "Ver objeto",
       "cover_variant": "listening-notebook"
     }
+  ],
+  "subscriptions": [
+    {
+      "type": "subscription",
+      "name": "CARTA DA ESTANTE PREMIUM",
+      "description": "Edições quinzenais aprofundadas com ensaios exclusivos, primeiras prensagens reservadas e curadoria musical comentada.",
+      "price": 29.9,
+      "image": "placeholder.svg",
+      "frequency": "quinzenal",
+      "category": "Assinatura",
+      "specs_meta": "NEWSLETTER DIGITAL · ACESSO ANTECIPADO",
+      "action_label": "Assinar plano",
+      "cover_variant": "newsletter-minimal"
+    }
   ]
 }

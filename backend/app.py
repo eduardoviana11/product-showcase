@@ -16,7 +16,7 @@ DATA_FILE = os.path.join(DATA_DIR, "products.json")
 def load_catalog_from_json():
     """Load and instantiate polymorphic Product objects from products.json storage."""
     if not os.path.exists(DATA_FILE):
-        return [], []
+        return [], [], []
 
     try:
         with open(DATA_FILE, "r", encoding="utf-8") as f:
@@ -30,15 +30,19 @@ def load_catalog_from_json():
             Product.from_dict(item)
             for item in data.get("scene_objects", [])
         ]
-        return vinyl_records, scene_objects
+        subscriptions = [
+            Product.from_dict({**item, "type": "subscription"})
+            for item in data.get("subscriptions", [])
+        ]
+        return vinyl_records, scene_objects, subscriptions
     except Exception as e:
         print(f"Error loading products.json: {e}")
-        return [], []
+        return [], [], []
 
 
 # Initial module-level instances for direct access and testing
-vinyl_records, scene_objects = load_catalog_from_json()
-products = vinyl_records + scene_objects
+vinyl_records, scene_objects, subscriptions = load_catalog_from_json()
+products = vinyl_records + scene_objects + subscriptions
 
 
 @app.route("/")
@@ -53,8 +57,8 @@ def index():
 
 @app.route("/api/products")
 def get_products():
-    current_vinyl, current_scene = load_catalog_from_json()
-    all_current = current_vinyl + current_scene
+    current_vinyl, current_scene, current_subs = load_catalog_from_json()
+    all_current = current_vinyl + current_scene + current_subs
     return jsonify([p.to_dict() for p in all_current])
 
 
@@ -68,8 +72,8 @@ def get_media(filename):
 
 @app.route("/api/showcase")
 def get_showcase():
-    current_vinyl, current_scene = load_catalog_from_json()
-    all_current = current_vinyl + current_scene
+    current_vinyl, current_scene, current_subs = load_catalog_from_json()
+    all_current = current_vinyl + current_scene + current_subs
     return jsonify(
         {
             "showcase_name": SHOWCASE_NAME,
@@ -77,6 +81,7 @@ def get_showcase():
             "author_name": AUTHOR_NAME,
             "vinyl_records": [record.to_dict() for record in current_vinyl],
             "scene_objects": [obj.to_dict() for obj in current_scene],
+            "subscriptions": [sub.to_dict() for sub in current_subs],
             "all_products": [product.to_dict() for product in all_current],
         }
     )

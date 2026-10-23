@@ -8,7 +8,7 @@ import unittest
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from app import app, products, vinyl_records, scene_objects
-from models.product import DigitalProduct, PhysicalProduct, Product, VinylProduct
+from models.product import DigitalProduct, PhysicalProduct, Product, VinylProduct, SubscriptionProduct
 
 
 class ShowcaseChecks(unittest.TestCase):
@@ -23,6 +23,7 @@ class ShowcaseChecks(unittest.TestCase):
             (PhysicalProduct, {"pickup_location": "Estúdio ZUNO"}),
             (DigitalProduct, {"file_format": "PDF"}),
             (VinylProduct, {"artist": "Artista Teste", "category": "Canção"}),
+            (SubscriptionProduct, {"frequency": "quinzenal"}),
         ):
             with self.subTest(product_class=product_class.__name__):
                 arguments = dict(name="Test", description="Test", price=59.90, image="placeholder.svg", **extra)
@@ -54,12 +55,16 @@ class ShowcaseChecks(unittest.TestCase):
             name="Disco", artist="Artista", description="Test", price=189.90, image="placeholder.svg",
             category="Jazz", weight_grams=180, tracks_count=10, pickup_location="Estúdio ZUNO"
         )
+        subscription = SubscriptionProduct(
+            name="Newsletter", description="Test", price=29.90, image="placeholder.svg", frequency="quinzenal"
+        )
 
-        deliveries = [physical.delivery(), digital.delivery(), vinyl.delivery()]
-        self.assertEqual(len(set(deliveries)), 3, "All delivery outputs must be distinct")
+        deliveries = [physical.delivery(), digital.delivery(), vinyl.delivery(), subscription.delivery()]
+        self.assertEqual(len(set(deliveries)), 4, "All delivery outputs must be distinct")
         self.assertIn("Loja ZUNO", physical.delivery())
         self.assertIn("PDF", digital.delivery())
         self.assertIn("180g", vinyl.delivery())
+        self.assertIn("quinzenal", subscription.delivery())
 
     def test_to_dict_serialization(self):
         """Polymorphic serialization includes delivery and formatted price."""

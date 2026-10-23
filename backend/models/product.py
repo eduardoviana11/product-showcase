@@ -111,6 +111,20 @@ class Product(ABC):
                 cover_variant=data.get("cover_variant", "digital-minimal"),
                 **store_flags,
             )
+        elif product_type == "subscription":
+            return SubscriptionProduct(
+                name=data["name"],
+                description=data.get("description", ""),
+                price=float(data["price"]),
+                image=data.get("image", "placeholder.svg"),
+                frequency=data.get("frequency", "quinzenal"),
+                category=data.get("category", "Assinatura"),
+                specs_meta=data.get("specs_meta", ""),
+                artist=data.get("artist", ""),
+                action_label=data.get("action_label", "Assinar"),
+                cover_variant=data.get("cover_variant", "newsletter-minimal"),
+                **store_flags,
+            )
         else:
             return PhysicalProduct(
                 name=data["name"],
@@ -271,3 +285,51 @@ class VinylProduct(PhysicalProduct):
             "pickup_location": self.pickup_location,
         })
         return base
+
+
+class SubscriptionProduct(Product):
+    def __init__(
+        self,
+        name,
+        description,
+        price,
+        image,
+        frequency="quinzenal",
+        category="Assinatura",
+        specs_meta="",
+        artist="",
+        action_label="Assinar",
+        cover_variant="newsletter-minimal",
+        featured=False,
+        is_new=False,
+        vinyl_image="",
+        vinyl_scale=1.0,
+    ):
+        super().__init__(
+            name,
+            description,
+            price,
+            image,
+            category=category,
+            specs_meta=specs_meta,
+            artist=artist,
+            action_label=action_label,
+            cover_variant=cover_variant,
+            featured=featured,
+            is_new=is_new,
+            vinyl_image=vinyl_image,
+            vinyl_scale=vinyl_scale,
+        )
+        self.frequency = frequency
+
+    def delivery(self):
+        return f"Envio {self.frequency} direto para sua caixa de entrada."
+
+    def to_dict(self):
+        base = super().to_dict()
+        base.update({
+            "type": "subscription",
+            "frequency": self.frequency,
+        })
+        return base
+
