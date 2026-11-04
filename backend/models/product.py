@@ -1,4 +1,16 @@
 from abc import ABC, abstractmethod
+import re
+import unicodedata
+
+
+def generate_product_slug(text):
+    """Generate a URL-friendly slug from a product name."""
+    if not text:
+        return "produto"
+    normalized = unicodedata.normalize("NFKD", str(text))
+    ascii_text = normalized.encode("ascii", "ignore").decode("ascii")
+    slug = re.sub(r"[^a-zA-Z0-9]+", "-", ascii_text).strip("-").lower()
+    return slug or "produto"
 
 
 class Product(ABC):
@@ -19,7 +31,9 @@ class Product(ABC):
         is_new=False,
         vinyl_image="",
         vinyl_scale=1.0,
+        product_id=None,
     ):
+        self.id = product_id or generate_product_slug(name)
         self.name = name
         self.description = description
         self.price = price  # Encapsulation: validated via setter
@@ -55,6 +69,7 @@ class Product(ABC):
     def to_dict(self):
         """Polymorphic serialization without isinstance checks."""
         return {
+            "id": self.id,
             "type": "product",
             "name": self.name,
             "artist": self.artist,
@@ -82,6 +97,7 @@ class Product(ABC):
             "is_new": bool(data.get("is_new", False)),
             "vinyl_image": data.get("vinyl_image", ""),
             "vinyl_scale": float(data.get("vinyl_scale", 1.0)),
+            "product_id": data.get("id"),
         }
         if product_type == "vinyl":
             return VinylProduct(
@@ -95,6 +111,7 @@ class Product(ABC):
                 tracks_count=int(data.get("tracks_count", 10)),
                 pickup_location=data.get("pickup_location", "Estúdio ZUNO"),
                 cover_variant=data.get("cover_variant", "coastal-bands"),
+                tracklist=data.get("tracklist", []),
                 **store_flags,
             )
         elif product_type == "digital":
@@ -159,6 +176,7 @@ class PhysicalProduct(Product):
         is_new=False,
         vinyl_image="",
         vinyl_scale=1.0,
+        product_id=None,
     ):
         super().__init__(
             name,
@@ -174,6 +192,7 @@ class PhysicalProduct(Product):
             is_new=is_new,
             vinyl_image=vinyl_image,
             vinyl_scale=vinyl_scale,
+            product_id=product_id,
         )
         self.pickup_location = pickup_location
 
@@ -206,6 +225,7 @@ class DigitalProduct(Product):
         is_new=False,
         vinyl_image="",
         vinyl_scale=1.0,
+        product_id=None,
     ):
         super().__init__(
             name,
@@ -221,6 +241,7 @@ class DigitalProduct(Product):
             is_new=is_new,
             vinyl_image=vinyl_image,
             vinyl_scale=vinyl_scale,
+            product_id=product_id,
         )
         self.file_format = file_format
 
@@ -253,6 +274,8 @@ class VinylProduct(PhysicalProduct):
         is_new=False,
         vinyl_image="",
         vinyl_scale=1.0,
+        tracklist=None,
+        product_id=None,
     ):
         specs_meta = f"VINIL PRETO · {weight_grams} G · {tracks_count} FAIXAS"
         super().__init__(
@@ -270,9 +293,11 @@ class VinylProduct(PhysicalProduct):
             is_new=is_new,
             vinyl_image=vinyl_image,
             vinyl_scale=vinyl_scale,
+            product_id=product_id,
         )
         self.weight_grams = weight_grams
         self.tracks_count = tracks_count
+        self.tracklist = list(tracklist) if tracklist else []
 
     def delivery(self):
         return f"Prensagem {self.weight_grams}g ({self.tracks_count} faixas) · Retirada ou envio: {self.pickup_location}."
@@ -284,6 +309,7 @@ class VinylProduct(PhysicalProduct):
             "weight_grams": self.weight_grams,
             "tracks_count": self.tracks_count,
             "pickup_location": self.pickup_location,
+            "tracklist": self.tracklist,
         })
         return base
 
@@ -306,6 +332,7 @@ class SubscriptionProduct(DigitalProduct):
         is_new=False,
         vinyl_image="",
         vinyl_scale=1.0,
+        product_id=None,
     ):
         super().__init__(
             name=name,
@@ -322,6 +349,7 @@ class SubscriptionProduct(DigitalProduct):
             is_new=is_new,
             vinyl_image=vinyl_image,
             vinyl_scale=vinyl_scale,
+            product_id=product_id,
         )
         self.frequency = frequency
 

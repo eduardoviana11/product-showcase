@@ -2,6 +2,7 @@
   "_instrucoes": "Edite este arquivo para adicionar, alterar ou remover discos e produtos da ZUNO. Cada item é carregado dinamicamente pelo backend.",
   "vinyl_records": [
     {
+      "id": "clube-da-esquina",
       "type": "vinyl",
       "name": "CLUBE DA ESQUINA",
       "artist": "Milton Nascimento & Lô Borges",
@@ -17,9 +18,24 @@
       "is_new": false,
       "vinyl_image": "",
       "vinyl_scale": 1.0,
+      "tracklist": [
+        { "number": "01", "title": "Tudo Que Você Podia Ser", "side": "A", "duration": "2:57" },
+        { "number": "02", "title": "Cais", "side": "A", "duration": "2:45" },
+        { "number": "03", "title": "O Trem Azul", "side": "A", "duration": "4:05" },
+        { "number": "04", "title": "Saídas e Bandeiras Nº 1", "side": "A", "duration": "0:45" },
+        { "number": "05", "title": "Nuvem Cigana", "side": "A", "duration": "2:59" },
+        { "number": "06", "title": "Cravo e Canela", "side": "A", "duration": "2:31" },
+        { "number": "07", "title": "Dos Cruces", "side": "B", "duration": "5:22" },
+        { "number": "08", "title": "Um Girassol da Cor de Seu Cabelo", "side": "B", "duration": "4:12" },
+        { "number": "09", "title": "San Vicente", "side": "B", "duration": "2:46" },
+        { "number": "10", "title": "Estrelas / Clube da Esquina Nº 2", "side": "B", "duration": "4:07" },
+        { "number": "11", "title": "Paisagem da Janela", "side": "B", "duration": "2:58" },
+        { "number": "12", "title": "Nada Será Como Antes", "side": "B", "duration": "2:46" }
+      ],
       "_comentario": "-> ITEM DE EXEMPLO: featured/is_new definem as abas da loja. vinyl_image aponta para a imagem do vinil. vinyl_scale (opcional, padrão 1.0) permite redimensionar o disco (ex: 1.08 ou 1.12) para ajustar perfeitamente ao tamanho da capa."
     },
     {
+      "id": "acabou-chorare",
       "type": "vinyl",
       "name": "ACABOU CHORARE",
       "artist": "Novos Baianos",
@@ -32,9 +48,22 @@
       "pickup_location": "Estúdio ZUNO",
       "cover_variant": "orange-stripes",
       "featured": true,
-      "is_new": false
+      "is_new": false,
+      "tracklist": [
+        { "number": "01", "title": "Brasil Pandeiro", "side": "A", "duration": "3:56" },
+        { "number": "02", "title": "Preta Pretinha", "side": "A", "duration": "6:38" },
+        { "number": "03", "title": "Tinindo, Trincando", "side": "A", "duration": "3:24" },
+        { "number": "04", "title": "Swing de Campo Grande", "side": "A", "duration": "3:09" },
+        { "number": "05", "title": "Acabou Chorare", "side": "A", "duration": "4:13" },
+        { "number": "06", "title": "Mistério do Planeta", "side": "B", "duration": "3:37" },
+        { "number": "07", "title": "A Menina Dança", "side": "B", "duration": "3:51" },
+        { "number": "08", "title": "Besta É Tu", "side": "B", "duration": "4:26" },
+        { "number": "09", "title": "Um Bilhete Pra Didi", "side": "B", "duration": "2:52" },
+        { "number": "10", "title": "Preta Pretinha (Reprise)", "side": "B", "duration": "3:24" }
+      ]
     },
     {
+      "id": "igor",
       "type": "vinyl",
       "name": "Igor",
       "artist": "Tyler, the Creator",
@@ -47,13 +76,28 @@
       "pickup_location": "Estúdio ZUNO",
       "cover_variant": "purple-circle",
       "featured": true,
-      "is_new": true
+      "is_new": true,
+      "tracklist": [
+        { "number": "01", "title": "IGOR'S THEME", "side": "A", "duration": "3:20" },
+        { "number": "02", "title": "EARFQUAKE", "side": "A", "duration": "3:10" },
+        { "number": "03", "title": "I THINK", "side": "A", "duration": "3:32" },
+        { "number": "04", "title": "EXACTLY WHAT YOU RUN FROM YOU END UP CHASING", "side": "A", "duration": "0:14" },
+        { "number": "05", "title": "RUNNING OUT OF TIME", "side": "A", "duration": "2:57" },
+        { "number": "06", "title": "NEW MAGIC WAND", "side": "A", "duration": "3:15" },
+        { "number": "07", "title": "A BOY IS A GUN*", "side": "B", "duration": "3:30" },
+        { "number": "08", "title": "PUPPET", "side": "B", "duration": "2:59" },
+        { "number": "09", "title": "WHAT'S GOOD", "side": "B", "duration": "3:25" },
+        { "number": "10", "title": "GONE, GONE / THANK YOU", "side": "B", "duration": "6:15" },
+        { "number": "11", "title": "I DON'T LOVE YOU ANYMORE", "side": "B", "duration": "2:41" },
+        { "number": "12", "title": "ARE WE STILL FRIENDS?", "side": "B", "duration": "4:25" }
+      ]
     },
     {
+      "id": "bad-remastered",
       "type": "vinyl",
       "name": "Bad (Remastered)",
       "artist": "Michael Jackson",
-      "description": "O álbum Bad de Michael Jackson ganhou uma remasterização oficial em 2012 (relançada também na comemoração do Bad 25), com 11 faixas originais remasterizadas pela MJJ Productions Inc",
+      "description": "O álbum Bad de Michael Jackson ganhou uma remasterização oficial em 2012 (relançada também na comemoração do Bad 25), com 11 faixas originais remasterizadas pela MJJ Productions Inc.",
       "price": 330.0,
       "image": "https://cdn-images.dzcdn.net/images/cover/cad261eafd0c6c15811200d5039b5b50/500x500-000000-80-0-0.jpg",
       "category": "Pop",
@@ -62,9 +106,23 @@
       "pickup_location": "Estúdio ZUNO",
       "cover_variant": "diagonal-split",
       "featured": false,
-      "is_new": true
+      "is_new": true,
+      "tracklist": [
+        { "number": "01", "title": "Bad", "side": "A", "duration": "4:07" },
+        { "number": "02", "title": "The Way You Make Me Feel", "side": "A", "duration": "4:58" },
+        { "number": "03", "title": "Speed Demon", "side": "A", "duration": "4:01" },
+        { "number": "04", "title": "Liberian Girl", "side": "A", "duration": "3:53" },
+        { "number": "05", "title": "Just Good Friends", "side": "A", "duration": "4:06" },
+        { "number": "06", "title": "Another Part of Me", "side": "B", "duration": "3:54" },
+        { "number": "07", "title": "Man in the Mirror", "side": "B", "duration": "5:19" },
+        { "number": "08", "title": "I Just Can't Stop Loving You", "side": "B", "duration": "4:11" },
+        { "number": "09", "title": "Dirty Diana", "side": "B", "duration": "4:41" },
+        { "number": "10", "title": "Smooth Criminal", "side": "B", "duration": "4:17" },
+        { "number": "11", "title": "Leave Me Alone", "side": "B", "duration": "4:40" }
+      ]
     },
     {
+      "id": "bewitched-the-goddess-edition",
       "type": "vinyl",
       "name": "Bewitched: The Goddess Edition",
       "artist": "Laufey",
@@ -79,11 +137,26 @@
       "featured": false,
       "is_new": true,
       "vinyl_image": "laufey-disc.png",
-      "vinyl_scale": 1.12
+      "vinyl_scale": 1.12,
+      "tracklist": [
+        { "number": "01", "title": "Dreamer", "side": "A", "duration": "3:30" },
+        { "number": "02", "title": "Second Best", "side": "A", "duration": "3:24" },
+        { "number": "03", "title": "Haunted", "side": "A", "duration": "3:20" },
+        { "number": "04", "title": "Must Be Love", "side": "A", "duration": "3:04" },
+        { "number": "05", "title": "While You Were Sleeping", "side": "A", "duration": "2:57" },
+        { "number": "06", "title": "Lovesick", "side": "A", "duration": "3:45" },
+        { "number": "07", "title": "California and Me", "side": "B", "duration": "3:36" },
+        { "number": "08", "title": "Promise", "side": "B", "duration": "3:54" },
+        { "number": "09", "title": "From The Start", "side": "B", "duration": "2:49" },
+        { "number": "10", "title": "Bewitched", "side": "B", "duration": "4:06" },
+        { "number": "11", "title": "Goddess", "side": "B", "duration": "4:27" },
+        { "number": "12", "title": "Bored", "side": "B", "duration": "3:33" }
+      ]
     }
   ],
   "scene_objects": [
     {
+      "id": "bolsa-escuta-livre",
       "type": "physical",
       "name": "BOLSA ESCUTA LIVRE",
       "description": "Para carregar até 15 LPs com reforço duplo na alça.",
@@ -96,6 +169,7 @@
       "cover_variant": "tote-bag"
     },
     {
+      "id": "cartaz-frequencia-comum",
       "type": "physical",
       "name": "CARTAZ FREQUÊNCIA COMUM",
       "description": "Tiragem numerada impressa manualmente em papel encorpado.",
@@ -108,6 +182,7 @@
       "cover_variant": "screenprint-poster"
     },
     {
+      "id": "caderno-de-escuta-vol-01",
       "type": "digital",
       "name": "CADERNO DE ESCUTA - VOL. 01",
       "description": "Ensaios curtos, fichas de prensagem e notas de estúdio.",

@@ -72,6 +72,8 @@ class ShowcaseChecks(unittest.TestCase):
         for p in products:
             data = p.to_dict()
             self.assertIsInstance(data, dict)
+            self.assertIn("id", data)
+            self.assertTrue(len(data["id"]) > 0)
             self.assertIn("name", data)
             self.assertIn("price", data)
             self.assertIn("formatted_price", data)

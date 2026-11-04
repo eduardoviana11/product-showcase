@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import VinylDisc from '../shapes/VinylDisc';
 import { resolveAssetUrl } from '../../utils/assets';
+import { getProductId } from '../../utils/slug';
 
 // Clean geometric fallback artworks for when a local or external image is not available
-function CoverArtwork({ variant, title, artist }) {
+export function CoverArtwork({ variant, title, artist }) {
   switch (variant) {
     case 'coastal-bands':
       return (
@@ -167,82 +169,91 @@ export default function ProductCard({
 
   const resolvedCoverSrc = resolveAssetUrl(image);
   const hasRealImage = Boolean(resolvedCoverSrc) && !imageError;
+  const productId = getProductId(product);
 
   return (
     <article
-      className="group flex flex-col justify-between transition-all duration-200 select-none cursor-pointer"
+      className="group flex flex-col justify-between transition-all duration-200 select-none"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {/* 1. TOP CONTAINER WITH SOFT NEUTRAL BACKGROUND */}
-      <div className="w-full bg-[#E5E6DF] aspect-[1.14/1] p-5 sm:p-6 flex items-center justify-center relative overflow-hidden">
-        {/* Store badges */}
-        {(is_new || featured) && (
-          <div className="absolute top-3 left-3 z-20 flex flex-col items-start gap-1">
-            {is_new && (
-              <span className="bg-[#C5F43B] text-[#141512] border border-[#141512] font-['IBM_Plex_Mono'] text-[10px] font-semibold uppercase tracking-[0.06em] px-2 py-0.5">
-                Novo
-              </span>
-            )}
-            {featured && (
-              <span className="bg-[#141512] text-[#F4F2E9] border border-[#141512] font-['IBM_Plex_Mono'] text-[10px] font-semibold uppercase tracking-[0.06em] px-2 py-0.5">
-                Destaque
-              </span>
-            )}
-          </div>
-        )}
-        {/* Cover + Vinyl Sleeve Center Unit */}
-        <div className="relative aspect-square w-[64%] max-w-[220px] flex items-center justify-center">
-          {/* Sliding Vinyl Record behind the sleeve */}
-          {isVinyl && (
-            <div
-              className={`absolute inset-y-1 right-0 aspect-square transition-transform duration-300 ease-out pointer-events-none z-0 vinyl-slide-element ${
-                isHovered ? 'translate-x-[25%]' : 'translate-x-0'
-              }`}
-            >
-              <VinylDisc
-                labelText={artist ? artist.split(' ')[0] : 'ZUNO'}
-                image={vinyl_image}
-                scale={vinyl_scale}
-              />
+      <Link
+        to={`/produto/${productId}`}
+        className="flex flex-col flex-grow cursor-pointer focus:outline-none"
+        aria-label={`Ver detalhes de ${name}`}
+      >
+        {/* 1. TOP CONTAINER WITH SOFT NEUTRAL BACKGROUND */}
+        <div className="w-full bg-[#E5E6DF] aspect-[1.14/1] p-5 sm:p-6 flex items-center justify-center relative overflow-hidden">
+          {/* Store badges */}
+          {(is_new || featured) && (
+            <div className="absolute top-3 left-3 z-20 flex flex-col items-start gap-1">
+              {is_new && (
+                <span className="bg-[#C5F43B] text-[#141512] border border-[#141512] font-['IBM_Plex_Mono'] text-[10px] font-semibold uppercase tracking-[0.06em] px-2 py-0.5">
+                  Novo
+                </span>
+              )}
+              {featured && (
+                <span className="bg-[#141512] text-[#F4F2E9] border border-[#141512] font-['IBM_Plex_Mono'] text-[10px] font-semibold uppercase tracking-[0.06em] px-2 py-0.5">
+                  Destaque
+                </span>
+              )}
             </div>
           )}
-
-          {/* Sleeve Cover in the foreground */}
-          <div
-            className={`relative z-10 w-full h-full aspect-square bg-[#141512] shadow-[0px_4px_16px_rgba(0,0,0,0.18)] overflow-hidden border border-black/10 transition-transform duration-300 ease-out ${
-              isVinyl ? 'cover-slide-element' : ''
-            } ${isVinyl && isHovered ? '-translate-x-[25%]' : 'translate-x-0'}`}
-          >
-            {hasRealImage ? (
-              <img
-                src={resolvedCoverSrc}
-                alt={`Capa do álbum ${name}`}
-                className="w-full h-full object-cover select-none pointer-events-none"
-                onError={() => setImageError(true)}
-              />
-            ) : (
-              <CoverArtwork variant={cover_variant} title={name} artist={artist} />
+          {/* Cover + Vinyl Sleeve Center Unit */}
+          <div className="relative aspect-square w-[64%] max-w-[220px] flex items-center justify-center">
+            {/* Sliding Vinyl Record behind the sleeve */}
+            {isVinyl && (
+              <div
+                className={`absolute inset-y-1 right-0 aspect-square transition-transform duration-300 ease-out pointer-events-none z-0 vinyl-slide-element ${
+                  isHovered ? 'translate-x-[25%]' : 'translate-x-0'
+                }`}
+              >
+                <VinylDisc
+                  labelText={artist ? artist.split(' ')[0] : 'ZUNO'}
+                  image={vinyl_image}
+                  scale={vinyl_scale}
+                />
+              </div>
             )}
+
+            {/* Sleeve Cover in the foreground */}
+            <div
+              className={`relative z-10 w-full h-full aspect-square bg-[#141512] shadow-[0px_4px_16px_rgba(0,0,0,0.18)] overflow-hidden border border-black/10 transition-transform duration-300 ease-out ${
+                isVinyl ? 'cover-slide-element' : ''
+              } ${isVinyl && isHovered ? '-translate-x-[25%]' : 'translate-x-0'}`}
+            >
+              {hasRealImage ? (
+                <img
+                  src={resolvedCoverSrc}
+                  alt={`Capa do álbum ${name}`}
+                  className="w-full h-full object-cover select-none pointer-events-none"
+                  onError={() => setImageError(true)}
+                />
+              ) : (
+                <CoverArtwork variant={cover_variant} title={name} artist={artist} />
+              )}
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* 2. CARD CONTENT & METADATA BELOW THE IMAGE BOX */}
-      <div className="pt-3.5 pb-1 flex flex-col flex-grow justify-between">
-        <div>
-          {/* Album Title */}
-          <h3 className="font-['Inter'] text-lg sm:text-[19px] font-bold text-[#141512] leading-tight line-clamp-1">
-            {name}
-          </h3>
+        {/* 2. CARD CONTENT & METADATA BELOW THE IMAGE BOX */}
+        <div className="pt-3.5 flex flex-col flex-grow justify-between">
+          <div>
+            {/* Album Title */}
+            <h3 className="font-['Inter'] text-lg sm:text-[19px] font-bold text-[#141512] leading-tight line-clamp-1 group-hover:underline underline-offset-4 decoration-2">
+              {name}
+            </h3>
 
-          {/* Subtitle / Artist & Specs */}
-          <p className="font-['Inter'] text-xs sm:text-[13px] text-[#71736D] mt-1 mb-3.5 line-clamp-1">
-            {subtitle}
-          </p>
+            {/* Subtitle / Artist & Specs */}
+            <p className="font-['Inter'] text-xs sm:text-[13px] text-[#71736D] mt-1 mb-3.5 line-clamp-1">
+              {subtitle}
+            </p>
+          </div>
         </div>
+      </Link>
 
-        {/* 3. FULL-WIDTH CTA BUTTON WITH DIRECT BUTTON HOVER */}
+      {/* 3. FULL-WIDTH CTA BUTTON WITH DIRECT BUTTON HOVER */}
+      <div className="pb-1">
         <button
           type="button"
           onClick={(e) => {
