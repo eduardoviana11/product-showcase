@@ -26,7 +26,7 @@ export default function Newsletter({ onAddToCart }) {
       {/* Header */}
       <div className="mb-12 pb-6 border-b-2 border-[#141512]">
         <span className="font-['IBM_Plex_Mono'] text-xs font-semibold text-[#141512] uppercase tracking-[0.08em] block mb-2">
-          PUBLICAÇÃO DIGITAL & CURADORIA · CARTA DA ESTANTE
+          PUBLICAÇÃO DIGITAL & CURADORIA - CARTA DA ESTANTE
         </span>
         <h1 className="font-['Anton'] text-5xl sm:text-7xl text-[#141512] uppercase tracking-wide leading-none">
           A MÚSICA EM PROFUNDIDADE.
@@ -101,7 +101,7 @@ export default function Newsletter({ onAddToCart }) {
               CARTA DA ESTANTE PREMIUM
             </h2>
             <div className="font-['IBM_Plex_Mono'] text-3xl font-bold text-[#C5F43B] mb-6">
-              R$ 29,90 <span className="text-xs text-[#DADCD3]/70 font-normal">/ mês · cancelamento a qualquer momento</span>
+              R$ 29,90 <span className="text-xs text-[#DADCD3]/70 font-normal">/ mês - cancelamento a qualquer momento</span>
             </div>
 
             <ul className="space-y-3 font-['Inter'] text-sm text-[#DADCD3]/90 mb-8">
@@ -133,7 +133,7 @@ export default function Newsletter({ onAddToCart }) {
               Assinar Plano Premium (R$ 29,90) ↗
             </Button>
             <p className="font-['IBM_Plex_Mono'] text-[10px] text-[#DADCD3]/60 text-center mt-3 uppercase tracking-wider">
-              Cobrança mensal segura · Sem fidelidade
+              Cobrança mensal segura - Sem fidelidade
             </p>
           </div>
         </div>

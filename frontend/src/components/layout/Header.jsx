@@ -34,7 +34,7 @@ export default function Header({ cartCount = 0, onCartClick, searchQuery = '', o
         aria-label="Aviso de frete"
       >
         <p className="font-['IBM_Plex_Mono'] text-[11px] sm:text-xs font-semibold uppercase tracking-[0.08em] text-[#141512]">
-          FRETE GRÁTIS A PARTIR DE R$ 299,00 · DISCOS SELECIONADOS, CLÁSSICOS E NOVIDADES
+          FRETE GRÁTIS A PARTIR DE R$ 299,00 - DISCOS SELECIONADOS, CLÁSSICOS E NOVIDADES
         </p>
       </section>
 

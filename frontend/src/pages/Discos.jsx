@@ -34,9 +34,10 @@ export default function Discos({ vinylRecords = [], onAddToCart }) {
   const [searchParams, setSearchParams] = useSearchParams();
   const urlTab = searchParams.get('tab') || (searchParams.get('filter') === 'em-destaque' ? 'featured' : 'all');
   const urlQuery = searchParams.get('q') || '';
+  const urlCategory = searchParams.get('category') || 'Todos';
 
   const [storeTab, setStoreTab] = useState(urlTab);
-  const [activeCategory, setActiveCategory] = useState('Todos');
+  const [activeCategory, setActiveCategory] = useState(urlCategory);
   const [sortBy, setSortBy] = useState('relevance');
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
   const [searchQuery, setSearchQuery] = useState(urlQuery);
@@ -46,6 +47,13 @@ export default function Discos({ vinylRecords = [], onAddToCart }) {
       setStoreTab(searchParams.get('tab'));
     } else if (searchParams.get('filter') === 'em-destaque') {
       setStoreTab('featured');
+    } else {
+      setStoreTab('all');
+    }
+    if (searchParams.get('category')) {
+      setActiveCategory(searchParams.get('category'));
+    } else {
+      setActiveCategory('Todos');
     }
     if (searchParams.get('q') !== null) {
       setSearchQuery(searchParams.get('q'));
@@ -74,7 +82,9 @@ export default function Discos({ vinylRecords = [], onAddToCart }) {
 
   const filteredRecords = tabRecords.filter((record) => {
     const matchesCategory =
-      activeCategory === 'Todos' || record.category === activeCategory;
+      activeCategory === 'Todos' ||
+      (record.category &&
+        record.category.toLowerCase() === activeCategory.toLowerCase());
     const matchesSearch =
       searchQuery.trim() === '' ||
       record.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -104,7 +114,7 @@ export default function Discos({ vinylRecords = [], onAddToCart }) {
       {/* Page Title */}
       <div className="mb-10 pb-6 border-b-2 border-[#141512]">
         <span className="font-['IBM_Plex_Mono'] text-xs font-semibold text-[#141512] uppercase tracking-[0.08em] block mb-2">
-          ACERVO COMPLETO · EDICÕES FÍSICAS EM VINIL
+          ACERVO COMPLETO - EDIÇÕES FÍSICAS EM VINIL
         </span>
         <h1 className="font-['Anton'] text-5xl sm:text-7xl text-[#141512] uppercase tracking-wide leading-none">
           DISCOS EM CATÁLOGO
@@ -151,7 +161,7 @@ export default function Discos({ vinylRecords = [], onAddToCart }) {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
         <div className="flex flex-wrap items-center gap-2" role="group" aria-label="Filtro de gêneros">
           {categories.map((cat) => {
-            const isActive = activeCategory === cat;
+            const isActive = activeCategory.toLowerCase() === cat.toLowerCase();
             return (
               <button
                 key={cat}
@@ -159,6 +169,14 @@ export default function Discos({ vinylRecords = [], onAddToCart }) {
                 onClick={() => {
                   setActiveCategory(cat);
                   setVisibleCount(PAGE_SIZE);
+                  setSearchParams((prev) => {
+                    if (cat === 'Todos') {
+                      prev.delete('category');
+                    } else {
+                      prev.set('category', cat);
+                    }
+                    return prev;
+                  });
                 }}
                 aria-pressed={isActive}
                 className={`font-['IBM_Plex_Mono'] text-[11px] font-semibold uppercase tracking-wider px-3 py-1.5 border-2 border-[#141512] transition-colors cursor-pointer ${isActive

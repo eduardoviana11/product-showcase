@@ -12,7 +12,7 @@ export function CoverArtwork({ variant, title, artist }) {
         <div className="w-full h-full bg-[#1e2e38] flex flex-col justify-between p-4 relative overflow-hidden select-none">
           <div className="space-y-1 z-10">
             <span className="font-['IBM_Plex_Mono'] text-[9px] uppercase tracking-widest text-[#C5F43B]">
-              ZUNO · VINIL
+              ZUNO - VINIL
             </span>
             <div className="font-['Anton'] text-lg text-[#F4F2E9] tracking-wider leading-none">
               {title}
@@ -34,7 +34,7 @@ export function CoverArtwork({ variant, title, artist }) {
         <div className="w-full h-full bg-[#3d1810] flex flex-col justify-between p-4 relative overflow-hidden select-none">
           <div className="space-y-1 z-10">
             <span className="font-['IBM_Plex_Mono'] text-[9px] uppercase tracking-widest text-[#C5F43B]">
-              ZUNO · VINIL
+              ZUNO - VINIL
             </span>
             <div className="font-['Anton'] text-lg text-[#F4F2E9] tracking-wider leading-none">
               {title}
@@ -54,7 +54,7 @@ export function CoverArtwork({ variant, title, artist }) {
         <div className="w-full h-full bg-[#1b1424] flex flex-col justify-between p-4 relative overflow-hidden select-none">
           <div className="space-y-1 z-10">
             <span className="font-['IBM_Plex_Mono'] text-[9px] uppercase tracking-widest text-[#C5F43B]">
-              ZUNO · VINIL
+              ZUNO - VINIL
             </span>
             <div className="font-['Anton'] text-lg text-[#F4F2E9] tracking-wider leading-none">
               {title}
@@ -72,7 +72,7 @@ export function CoverArtwork({ variant, title, artist }) {
         <div className="w-full h-full bg-[#1a1c18] flex flex-col justify-between p-4 relative overflow-hidden select-none">
           <div className="space-y-1 z-10">
             <span className="font-['IBM_Plex_Mono'] text-[9px] uppercase tracking-widest text-[#C5F43B]">
-              ZUNO · VINIL
+              ZUNO - VINIL
             </span>
             <div className="font-['Anton'] text-lg text-[#F4F2E9] tracking-wider leading-none">
               {title}
@@ -154,17 +154,18 @@ export default function ProductCard({
     is_new,
   } = product;
 
-  // Build clean subtitle matching the reference image: "Linha d'Água · vinil preto · 180 g"
+  // Build clean subtitle: "Linha d'Água - vinil preto, 180 g"
   let subtitle = '';
   if (isVinyl) {
-    const parts = [
-      artist,
+    const formatSpec = [
       category ? category.toLowerCase() : 'vinil preto',
       weight_grams ? `${weight_grams} g` : '180 g',
-    ].filter(Boolean);
-    subtitle = parts.join(' · ');
+    ]
+      .filter(Boolean)
+      .join(', ');
+    subtitle = [artist, formatSpec].filter(Boolean).join(' - ');
   } else {
-    subtitle = specs_meta || delivery || (category ? `Objetos · ${category}` : 'Edição ZUNO');
+    subtitle = specs_meta || delivery || (category ? `Objetos - ${category}` : 'Edição ZUNO');
   }
 
   const resolvedCoverSrc = resolveAssetUrl(image);
@@ -184,21 +185,6 @@ export default function ProductCard({
       >
         {/* 1. TOP CONTAINER WITH SOFT NEUTRAL BACKGROUND */}
         <div className="w-full bg-[#E5E6DF] aspect-[1.14/1] p-5 sm:p-6 flex items-center justify-center relative overflow-hidden">
-          {/* Store badges */}
-          {(is_new || featured) && (
-            <div className="absolute top-3 left-3 z-20 flex flex-col items-start gap-1">
-              {is_new && (
-                <span className="bg-[#C5F43B] text-[#141512] border border-[#141512] font-['IBM_Plex_Mono'] text-[10px] font-semibold uppercase tracking-[0.06em] px-2 py-0.5">
-                  Novo
-                </span>
-              )}
-              {featured && (
-                <span className="bg-[#141512] text-[#F4F2E9] border border-[#141512] font-['IBM_Plex_Mono'] text-[10px] font-semibold uppercase tracking-[0.06em] px-2 py-0.5">
-                  Destaque
-                </span>
-              )}
-            </div>
-          )}
           {/* Cover + Vinyl Sleeve Center Unit */}
           <div className="relative aspect-square w-[64%] max-w-[220px] flex items-center justify-center">
             {/* Sliding Vinyl Record behind the sleeve */}
@@ -264,7 +250,7 @@ export default function ProductCard({
           aria-label={`Adicionar ao carrinho: ${name}`}
         >
           <span>
-            {formatted_price} · Adicionar ↗
+            {formatted_price} - Adicionar ↗
           </span>
         </button>
       </div>

@@ -14,7 +14,7 @@ export default function Footer() {
             Curadoria musical para quem nunca termina de descobrir música. Clássicos, novidades e objetos da cena.
           </p>
           <div className="font-['IBM_Plex_Mono'] text-[11px] text-[#C5F43B] uppercase tracking-wider">
-            FORTALEZA · BRASIL · 2026
+            FORTALEZA, BRASIL - 2026
           </div>
         </div>
 
@@ -78,14 +78,14 @@ export default function Footer() {
           <div className="space-y-2.5 font-['IBM_Plex_Mono'] text-xs text-[#DADCD3]/80 leading-relaxed">
             <p className="text-[#C5F43B]">contato@zuno.com.br</p>
             <p>PIX e cartão em até 3x sem juros</p>
-            <p>Seg a Sex · 10h às 18h</p>
+            <p>Seg a Sex, das 10h às 18h</p>
           </div>
         </div>
       </div>
 
       {/* Bottom copyright line */}
       <div className="max-w-[1440px] mx-auto pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 font-['IBM_Plex_Mono'] text-[11px] text-[#DADCD3]/60">
-        <p>© 2026 ZUNO · TODOS OS DIREITOS RESERVADOS</p>
+        <p>© 2026 ZUNO - TODOS OS DIREITOS RESERVADOS</p>
       </div>
     </footer>
   );

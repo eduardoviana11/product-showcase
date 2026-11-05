@@ -7,7 +7,7 @@ export default function Objetos({ sceneObjects = [], onAddToCart }) {
       {/* Header */}
       <div className="mb-10 pb-6 border-b-2 border-[#141512]">
         <span className="font-['IBM_Plex_Mono'] text-xs font-semibold text-[#141512] uppercase tracking-[0.08em] block mb-2">
-          ARTEFATOS E PRODUTOS FÍSICOS · MERCH & EDIÇÕES
+          ARTEFATOS E PRODUTOS FÍSICOS - MERCH & EDIÇÕES
         </span>
         <h1 className="font-['Anton'] text-5xl sm:text-7xl text-[#141512] uppercase tracking-wide leading-none">
           OBJETOS DA CENA

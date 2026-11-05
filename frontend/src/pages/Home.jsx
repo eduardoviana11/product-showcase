@@ -21,19 +21,83 @@ export default function Home({
 }) {
   return (
     <div className="flex flex-col">
-      {/* 1. ANIMATED HERO SECTION */}
-      <section className="border-b-2 border-[#141512] bg-[#F4F2E9] overflow-hidden lg:min-h-[calc(100vh-112px)] flex flex-col justify-center">
-        <div className="max-w-[1440px] w-full mx-auto px-6 sm:px-12 lg:px-16 py-8 sm:py-10 lg:py-8 xl:py-10 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-14 xl:gap-20 items-center">
-          {/* Animated Text Column */}
+      {/* 1. HERO SECTION WITH CANVA COLLAGE BACKGROUND & DYNAMIC PLACEHOLDERS */}
+      <section className="relative border-b-2 border-[#141512] bg-[#F4F2E9] overflow-hidden lg:h-[calc(100vh-114px)] lg:min-h-[560px]">
+        {/* Desktop Single-Screen Hero (1920x1080 background tucked behind navbar & shipping bar) */}
+        <div className="hidden lg:block relative w-full h-full">
+          {/* Left torn paper layer anchored to the left edge and pulled behind the 114px header */}
           <div
-            className="flex flex-col items-start lg:justify-self-start animate-slide-up opacity-0"
-            style={{ animationFillMode: 'forwards' }}
+            className="absolute left-0 -top-[114px] h-[100vh] min-h-[674px] aspect-[16/9] pointer-events-none select-none z-0"
+            style={{ clipPath: 'inset(0 75% 0 0)' }}
           >
-            <h1 className="font-['Anton'] text-[44px] sm:text-[62px] md:text-[72px] lg:text-[82px] xl:text-[92px] 2xl:text-[102px] text-[#141512] uppercase leading-[1.05] tracking-normal mb-4 sm:mb-5 lg:mb-6">
-              O SEU PRÓXIMO<br className="hidden sm:inline" /> DISCO FAVORITO<br className="hidden sm:inline" /> ESTÁ AQUI
+            <img
+              src="/images/hero-background-2.png"
+              alt=""
+              aria-hidden="true"
+              className="w-full h-full object-fill"
+            />
+          </div>
+
+          {/* Right collage & dynamic placeholders anchored to the right edge and pulled behind the 114px header */}
+          <div
+            className="absolute right-0 -top-[114px] h-[100vh] min-h-[674px] aspect-[16/9] z-10"
+            style={{ clipPath: 'inset(0 0 0 45%)' }}
+          >
+            <img
+              src="/images/hero-background-2.png"
+              alt=""
+              aria-hidden="true"
+              className="absolute inset-0 w-full h-full object-fill select-none pointer-events-none z-0"
+            />
+            <AlbumCluster albums={vinylRecords} />
+          </div>
+
+          {/* Hero Text Column (Vertically centered in the visible single-screen hero area) */}
+          <div className="relative z-30 h-full w-full flex items-center pointer-events-none">
+            <div
+              className="pl-[10.5%] pr-6 w-[52%] flex flex-col items-start animate-slide-up opacity-0 pointer-events-auto"
+              style={{ animationFillMode: 'forwards' }}
+            >
+              <h1 className="font-['Anton'] text-[clamp(2.5rem,4.9vw,5.6rem)] text-[#141512] uppercase leading-[1.04] tracking-normal mb-4 xl:mb-5">
+                O SEU PRÓXIMO
+                <br /> DISCO FAVORITO
+                <br /> ESTÁ AQUI
+              </h1>
+
+              <p className="font-['Inter'] text-sm xl:text-base text-[#141512]/85 max-w-lg leading-relaxed mb-5 xl:mb-6 font-normal">
+                Das edições clássicas que moldaram gerações aos lançamentos que você precisa conhecer hoje.
+                Explore o acervo e leve a música além dos fones de ouvido.
+              </p>
+
+              <div className="flex flex-wrap items-center gap-3 sm:gap-4">
+                <Link
+                  to="/discos"
+                  className="inline-flex items-center justify-center font-['IBM_Plex_Mono'] uppercase tracking-[0.06em] text-xs xl:text-sm font-semibold px-6 xl:px-7 py-2.5 xl:py-3 bg-[#C5F43B] text-[#141512] border-2 border-[#141512] hover:shadow-[3px_3px_0px_#141512] active:translate-x-0.5 active:translate-y-0.5 transition-all select-none"
+                >
+                  Explorar os discos
+                </Link>
+
+                <Link
+                  to="/colecoes"
+                  className="inline-flex items-center justify-center font-['IBM_Plex_Mono'] uppercase tracking-[0.06em] text-xs xl:text-sm font-semibold px-6 xl:px-7 py-2.5 xl:py-3 bg-[#F4F2E9]/90 text-[#141512] border-2 border-[#141512] hover:bg-[#141512] hover:text-[#F4F2E9] hover:shadow-[3px_3px_0px_#141512] transition-all select-none"
+                >
+                  Nossa curadoria
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Mobile / Tablet Stacked Hero (Preserves exact 16:9 placeholder alignment) */}
+        <div className="lg:hidden flex flex-col">
+          <div className="px-6 sm:px-12 pt-8 pb-4 flex flex-col items-start">
+            <h1 className="font-['Anton'] text-[44px] sm:text-[62px] md:text-[72px] text-[#141512] uppercase leading-[1.05] tracking-normal mb-4 sm:mb-5">
+              O SEU PRÓXIMO
+              <br className="hidden sm:inline" /> DISCO FAVORITO
+              <br className="hidden sm:inline" /> ESTÁ AQUI
             </h1>
 
-            <p className="font-['Inter'] text-sm sm:text-base lg:text-[16px] text-[#141512]/85 max-w-lg leading-relaxed mb-5 sm:mb-6 font-normal">
+            <p className="font-['Inter'] text-sm sm:text-base text-[#141512]/85 max-w-lg leading-relaxed mb-5 font-normal">
               Das edições clássicas que moldaram gerações aos lançamentos que você precisa conhecer hoje.
               Explore o acervo e leve a música além dos fones de ouvido.
             </p>
@@ -41,32 +105,31 @@ export default function Home({
             <div className="flex flex-wrap items-center gap-3 sm:gap-4">
               <Link
                 to="/discos"
-                className="inline-flex items-center justify-center font-['IBM_Plex_Mono'] uppercase tracking-[0.06em] text-xs sm:text-sm font-semibold px-6 sm:px-7 py-2.5 sm:py-3 bg-[#C5F43B] text-[#141512] border-2 border-[#141512] hover:shadow-[3px_3px_0px_#141512] active:translate-x-0.5 active:translate-y-0.5 transition-all select-none"
+                className="inline-flex items-center justify-center font-['IBM_Plex_Mono'] uppercase tracking-[0.06em] text-xs sm:text-sm font-semibold px-6 sm:px-7 py-2.5 sm:py-3 bg-[#C5F43B] text-[#141512] border-2 border-[#141512] hover:shadow-[3px_3px_0px_#141512] transition-all select-none"
               >
                 Explorar os discos
               </Link>
 
               <Link
                 to="/colecoes"
-                className="inline-flex items-center justify-center font-['IBM_Plex_Mono'] uppercase tracking-[0.06em] text-xs sm:text-sm font-semibold px-6 sm:px-7 py-2.5 sm:py-3 bg-transparent text-[#141512] border-2 border-[#141512] hover:bg-[#141512] hover:text-[#F4F2E9] hover:shadow-[3px_3px_0px_#141512] transition-all select-none"
+                className="inline-flex items-center justify-center font-['IBM_Plex_Mono'] uppercase tracking-[0.06em] text-xs sm:text-sm font-semibold px-6 sm:px-7 py-2.5 sm:py-3 bg-transparent text-[#141512] border-2 border-[#141512] hover:bg-[#141512] hover:text-[#F4F2E9] transition-all select-none"
               >
                 Nossa curadoria
               </Link>
             </div>
           </div>
 
-          {/* Animated Album Cluster */}
-          <div
-            className="relative w-full flex items-center justify-center lg:justify-end animate-slide-up opacity-0"
-            style={{ animationDelay: '200ms', animationFillMode: 'forwards' }}
-          >
-            <Link
-              to="/discos?filter=em-destaque"
-              className="group block w-full max-w-[480px] xl:max-w-[520px] mx-auto lg:ml-auto lg:mr-0 cursor-pointer"
-              aria-label="Ver discos em destaque"
-            >
+          {/* Cropped Right-Half View of the 16:9 Hero Canvas for Mobile/Tablet */}
+          <div className="relative w-full overflow-hidden pb-4">
+            <div className="relative w-[195%] -ml-[92%] aspect-[16/9]">
+              <img
+                src="/images/hero-background-2.png"
+                alt=""
+                aria-hidden="true"
+                className="absolute inset-0 w-full h-full object-fill select-none pointer-events-none z-0"
+              />
               <AlbumCluster albums={vinylRecords} />
-            </Link>
+            </div>
           </div>
         </div>
       </section>
@@ -76,7 +139,7 @@ export default function Home({
         <div className="max-w-[1440px] mx-auto">
           <Carousel
             title="CHEGOU. É PRA OUVIR."
-            subtitle="GARIMPO FRESCO · EDIÇÕES EM DESTAQUE"
+            subtitle="GARIMPO FRESCO - EDIÇÕES EM DESTAQUE"
             items={vinylRecords}
             rightAction={
               <Link
@@ -180,7 +243,7 @@ export default function Home({
                 <div className="relative z-10 w-full h-full bg-[#1a252c] p-6 sm:p-8 flex flex-col justify-between border-r border-[#C5F43B]/30">
                   <div>
                     <span className="font-['IBM_Plex_Mono'] text-[10px] text-[#C5F43B] uppercase tracking-widest block mb-2">
-                      ZUNO DESTAQUE · SEMANA 42
+                      ZUNO DESTAQUE - SEMANA 42
                     </span>
                     <h3 className="font-['Anton'] text-4xl sm:text-5xl text-[#F4F2E9] uppercase leading-none">
                       {recordOfTheWeek.title}
@@ -290,7 +353,7 @@ export default function Home({
           <div className="flex items-start justify-between mb-10 pb-6 border-b-2 border-[#141512]">
             <div>
               <span className="font-['IBM_Plex_Mono'] text-xs font-semibold text-[#141512] uppercase tracking-[0.08em] block mb-2">
-                REVISTA · HISTÓRIAS PARA AMPLIAR A ESCUTA
+                REVISTA - HISTÓRIAS PARA AMPLIAR A ESCUTA
               </span>
               <h2 className="font-['Anton'] text-4xl sm:text-6xl text-[#141512] uppercase tracking-wide leading-none">
                 TEM MAIS ENTRE OS SULCOS.
@@ -335,7 +398,7 @@ export default function Home({
       <section className="bg-[#C5F43B] text-[#141512] border-b-2 border-[#141512] py-16 px-6 sm:px-12 lg:px-16 select-none">
         <div className="max-w-[1440px] mx-auto max-w-3xl text-center flex flex-col items-center">
           <span className="font-['IBM_Plex_Mono'] text-xs font-semibold uppercase tracking-[0.1em] text-[#141512] mb-3">
-            CARTA DA ESTANTE · ASSINATURA EDITORIAL
+            CARTA DA ESTANTE - ASSINATURA EDITORIAL
           </span>
 
           <h2 className="font-['Anton'] text-3xl sm:text-5xl lg:text-6xl uppercase tracking-wide leading-tight mb-4 text-[#141512]">
