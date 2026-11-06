@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import {
   fallbackVinylRecords,
   fallbackSceneObjects,
+  showcaseCollections,
 } from './data/showcaseData';
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
@@ -11,6 +12,7 @@ import Discos from './pages/Discos';
 import Newsletter from './pages/Newsletter';
 import ProductDetail from './pages/ProductDetail';
 import CreatorProfile from './pages/CreatorProfile';
+import Colecoes from './pages/Colecoes';
 
 // Automatically scroll to top on route change
 function ScrollToTop() {
@@ -26,6 +28,7 @@ function ScrollToTop() {
 export default function App() {
   const [vinylRecords, setVinylRecords] = useState(fallbackVinylRecords);
   const [sceneObjects, setSceneObjects] = useState(fallbackSceneObjects);
+  const [collections, setCollections] = useState(showcaseCollections);
   const [cartCount, setCartCount] = useState(0);
   const [toastMessage, setToastMessage] = useState('');
 
@@ -42,6 +45,9 @@ export default function App() {
         }
         if (data.scene_objects && data.scene_objects.length > 0) {
           setSceneObjects(data.scene_objects);
+        }
+        if (data.collections && data.collections.length > 0) {
+          setCollections(data.collections);
         }
       })
       .catch((err) => {
@@ -95,6 +101,7 @@ export default function App() {
               element={
                 <Home
                   vinylRecords={vinylRecords}
+                  collections={collections}
                   sceneObjects={sceneObjects}
                   onAddToCart={handleAddToCart}
                 />
@@ -103,9 +110,9 @@ export default function App() {
             <Route
               path="/colecoes"
               element={
-                <Home
+                <Colecoes
                   vinylRecords={vinylRecords}
-                  sceneObjects={sceneObjects}
+                  collections={collections}
                   onAddToCart={handleAddToCart}
                 />
               }

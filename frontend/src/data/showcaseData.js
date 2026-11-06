@@ -178,26 +178,29 @@ export const showcaseCollections = [
   {
     id: "meia-noite",
     title: "DEPOIS DA MEIA-NOITE",
-    count: "12 discos",
+    count: "04 discos",
     description: "Eletrônica, paisagens e outras horas.",
     accent: "#C5F43B",
     tag: "COLEÇÃO 01",
+    product_ids: ["bewitched-the-goddess-edition", "sos", "iceman", "igor"],
   },
   {
     id: "brasil-inventa",
     title: "UM BRASIL QUE INVENTA",
-    count: "18 discos",
+    count: "02 discos",
     description: "Canções que puxam novos caminhos.",
     accent: "#DADCD3",
     tag: "COLEÇÃO 02",
+    product_ids: ["acabou-chorare", "clube-da-esquina"],
   },
   {
     id: "ouvir-inteiro",
     title: "PARA OUVIR POR INTEIRO",
-    count: "09 discos",
+    count: "04 discos",
     description: "Do primeiro sulco à última pausa.",
     accent: "#C5F43B",
     tag: "COLEÇÃO 03",
+    product_ids: ["bad-remastered", "sos", "midwest-princess", "igor"],
   },
 ];
 

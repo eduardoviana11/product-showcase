@@ -14,7 +14,7 @@ export default function Footer() {
             ZUNO
           </Link>
           <p className="font-['Inter'] text-xs sm:text-sm text-[#DADCD3]/80">
-            Projeto de estudos de vitrine de discos e objetos musicais.
+            Projeto de estudos de vitrine de discos e objetos musicais
           </p>
         </div>
 

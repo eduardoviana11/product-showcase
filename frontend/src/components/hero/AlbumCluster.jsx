@@ -9,7 +9,7 @@ const DEFAULT_ALBUMS = [
     artist: 'Laufey',
     image:
       'https://cdn-images.dzcdn.net/images/cover/d24bc027d049dca1591200130a54dd8f/500x500-000000-80-0-0.jpg',
-    vinyl_image: 'laufey-disc.png',
+    vinyl_image: '/images/laufey-disc.png',
     vinyl_scale: 1.13,
   },
   {
@@ -43,7 +43,7 @@ const DEFAULT_ALBUMS = [
 ];
 
 /**
- * Exact placeholder slots measured from `hero-background-2.png` (1920x1080):
+ * Exact placeholder slots measured from `hero/hero-background-2.png` (1920x1080):
  * - 5 rectangular/square placeholders (2 red + 3 black) for album covers
  * - 1 black circle placeholder for the custom vinyl disc
  */

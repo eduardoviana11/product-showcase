@@ -103,11 +103,31 @@ class ShowcaseChecks(unittest.TestCase):
             self.assertEqual(len(data["scene_objects"]), len(scene_objects))
 
     def test_api_media(self):
-        """GET /api/media/<filename> serves uploaded assets from backend/data."""
+        """GET /api/media/<path> serves assets from backend/data/media."""
         with app.test_client() as client:
-            response = client.get("/api/media/laufey-disc.png")
+            response = client.get(
+                "/api/media/products/bewitched-the-goddess-edition/vinyl.png"
+            )
             self.assertEqual(response.status_code, 200)
             self.assertTrue(len(response.data) > 0)
+
+    def test_local_media_discovery(self):
+        """Files in media/products/<id>/ are attached to the product automatically."""
+        laufey = next(r for r in vinyl_records if r.id == "bewitched-the-goddess-edition")
+        self.assertEqual(
+            laufey.vinyl_image, "products/bewitched-the-goddess-edition/vinyl.png"
+        )
+        self.assertIn(laufey.vinyl_image, laufey.images)
+
+    def test_api_collections(self):
+        """/api/showcase exposes collections whose products exist in the catalog."""
+        with app.test_client() as client:
+            data = client.get("/api/showcase").get_json()
+        ids = {p["id"] for p in data["vinyl_records"]}
+        self.assertGreaterEqual(len(data["collections"]), 1)
+        for collection in data["collections"]:
+            self.assertTrue(collection["product_ids"])
+            self.assertTrue(set(collection["product_ids"]) <= ids)
 
     def test_json_storage_and_factory(self):
         """Test Product.from_dict factory method and JSON storage loading."""

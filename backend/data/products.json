@@ -1,5 +1,5 @@
 {
-  "_instrucoes": "Edite este arquivo para adicionar, alterar ou remover discos e produtos da ZUNO. Cada item é carregado dinamicamente pelo backend. Use o campo 'images' (lista) para adicionar mais fotos ao slider da página do produto.",
+  "_instrucoes": "Edite este arquivo para adicionar, alterar ou remover discos, produtos e colecoes da ZUNO. As imagens locais ficam em backend/data/media/ (veja backend/data/media/README.md): basta colocar os arquivos na pasta do produto e o backend os encontra sozinho. O campo images (lista) ainda aceita URLs externas.",
   "vinyl_records": [
     {
       "id": "bewitched-the-goddess-edition",
@@ -10,8 +10,7 @@
       "price": 397.74,
       "image": "https://cdn-images.dzcdn.net/images/cover/d24bc027d049dca1591200130a54dd8f/500x500-000000-80-0-0.jpg",
       "images": [
-        "https://cdn-images.dzcdn.net/images/cover/d24bc027d049dca1591200130a54dd8f/500x500-000000-80-0-0.jpg",
-        "laufey-disc.png"
+        "https://cdn-images.dzcdn.net/images/cover/d24bc027d049dca1591200130a54dd8f/500x500-000000-80-0-0.jpg"
       ],
       "category": "Jazz",
       "weight_grams": 590,
@@ -20,21 +19,69 @@
       "cover_variant": "diagonal-split",
       "featured": true,
       "is_new": true,
-      "vinyl_image": "laufey-disc.png",
+      "vinyl_image": "",
       "vinyl_scale": 1.12,
       "tracklist": [
-        { "number": "01", "title": "Dreamer", "duration": "3:30" },
-        { "number": "02", "title": "Second Best", "duration": "3:24" },
-        { "number": "03", "title": "Haunted", "duration": "3:20" },
-        { "number": "04", "title": "Must Be Love", "duration": "3:04" },
-        { "number": "05", "title": "While You Were Sleeping", "duration": "2:57" },
-        { "number": "06", "title": "Lovesick", "duration": "3:45" },
-        { "number": "07", "title": "California and Me", "duration": "3:36" },
-        { "number": "08", "title": "Promise", "duration": "3:54" },
-        { "number": "09", "title": "From The Start", "duration": "2:49" },
-        { "number": "10", "title": "Bewitched", "duration": "4:06" },
-        { "number": "11", "title": "Goddess", "duration": "4:27" },
-        { "number": "12", "title": "Bored", "duration": "3:33" }
+        {
+          "number": "01",
+          "title": "Dreamer",
+          "duration": "3:30"
+        },
+        {
+          "number": "02",
+          "title": "Second Best",
+          "duration": "3:24"
+        },
+        {
+          "number": "03",
+          "title": "Haunted",
+          "duration": "3:20"
+        },
+        {
+          "number": "04",
+          "title": "Must Be Love",
+          "duration": "3:04"
+        },
+        {
+          "number": "05",
+          "title": "While You Were Sleeping",
+          "duration": "2:57"
+        },
+        {
+          "number": "06",
+          "title": "Lovesick",
+          "duration": "3:45"
+        },
+        {
+          "number": "07",
+          "title": "California and Me",
+          "duration": "3:36"
+        },
+        {
+          "number": "08",
+          "title": "Promise",
+          "duration": "3:54"
+        },
+        {
+          "number": "09",
+          "title": "From The Start",
+          "duration": "2:49"
+        },
+        {
+          "number": "10",
+          "title": "Bewitched",
+          "duration": "4:06"
+        },
+        {
+          "number": "11",
+          "title": "Goddess",
+          "duration": "4:27"
+        },
+        {
+          "number": "12",
+          "title": "Bored",
+          "duration": "3:33"
+        }
       ]
     },
     {
@@ -43,7 +90,7 @@
       "name": "SOS",
       "artist": "SZA",
       "description": "Um épico do R&B contemporâneo. Uma jornada emocional crua e versátil que transita entre baladas confessionais, pop, trap e influências de rock.",
-      "price": 349.90,
+      "price": 349.9,
       "image": "https://musicainstantanea.com.br/wp-content/uploads/2022/12/SZA-SOS-700x700.jpg",
       "images": [
         "https://musicainstantanea.com.br/wp-content/uploads/2022/12/SZA-SOS-700x700.jpg"
@@ -56,29 +103,121 @@
       "featured": false,
       "is_new": true,
       "tracklist": [
-        { "number": "01", "title": "SOS", "duration": "1:57" },
-        { "number": "02", "title": "Kill Bill", "duration": "2:33" },
-        { "number": "03", "title": "Seek & Destroy", "duration": "3:23" },
-        { "number": "04", "title": "Low", "duration": "3:01" },
-        { "number": "05", "title": "Love Language", "duration": "3:03" },
-        { "number": "06", "title": "Blind", "duration": "2:30" },
-        { "number": "07", "title": "Used", "duration": "2:26" },
-        { "number": "08", "title": "Snooze", "duration": "3:21" },
-        { "number": "09", "title": "Notice Me", "duration": "2:40" },
-        { "number": "10", "title": "Gone Girl", "duration": "4:04" },
-        { "number": "11", "title": "Smoking on my Ex Pack", "duration": "1:23" },
-        { "number": "12", "title": "Ghost in the Machine", "duration": "3:38" },
-        { "number": "13", "title": "F2F", "duration": "3:05" },
-        { "number": "14", "title": "Nobody Gets Me", "duration": "3:00" },
-        { "number": "15", "title": "Conceited", "duration": "2:31" },
-        { "number": "16", "title": "Special", "duration": "2:38" },
-        { "number": "17", "title": "Too Late", "duration": "2:44" },
-        { "number": "18", "title": "Far", "duration": "3:00" },
-        { "number": "19", "title": "Shirt", "duration": "3:01" },
-        { "number": "20", "title": "Open Arms", "duration": "3:59" },
-        { "number": "21", "title": "I Hate U", "duration": "2:54" },
-        { "number": "22", "title": "Good Days", "duration": "4:39" },
-        { "number": "23", "title": "Forgiveless", "duration": "2:21" }
+        {
+          "number": "01",
+          "title": "SOS",
+          "duration": "1:57"
+        },
+        {
+          "number": "02",
+          "title": "Kill Bill",
+          "duration": "2:33"
+        },
+        {
+          "number": "03",
+          "title": "Seek & Destroy",
+          "duration": "3:23"
+        },
+        {
+          "number": "04",
+          "title": "Low",
+          "duration": "3:01"
+        },
+        {
+          "number": "05",
+          "title": "Love Language",
+          "duration": "3:03"
+        },
+        {
+          "number": "06",
+          "title": "Blind",
+          "duration": "2:30"
+        },
+        {
+          "number": "07",
+          "title": "Used",
+          "duration": "2:26"
+        },
+        {
+          "number": "08",
+          "title": "Snooze",
+          "duration": "3:21"
+        },
+        {
+          "number": "09",
+          "title": "Notice Me",
+          "duration": "2:40"
+        },
+        {
+          "number": "10",
+          "title": "Gone Girl",
+          "duration": "4:04"
+        },
+        {
+          "number": "11",
+          "title": "Smoking on my Ex Pack",
+          "duration": "1:23"
+        },
+        {
+          "number": "12",
+          "title": "Ghost in the Machine",
+          "duration": "3:38"
+        },
+        {
+          "number": "13",
+          "title": "F2F",
+          "duration": "3:05"
+        },
+        {
+          "number": "14",
+          "title": "Nobody Gets Me",
+          "duration": "3:00"
+        },
+        {
+          "number": "15",
+          "title": "Conceited",
+          "duration": "2:31"
+        },
+        {
+          "number": "16",
+          "title": "Special",
+          "duration": "2:38"
+        },
+        {
+          "number": "17",
+          "title": "Too Late",
+          "duration": "2:44"
+        },
+        {
+          "number": "18",
+          "title": "Far",
+          "duration": "3:00"
+        },
+        {
+          "number": "19",
+          "title": "Shirt",
+          "duration": "3:01"
+        },
+        {
+          "number": "20",
+          "title": "Open Arms",
+          "duration": "3:59"
+        },
+        {
+          "number": "21",
+          "title": "I Hate U",
+          "duration": "2:54"
+        },
+        {
+          "number": "22",
+          "title": "Good Days",
+          "duration": "4:39"
+        },
+        {
+          "number": "23",
+          "title": "Forgiveless",
+          "duration": "2:21"
+        }
       ]
     },
     {
@@ -87,7 +226,7 @@
       "name": "The Rise and Fall of a Midwest Princess",
       "artist": "Chappell Roan",
       "description": "Um fenômeno pop absoluto. Batidas contagiantes, vocais teatrais e hinos de libertação que dominaram o cenário musical moderno.",
-      "price": 315.00,
+      "price": 315.0,
       "image": "https://t2.genius.com/unsafe/300x300/https%3A%2F%2Fimages.genius.com%2F53bf614a79e22b5e3ceb65393ff09977.1000x1000x1.png",
       "images": [
         "https://t2.genius.com/unsafe/300x300/https%3A%2F%2Fimages.genius.com%2F53bf614a79e22b5e3ceb65393ff09977.1000x1000x1.png"
@@ -100,20 +239,76 @@
       "featured": true,
       "is_new": true,
       "tracklist": [
-        { "number": "01", "title": "Feminomenon", "duration": "3:39" },
-        { "number": "02", "title": "Red Wine Supernova", "duration": "3:12" },
-        { "number": "03", "title": "After Midnight", "duration": "3:24" },
-        { "number": "04", "title": "Coffee", "duration": "3:25" },
-        { "number": "05", "title": "Casual", "duration": "3:52" },
-        { "number": "06", "title": "Super Graphic Ultra Modern Girl", "duration": "3:03" },
-        { "number": "07", "title": "HOT TO GO!", "duration": "3:04" },
-        { "number": "08", "title": "My Kink Is Karma", "duration": "3:42" },
-        { "number": "09", "title": "Picture You", "duration": "3:07" },
-        { "number": "10", "title": "Kaleidoscope", "duration": "3:42" },
-        { "number": "11", "title": "Pink Pony Club", "duration": "4:18" },
-        { "number": "12", "title": "Naked In Manhattan", "duration": "3:31" },
-        { "number": "13", "title": "California", "duration": "3:18" },
-        { "number": "14", "title": "Guilty Pleasure", "duration": "3:44" }
+        {
+          "number": "01",
+          "title": "Feminomenon",
+          "duration": "3:39"
+        },
+        {
+          "number": "02",
+          "title": "Red Wine Supernova",
+          "duration": "3:12"
+        },
+        {
+          "number": "03",
+          "title": "After Midnight",
+          "duration": "3:24"
+        },
+        {
+          "number": "04",
+          "title": "Coffee",
+          "duration": "3:25"
+        },
+        {
+          "number": "05",
+          "title": "Casual",
+          "duration": "3:52"
+        },
+        {
+          "number": "06",
+          "title": "Super Graphic Ultra Modern Girl",
+          "duration": "3:03"
+        },
+        {
+          "number": "07",
+          "title": "HOT TO GO!",
+          "duration": "3:04"
+        },
+        {
+          "number": "08",
+          "title": "My Kink Is Karma",
+          "duration": "3:42"
+        },
+        {
+          "number": "09",
+          "title": "Picture You",
+          "duration": "3:07"
+        },
+        {
+          "number": "10",
+          "title": "Kaleidoscope",
+          "duration": "3:42"
+        },
+        {
+          "number": "11",
+          "title": "Pink Pony Club",
+          "duration": "4:18"
+        },
+        {
+          "number": "12",
+          "title": "Naked In Manhattan",
+          "duration": "3:31"
+        },
+        {
+          "number": "13",
+          "title": "California",
+          "duration": "3:18"
+        },
+        {
+          "number": "14",
+          "title": "Guilty Pleasure",
+          "duration": "3:44"
+        }
       ]
     },
     {
@@ -122,7 +317,7 @@
       "name": "ICEMAN",
       "artist": "Drake",
       "description": "Lançado de surpresa em maio de 2026, o nono álbum de estúdio do rapper canadense consolida seu impacto cultural com batidas refinadas e participações pesadas como Future e 21 Savage.",
-      "price": 380.00,
+      "price": 380.0,
       "image": "https://charts-static.billboard.com/img/2026/05/drake-v3o-iceman-s2k-180x180.jpg",
       "images": [
         "https://charts-static.billboard.com/img/2026/05/drake-v3o-iceman-s2k-180x180.jpg"
@@ -135,24 +330,96 @@
       "featured": false,
       "is_new": true,
       "tracklist": [
-        { "number": "01", "title": "Make Them Cry", "duration": "5:07" },
-        { "number": "02", "title": "Dust", "duration": "3:09" },
-        { "number": "03", "title": "Whisper My Name", "duration": "3:42" },
-        { "number": "04", "title": "Janice STFU", "duration": "3:57" },
-        { "number": "05", "title": "Ran to Atlanta (feat. Future & Molly Santana)", "duration": "4:07" },
-        { "number": "06", "title": "Shabang", "duration": "3:08" },
-        { "number": "07", "title": "Make Them Pay", "duration": "5:01" },
-        { "number": "08", "title": "Burning Bridges", "duration": "3:45" },
-        { "number": "09", "title": "National Treasures", "duration": "3:20" },
-        { "number": "10", "title": "B's on the Table (feat. 21 Savage)", "duration": "2:17" },
-        { "number": "11", "title": "What Did I Miss?", "duration": "3:14" },
-        { "number": "12", "title": "Plot Twist", "duration": "3:15" },
-        { "number": "13", "title": "2 Hard 4 The Radio", "duration": "3:03" },
-        { "number": "14", "title": "Make Them Remember", "duration": "5:24" },
-        { "number": "15", "title": "Firm Friends", "duration": "5:03" },
-        { "number": "16", "title": "Make Them Know", "duration": "3:11" },
-        { "number": "17", "title": "No Face", "duration": "3:10" },
-        { "number": "18", "title": "Habibti", "duration": "2:55" }
+        {
+          "number": "01",
+          "title": "Make Them Cry",
+          "duration": "5:07"
+        },
+        {
+          "number": "02",
+          "title": "Dust",
+          "duration": "3:09"
+        },
+        {
+          "number": "03",
+          "title": "Whisper My Name",
+          "duration": "3:42"
+        },
+        {
+          "number": "04",
+          "title": "Janice STFU",
+          "duration": "3:57"
+        },
+        {
+          "number": "05",
+          "title": "Ran to Atlanta (feat. Future & Molly Santana)",
+          "duration": "4:07"
+        },
+        {
+          "number": "06",
+          "title": "Shabang",
+          "duration": "3:08"
+        },
+        {
+          "number": "07",
+          "title": "Make Them Pay",
+          "duration": "5:01"
+        },
+        {
+          "number": "08",
+          "title": "Burning Bridges",
+          "duration": "3:45"
+        },
+        {
+          "number": "09",
+          "title": "National Treasures",
+          "duration": "3:20"
+        },
+        {
+          "number": "10",
+          "title": "B's on the Table (feat. 21 Savage)",
+          "duration": "2:17"
+        },
+        {
+          "number": "11",
+          "title": "What Did I Miss?",
+          "duration": "3:14"
+        },
+        {
+          "number": "12",
+          "title": "Plot Twist",
+          "duration": "3:15"
+        },
+        {
+          "number": "13",
+          "title": "2 Hard 4 The Radio",
+          "duration": "3:03"
+        },
+        {
+          "number": "14",
+          "title": "Make Them Remember",
+          "duration": "5:24"
+        },
+        {
+          "number": "15",
+          "title": "Firm Friends",
+          "duration": "5:03"
+        },
+        {
+          "number": "16",
+          "title": "Make Them Know",
+          "duration": "3:11"
+        },
+        {
+          "number": "17",
+          "title": "No Face",
+          "duration": "3:10"
+        },
+        {
+          "number": "18",
+          "title": "Habibti",
+          "duration": "2:55"
+        }
       ]
     },
     {
@@ -174,18 +441,66 @@
       "featured": true,
       "is_new": true,
       "tracklist": [
-        { "number": "01", "title": "IGOR'S THEME", "duration": "3:20" },
-        { "number": "02", "title": "EARFQUAKE", "duration": "3:10" },
-        { "number": "03", "title": "I THINK", "duration": "3:32" },
-        { "number": "04", "title": "EXACTLY WHAT YOU RUN FROM YOU END UP CHASING", "duration": "0:14" },
-        { "number": "05", "title": "RUNNING OUT OF TIME", "duration": "2:57" },
-        { "number": "06", "title": "NEW MAGIC WAND", "duration": "3:15" },
-        { "number": "07", "title": "A BOY IS A GUN*", "duration": "3:30" },
-        { "number": "08", "title": "PUPPET", "duration": "2:59" },
-        { "number": "09", "title": "WHAT'S GOOD", "duration": "3:25" },
-        { "number": "10", "title": "GONE, GONE / THANK YOU", "duration": "6:15" },
-        { "number": "11", "title": "I DON'T LOVE YOU ANYMORE", "duration": "2:41" },
-        { "number": "12", "title": "ARE WE STILL FRIENDS?", "duration": "4:25" }
+        {
+          "number": "01",
+          "title": "IGOR'S THEME",
+          "duration": "3:20"
+        },
+        {
+          "number": "02",
+          "title": "EARFQUAKE",
+          "duration": "3:10"
+        },
+        {
+          "number": "03",
+          "title": "I THINK",
+          "duration": "3:32"
+        },
+        {
+          "number": "04",
+          "title": "EXACTLY WHAT YOU RUN FROM YOU END UP CHASING",
+          "duration": "0:14"
+        },
+        {
+          "number": "05",
+          "title": "RUNNING OUT OF TIME",
+          "duration": "2:57"
+        },
+        {
+          "number": "06",
+          "title": "NEW MAGIC WAND",
+          "duration": "3:15"
+        },
+        {
+          "number": "07",
+          "title": "A BOY IS A GUN*",
+          "duration": "3:30"
+        },
+        {
+          "number": "08",
+          "title": "PUPPET",
+          "duration": "2:59"
+        },
+        {
+          "number": "09",
+          "title": "WHAT'S GOOD",
+          "duration": "3:25"
+        },
+        {
+          "number": "10",
+          "title": "GONE, GONE / THANK YOU",
+          "duration": "6:15"
+        },
+        {
+          "number": "11",
+          "title": "I DON'T LOVE YOU ANYMORE",
+          "duration": "2:41"
+        },
+        {
+          "number": "12",
+          "title": "ARE WE STILL FRIENDS?",
+          "duration": "4:25"
+        }
       ]
     },
     {
@@ -207,16 +522,56 @@
       "featured": true,
       "is_new": false,
       "tracklist": [
-        { "number": "01", "title": "Brasil Pandeiro", "duration": "3:56" },
-        { "number": "02", "title": "Preta Pretinha", "duration": "6:38" },
-        { "number": "03", "title": "Tinindo, Trincando", "duration": "3:24" },
-        { "number": "04", "title": "Swing de Campo Grande", "duration": "3:09" },
-        { "number": "05", "title": "Acabou Chorare", "duration": "4:13" },
-        { "number": "06", "title": "Mistério do Planeta", "duration": "3:37" },
-        { "number": "07", "title": "A Menina Dança", "duration": "3:51" },
-        { "number": "08", "title": "Besta É Tu", "duration": "4:26" },
-        { "number": "09", "title": "Um Bilhete Pra Didi", "duration": "2:52" },
-        { "number": "10", "title": "Preta Pretinha (Reprise)", "duration": "3:24" }
+        {
+          "number": "01",
+          "title": "Brasil Pandeiro",
+          "duration": "3:56"
+        },
+        {
+          "number": "02",
+          "title": "Preta Pretinha",
+          "duration": "6:38"
+        },
+        {
+          "number": "03",
+          "title": "Tinindo, Trincando",
+          "duration": "3:24"
+        },
+        {
+          "number": "04",
+          "title": "Swing de Campo Grande",
+          "duration": "3:09"
+        },
+        {
+          "number": "05",
+          "title": "Acabou Chorare",
+          "duration": "4:13"
+        },
+        {
+          "number": "06",
+          "title": "Mistério do Planeta",
+          "duration": "3:37"
+        },
+        {
+          "number": "07",
+          "title": "A Menina Dança",
+          "duration": "3:51"
+        },
+        {
+          "number": "08",
+          "title": "Besta É Tu",
+          "duration": "4:26"
+        },
+        {
+          "number": "09",
+          "title": "Um Bilhete Pra Didi",
+          "duration": "2:52"
+        },
+        {
+          "number": "10",
+          "title": "Preta Pretinha (Reprise)",
+          "duration": "3:24"
+        }
       ]
     },
     {
@@ -238,17 +593,61 @@
       "featured": false,
       "is_new": true,
       "tracklist": [
-        { "number": "01", "title": "Bad", "duration": "4:07" },
-        { "number": "02", "title": "The Way You Make Me Feel", "duration": "4:58" },
-        { "number": "03", "title": "Speed Demon", "duration": "4:01" },
-        { "number": "04", "title": "Liberian Girl", "duration": "3:53" },
-        { "number": "05", "title": "Just Good Friends", "duration": "4:06" },
-        { "number": "06", "title": "Another Part of Me", "duration": "3:54" },
-        { "number": "07", "title": "Man in the Mirror", "duration": "5:19" },
-        { "number": "08", "title": "I Just Can't Stop Loving You", "duration": "4:11" },
-        { "number": "09", "title": "Dirty Diana", "duration": "4:41" },
-        { "number": "10", "title": "Smooth Criminal", "duration": "4:17" },
-        { "number": "11", "title": "Leave Me Alone", "duration": "4:40" }
+        {
+          "number": "01",
+          "title": "Bad",
+          "duration": "4:07"
+        },
+        {
+          "number": "02",
+          "title": "The Way You Make Me Feel",
+          "duration": "4:58"
+        },
+        {
+          "number": "03",
+          "title": "Speed Demon",
+          "duration": "4:01"
+        },
+        {
+          "number": "04",
+          "title": "Liberian Girl",
+          "duration": "3:53"
+        },
+        {
+          "number": "05",
+          "title": "Just Good Friends",
+          "duration": "4:06"
+        },
+        {
+          "number": "06",
+          "title": "Another Part of Me",
+          "duration": "3:54"
+        },
+        {
+          "number": "07",
+          "title": "Man in the Mirror",
+          "duration": "5:19"
+        },
+        {
+          "number": "08",
+          "title": "I Just Can't Stop Loving You",
+          "duration": "4:11"
+        },
+        {
+          "number": "09",
+          "title": "Dirty Diana",
+          "duration": "4:41"
+        },
+        {
+          "number": "10",
+          "title": "Smooth Criminal",
+          "duration": "4:17"
+        },
+        {
+          "number": "11",
+          "title": "Leave Me Alone",
+          "duration": "4:40"
+        }
       ]
     },
     {
@@ -272,18 +671,66 @@
       "vinyl_image": "",
       "vinyl_scale": 1.0,
       "tracklist": [
-        { "number": "01", "title": "Tudo Que Você Podia Ser", "duration": "2:57" },
-        { "number": "02", "title": "Cais", "duration": "2:45" },
-        { "number": "03", "title": "O Trem Azul", "duration": "4:05" },
-        { "number": "04", "title": "Saídas e Bandeiras Nº 1", "duration": "0:45" },
-        { "number": "05", "title": "Nuvem Cigana", "duration": "2:59" },
-        { "number": "06", "title": "Cravo e Canela", "duration": "2:31" },
-        { "number": "07", "title": "Dos Cruces", "duration": "5:22" },
-        { "number": "08", "title": "Um Girassol da Cor de Seu Cabelo", "duration": "4:12" },
-        { "number": "09", "title": "San Vicente", "duration": "2:46" },
-        { "number": "10", "title": "Estrelas / Clube da Esquina Nº 2", "duration": "4:07" },
-        { "number": "11", "title": "Paisagem da Janela", "duration": "2:58" },
-        { "number": "12", "title": "Nada Será Como Antes", "duration": "2:46" }
+        {
+          "number": "01",
+          "title": "Tudo Que Você Podia Ser",
+          "duration": "2:57"
+        },
+        {
+          "number": "02",
+          "title": "Cais",
+          "duration": "2:45"
+        },
+        {
+          "number": "03",
+          "title": "O Trem Azul",
+          "duration": "4:05"
+        },
+        {
+          "number": "04",
+          "title": "Saídas e Bandeiras Nº 1",
+          "duration": "0:45"
+        },
+        {
+          "number": "05",
+          "title": "Nuvem Cigana",
+          "duration": "2:59"
+        },
+        {
+          "number": "06",
+          "title": "Cravo e Canela",
+          "duration": "2:31"
+        },
+        {
+          "number": "07",
+          "title": "Dos Cruces",
+          "duration": "5:22"
+        },
+        {
+          "number": "08",
+          "title": "Um Girassol da Cor de Seu Cabelo",
+          "duration": "4:12"
+        },
+        {
+          "number": "09",
+          "title": "San Vicente",
+          "duration": "2:46"
+        },
+        {
+          "number": "10",
+          "title": "Estrelas / Clube da Esquina Nº 2",
+          "duration": "4:07"
+        },
+        {
+          "number": "11",
+          "title": "Paisagem da Janela",
+          "duration": "2:58"
+        },
+        {
+          "number": "12",
+          "title": "Nada Será Como Antes",
+          "duration": "2:46"
+        }
       ],
       "_comentario": "-> ITEM DE EXEMPLO: featured/is_new definem as abas da loja no back/filtros. 'images' aceita várias fotos para o slider na tela de produto."
     }
@@ -345,6 +792,45 @@
       "specs_meta": "NEWSLETTER DIGITAL · ACESSO ANTECIPADO",
       "action_label": "Assinar plano",
       "cover_variant": "newsletter-minimal"
+    }
+  ],
+  "collections": [
+    {
+      "id": "meia-noite",
+      "tag": "COLEÇÃO 01",
+      "title": "DEPOIS DA MEIA-NOITE",
+      "description": "Eletrônica, paisagens e outras horas.",
+      "accent": "#C5F43B",
+      "product_ids": [
+        "bewitched-the-goddess-edition",
+        "sos",
+        "iceman",
+        "igor"
+      ]
+    },
+    {
+      "id": "brasil-inventa",
+      "tag": "COLEÇÃO 02",
+      "title": "UM BRASIL QUE INVENTA",
+      "description": "Canções que puxam novos caminhos.",
+      "accent": "#DADCD3",
+      "product_ids": [
+        "acabou-chorare",
+        "clube-da-esquina"
+      ]
+    },
+    {
+      "id": "ouvir-inteiro",
+      "tag": "COLEÇÃO 03",
+      "title": "PARA OUVIR POR INTEIRO",
+      "description": "Do primeiro sulco à última pausa.",
+      "accent": "#C5F43B",
+      "product_ids": [
+        "bad-remastered",
+        "sos",
+        "midwest-princess",
+        "igor"
+      ]
     }
   ]
 }

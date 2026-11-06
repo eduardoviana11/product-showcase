@@ -17,6 +17,7 @@ import {
 export default function Home({
   vinylRecords = [],
   sceneObjects = [],
+  collections = showcaseCollections,
   onAddToCart,
 }) {
   return (
@@ -31,7 +32,7 @@ export default function Home({
             style={{ clipPath: 'inset(0 75% 0 0)' }}
           >
             <img
-              src="/images/hero-background-2.png"
+              src="/images/hero/hero-background-2.png"
               alt=""
               aria-hidden="true"
               className="w-full h-full object-fill"
@@ -44,7 +45,7 @@ export default function Home({
             style={{ clipPath: 'inset(0 0 0 45%)' }}
           >
             <img
-              src="/images/hero-background-2.png"
+              src="/images/hero/hero-background-2.png"
               alt=""
               aria-hidden="true"
               className="absolute inset-0 w-full h-full object-fill select-none pointer-events-none z-0"
@@ -123,7 +124,7 @@ export default function Home({
           <div className="relative w-full overflow-hidden pb-4">
             <div className="relative w-[195%] -ml-[92%] aspect-[16/9]">
               <img
-                src="/images/hero-background-2.png"
+                src="/images/hero/hero-background-2.png"
                 alt=""
                 aria-hidden="true"
                 className="absolute inset-0 w-full h-full object-fill select-none pointer-events-none z-0"
@@ -182,7 +183,7 @@ export default function Home({
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {showcaseCollections.map((col) => (
+            {collections.map((col) => (
               <OffsetCutout
                 key={col.id}
                 className="h-full"
@@ -210,7 +211,7 @@ export default function Home({
 
                   <div className="pt-6 border-t border-[#F4F2E9]/20 mt-8 flex justify-between items-center">
                     <Link
-                      to="/discos"
+                      to={`/colecoes#${col.id}`}
                       className="font-['IBM_Plex_Mono'] text-xs font-semibold text-[#C5F43B] uppercase tracking-wider hover:underline"
                     >
                       EXPLORAR SELEÇÃO →
