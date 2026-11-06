@@ -14,8 +14,18 @@ export default function Header({
   const [internalQuery, setInternalQuery] = useState(searchQuery);
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
   const searchContainerRef = useRef(null);
+  const searchInputRef = useRef(null);
   const navigate = useNavigate();
   const location = useLocation();
+
+  // Sync internalQuery when URL ?q= changes
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const qParam = params.get('q');
+    if (qParam !== null) {
+      setInternalQuery(qParam);
+    }
+  }, [location.search]);
 
   // Close search modal on route change
   useEffect(() => {
@@ -37,13 +47,27 @@ export default function Header({
   }, []);
 
   const handleSearchSubmit = (e) => {
-    e.preventDefault();
+    if (e) e.preventDefault();
     const trimmed = internalQuery.trim();
     if (onSearchChange) {
       onSearchChange(trimmed);
     }
     setIsSearchModalOpen(false);
-    navigate(`/busca?q=${encodeURIComponent(trimmed)}`);
+    if (trimmed) {
+      navigate(`/busca?q=${encodeURIComponent(trimmed)}`);
+    } else {
+      navigate('/busca');
+    }
+  };
+
+  const handleClearSearch = () => {
+    setInternalQuery('');
+    if (onSearchChange) {
+      onSearchChange('');
+    }
+    if (searchInputRef.current) {
+      searchInputRef.current.focus();
+    }
   };
 
   // Combine catalog items for live search suggestions
@@ -73,11 +97,24 @@ export default function Header({
         .slice(0, 6)
     : allCatalogItems.slice(0, 5);
 
+  const searchParams = new URLSearchParams(location.search);
+  const currentTab = searchParams.get('tab');
+  const currentType = searchParams.get('type');
+
   const isNewActive =
-    location.pathname === '/discos' && location.search.includes('tab=new');
+    (location.pathname === '/discos' || location.pathname === '/busca') &&
+    currentTab === 'new';
+  const isObjetosActive =
+    location.pathname === '/objetos' ||
+    ((location.pathname === '/discos' || location.pathname === '/busca') &&
+      currentType === 'object');
   const isDiscosActive =
-    location.pathname === '/discos' && !location.search.includes('tab=new');
-  const isObjetosActive = location.pathname === '/objetos';
+    (location.pathname === '/discos' &&
+      currentTab !== 'new' &&
+      currentType !== 'object') ||
+    (location.pathname === '/busca' &&
+      currentType === 'vinyl' &&
+      currentTab !== 'new');
   const isNewsletterActive = location.pathname === '/newsletter';
 
   const getLinkClasses = (isActive) =>
@@ -138,13 +175,14 @@ export default function Header({
           <div className="flex items-center gap-4">
             {/* Search Input + Suggestions Modal */}
             <div ref={searchContainerRef} className="relative hidden md:block">
-              <form onSubmit={handleSearchSubmit} className="relative">
+              <form onSubmit={handleSearchSubmit} className="relative flex items-center">
                 <label htmlFor="search-input" className="sr-only">
                   Buscar discos, artistas ou objetos
                 </label>
                 <input
+                  ref={searchInputRef}
                   id="search-input"
-                  type="search"
+                  type="text"
                   autoComplete="off"
                   value={internalQuery}
                   onFocus={() => setIsSearchModalOpen(true)}
@@ -159,8 +197,33 @@ export default function Header({
                     if (onSearchChange) onSearchChange(e.target.value);
                   }}
                   placeholder="BUSCAR DISCO, ARTISTA OU OBJETO..."
-                  className="w-72 sm:w-80 md:w-[420px] lg:w-[520px] xl:w-[600px] bg-[#FFFFFF] border-2 border-[#141512] rounded-md px-3.5 py-2 font-['IBM_Plex_Mono'] text-xs uppercase tracking-wide text-[#141512] placeholder-[#141512]/45 focus:bg-[#FFFFFF] focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0 !outline-none"
+                  className="w-72 sm:w-80 md:w-[420px] lg:w-[520px] xl:w-[600px] bg-[#FFFFFF] border-2 border-[#141512] rounded-md pl-3.5 pr-10 py-2 font-['IBM_Plex_Mono'] text-xs uppercase tracking-wide text-[#141512] placeholder-[#141512]/45 focus:bg-[#FFFFFF] focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0 !outline-none"
                 />
+
+                {/* Custom Larger Black Clear (X) Button */}
+                {internalQuery && (
+                  <button
+                    type="button"
+                    onClick={handleClearSearch}
+                    aria-label="Limpar busca"
+                    className="absolute right-2.5 top-1/2 -translate-y-1/2 p-1 text-[#141512] hover:opacity-70 transition-opacity cursor-pointer flex items-center justify-center"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="#141512"
+                      strokeWidth="2.6"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="w-5 h-5"
+                      aria-hidden="true"
+                    >
+                      <line x1="18" y1="6" x2="6" y2="18" />
+                      <line x1="6" y1="6" x2="18" y2="18" />
+                    </svg>
+                  </button>
+                )}
               </form>
 
               {/* Search Suggestions Modal */}
@@ -250,7 +313,7 @@ export default function Header({
                     <span>
                       {trimmedQuery
                         ? `Ver todos os resultados para "${internalQuery.trim()}"`
-                        : 'Ir para a página de busca completa'}
+                        : 'Ver todo o catálogo com filtros'}
                     </span>
                     <span className="text-[#C5F43B]">ENTER ↵</span>
                   </button>

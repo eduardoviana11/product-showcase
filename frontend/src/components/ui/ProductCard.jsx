@@ -2,7 +2,11 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import VinylDisc from '../shapes/VinylDisc';
 import { resolveAssetUrl } from '../../utils/assets';
-import { getProductId } from '../../utils/slug';
+import {
+  getProductId,
+  getCreatorName,
+  getCreatorHref,
+} from '../../utils/slug';
 
 // Clean geometric fallback artworks for when a local or external image is not available
 export function CoverArtwork({ variant, title, artist }) {
@@ -154,18 +158,23 @@ export default function ProductCard({
     is_new,
   } = product;
 
-  // Build clean subtitle: "Linha d'Água - vinil preto, 180 g"
-  let subtitle = '';
+  const creatorName = getCreatorName(product);
+  const creatorHref = getCreatorHref(product);
+
+  // Build clean format/category spec next to the creator name
+  let specSuffix = '';
   if (isVinyl) {
-    const formatSpec = [
+    specSuffix = [
       category ? category.toLowerCase() : 'vinil preto',
       weight_grams ? `${weight_grams} g` : '180 g',
     ]
       .filter(Boolean)
       .join(', ');
-    subtitle = [artist, formatSpec].filter(Boolean).join(' - ');
   } else {
-    subtitle = specs_meta || delivery || (category ? `Objetos - ${category}` : 'Edição ZUNO');
+    specSuffix =
+      specs_meta ||
+      delivery ||
+      (category ? `Objetos - ${category}` : 'Edição ZUNO');
   }
 
   const resolvedCoverSrc = resolveAssetUrl(image);
@@ -178,13 +187,13 @@ export default function ProductCard({
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <Link
-        to={`/produto/${productId}`}
-        className="flex flex-col flex-grow cursor-pointer focus:outline-none"
-        aria-label={`Ver detalhes de ${name}`}
-      >
+      <div className="flex flex-col flex-grow">
         {/* 1. TOP CONTAINER WITH SOFT NEUTRAL BACKGROUND */}
-        <div className="w-full bg-[#E5E6DF] aspect-[1.14/1] p-5 sm:p-6 flex items-center justify-center relative overflow-hidden">
+        <Link
+          to={`/produto/${productId}`}
+          className="w-full bg-[#E5E6DF] aspect-[1.14/1] p-5 sm:p-6 flex items-center justify-center relative overflow-hidden cursor-pointer focus:outline-none"
+          aria-label={`Ver detalhes de ${name}`}
+        >
           {/* Cover + Vinyl Sleeve Center Unit */}
           <div className="relative aspect-square w-[64%] max-w-[220px] flex items-center justify-center">
             {/* Sliding Vinyl Record behind the sleeve */}
@@ -195,7 +204,6 @@ export default function ProductCard({
                 }`}
               >
                 <VinylDisc
-                  labelText={artist ? artist.split(' ')[0] : 'ZUNO'}
                   image={vinyl_image}
                   scale={vinyl_scale}
                 />
@@ -220,23 +228,31 @@ export default function ProductCard({
               )}
             </div>
           </div>
-        </div>
+        </Link>
 
         {/* 2. CARD CONTENT & METADATA BELOW THE IMAGE BOX */}
         <div className="pt-3.5 flex flex-col flex-grow justify-between">
           <div>
-            {/* Album Title */}
-            <h3 className="font-['Inter'] text-lg sm:text-[19px] font-bold text-[#141512] leading-tight line-clamp-1 group-hover:underline underline-offset-4 decoration-2">
-              {name}
-            </h3>
+            {/* Album / Item Title */}
+            <Link to={`/produto/${productId}`} className="block focus:outline-none">
+              <h3 className="font-['Inter'] text-lg sm:text-[19px] font-bold text-[#141512] leading-tight line-clamp-1 group-hover:underline underline-offset-4 decoration-2">
+                {name}
+              </h3>
+            </Link>
 
-            {/* Subtitle / Artist & Specs */}
+            {/* Clickable Creator / Store Name + Specs */}
             <p className="font-['Inter'] text-xs sm:text-[13px] text-[#71736D] mt-1 mb-3.5 line-clamp-1">
-              {subtitle}
+              <Link
+                to={creatorHref}
+                className="font-medium text-[#141512]/80 hover:text-[#141512] hover:underline underline-offset-2 transition-colors"
+              >
+                {creatorName}
+              </Link>
+              {specSuffix ? <span>{` - ${specSuffix}`}</span> : null}
             </p>
           </div>
         </div>
-      </Link>
+      </div>
 
       {/* 3. FULL-WIDTH CTA BUTTON WITH DIRECT BUTTON HOVER */}
       <div className="pb-1">

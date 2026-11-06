@@ -3,7 +3,11 @@ import { useParams, Link } from 'react-router-dom';
 import VinylDisc from '../components/shapes/VinylDisc';
 import ProductCard, { CoverArtwork } from '../components/ui/ProductCard';
 import { resolveAssetUrl } from '../utils/assets';
-import { getProductId, slugifyProductName } from '../utils/slug';
+import {
+  getProductId,
+  getCreatorName,
+  getCreatorHref,
+} from '../utils/slug';
 
 export default function ProductDetail({
   vinylRecords = [],
@@ -98,20 +102,9 @@ export default function ProductDetail({
 
   const productSlug = getProductId(product);
 
-  // Generic seller / artist label and destination link
-  const rawSellerName = (artist || store || '').trim();
-  const isZunoOfficial =
-    !rawSellerName || rawSellerName.toLowerCase().includes('zuno');
-
-  const sellerName = isZunoOfficial
-    ? store || pickup_location || 'Loja ZUNO'
-    : rawSellerName;
-
-  const sellerHref = isZunoOfficial
-    ? '/objetos'
-    : artist
-    ? `/artista/${slugifyProductName(rawSellerName)}`
-    : `/loja/${slugifyProductName(rawSellerName)}`;
+  // Generic seller / artist label and destination link to the Creator / Store page
+  const sellerName = getCreatorName(product);
+  const sellerHref = getCreatorHref(product);
 
   // Build gallery slides from `images` array + primary `image` + optional `vinyl_image`
   const rawImageCandidates = [
@@ -216,26 +209,26 @@ export default function ProductDetail({
   // Build product characteristics list
   const characteristics = isVinyl
     ? [
-        { label: 'Artista', value: sellerName },
-        { label: 'Gênero', value: category || 'Vinil' },
-        {
-          label: 'Gramatura',
-          value: `${weight_grams} g (Vinil 12", 33⅓ RPM)`,
-        },
-        { label: 'Total de faixas', value: `${tracks_count} faixas` },
-        { label: 'Retirada ou envio', value: 'Estúdio ZUNO' },
-      ]
+      { label: 'Artista', value: sellerName },
+      { label: 'Gênero', value: category || 'Vinil' },
+      {
+        label: 'Gramatura',
+        value: `${weight_grams} g (Vinil 12", 33⅓ RPM)`,
+      },
+      { label: 'Total de faixas', value: `${tracks_count} faixas` },
+      { label: 'Retirada ou envio', value: 'Estúdio ZUNO' },
+    ]
     : [
-        { label: 'Loja', value: sellerName },
-        { label: 'Categoria', value: category || 'Objetos' },
-        ...(specs_meta
-          ? [{ label: 'Especificações', value: specs_meta }]
-          : []),
-        {
-          label: 'Formato / Entrega',
-          value: file_format || 'Retirada ou envio: Estúdio ZUNO',
-        },
-      ];
+      { label: 'Loja', value: sellerName },
+      { label: 'Categoria', value: category || 'Objetos' },
+      ...(specs_meta
+        ? [{ label: 'Especificações', value: specs_meta }]
+        : []),
+      {
+        label: 'Formato / Entrega',
+        value: file_format || 'Retirada ou envio: Estúdio ZUNO',
+      },
+    ];
 
   // Show "Ver descrição completa ↓" when description or characteristics are long
   const isLongContent =
@@ -324,7 +317,7 @@ export default function ProductDetail({
             {/* Slide Content */}
             <div className="w-full h-full flex items-center justify-center">
               {currentSlide.type === 'image' &&
-              !failedUrls[currentSlide.src] ? (
+                !failedUrls[currentSlide.src] ? (
                 <img
                   src={currentSlide.src}
                   alt={currentSlide.alt}
@@ -395,11 +388,10 @@ export default function ProductDetail({
                     role="tab"
                     aria-selected={isSelected}
                     onClick={() => setActiveSlide(index)}
-                    className={`w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-md bg-[#FFFFFF] p-1.5 transition-all cursor-pointer flex items-center justify-center overflow-hidden ${
-                      isSelected
+                    className={`w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-md bg-[#FFFFFF] p-1.5 transition-all cursor-pointer flex items-center justify-center overflow-hidden ${isSelected
                         ? 'border-2 border-[#141512] opacity-100'
                         : 'border border-[#141512]/20 opacity-70 hover:opacity-100 hover:border-[#141512]'
-                    }`}
+                      }`}
                   >
                     {slide.type === 'image' && !failedUrls[slide.src] ? (
                       <img
@@ -455,7 +447,7 @@ export default function ProductDetail({
             {/* 4. Price & Standardized Delivery Section */}
             <div className="mt-6 pt-6 border-t border-[#141512]/15">
               <div className="flex flex-wrap items-baseline gap-3">
-                <span className="font-['IBM_Plex_Mono'] text-3xl sm:text-4xl font-bold text-[#141512]">
+                <span className="font-['Inter'] text-3xl sm:text-4xl font-bold tracking-tight text-[#141512]">
                   {formatted_price}
                 </span>
                 <span className="font-['Inter'] text-xs sm:text-sm text-[#141512]/75">
@@ -498,9 +490,8 @@ export default function ProductDetail({
                       strokeWidth="2"
                       strokeLinecap="round"
                       strokeLinejoin="round"
-                      className={`w-4 h-4 shrink-0 text-[#141512]/70 transition-transform ${
-                        isQtyDropdownOpen ? 'rotate-180' : ''
-                      }`}
+                      className={`w-4 h-4 shrink-0 text-[#141512]/70 transition-transform ${isQtyDropdownOpen ? 'rotate-180' : ''
+                        }`}
                     >
                       <path d="M6 9l6 6 6-6" />
                     </svg>
@@ -523,11 +514,10 @@ export default function ProductDetail({
                             role="option"
                             aria-selected={isCurrent}
                             onClick={() => handleSelectPresetQty(num)}
-                            className={`w-full text-left px-4 py-2.5 font-['Inter'] text-sm flex items-center justify-between transition-colors cursor-pointer ${
-                              isCurrent
+                            className={`w-full text-left px-4 py-2.5 font-['Inter'] text-sm flex items-center justify-between transition-colors cursor-pointer ${isCurrent
                                 ? 'bg-[#E5E6DF] font-semibold text-[#141512]'
                                 : 'text-[#141512]/85 hover:bg-[#F4F2E9]'
-                            }`}
+                              }`}
                           >
                             <span>
                               {num} {num === 1 ? 'unidade' : 'unidades'}
@@ -547,11 +537,10 @@ export default function ProductDetail({
                           role="option"
                           aria-selected={showCustomQtyInput || quantity > 5}
                           onClick={handleSelectMoreThanFive}
-                          className={`w-full text-left px-4 py-2.5 font-['Inter'] text-sm transition-colors cursor-pointer ${
-                            showCustomQtyInput || quantity > 5
+                          className={`w-full text-left px-4 py-2.5 font-['Inter'] text-sm transition-colors cursor-pointer ${showCustomQtyInput || quantity > 5
                               ? 'bg-[#E5E6DF] font-semibold text-[#141512]'
                               : 'text-[#141512]/85 hover:bg-[#F4F2E9]'
-                          }`}
+                            }`}
                         >
                           Mais de 5 unidades
                         </button>
@@ -625,9 +614,8 @@ export default function ProductDetail({
                 O que você precisa saber sobre este produto
               </h2>
               <p
-                className={`font-['Inter'] text-sm sm:text-base text-[#141512]/85 leading-relaxed mb-4 ${
-                  isLongContent ? 'line-clamp-3' : ''
-                }`}
+                className={`font-['Inter'] text-sm sm:text-base text-[#141512]/85 leading-relaxed mb-4 ${isLongContent ? 'line-clamp-3' : ''
+                  }`}
               >
                 {description}
               </p>

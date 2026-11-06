@@ -8,10 +8,9 @@ import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
 import Home from './pages/Home';
 import Discos from './pages/Discos';
-import Objetos from './pages/Objetos';
 import Newsletter from './pages/Newsletter';
 import ProductDetail from './pages/ProductDetail';
-import SearchResults from './pages/SearchResults';
+import CreatorProfile from './pages/CreatorProfile';
 
 // Automatically scroll to top on route change
 function ScrollToTop() {
@@ -61,6 +60,14 @@ export default function App() {
     setTimeout(() => setToastMessage(''), 3000);
   };
 
+  const unifiedCatalogElement = (
+    <Discos
+      vinylRecords={vinylRecords}
+      sceneObjects={sceneObjects}
+      onAddToCart={handleAddToCart}
+    />
+  );
+
   return (
     <BrowserRouter>
       <ScrollToTop />
@@ -103,24 +110,10 @@ export default function App() {
                 />
               }
             />
-            <Route
-              path="/discos"
-              element={
-                <Discos
-                  vinylRecords={vinylRecords}
-                  onAddToCart={handleAddToCart}
-                />
-              }
-            />
-            <Route
-              path="/objetos"
-              element={
-                <Objetos
-                  sceneObjects={sceneObjects}
-                  onAddToCart={handleAddToCart}
-                />
-              }
-            />
+            {/* Unified Catalog & Search Screen with Generalized Filters */}
+            <Route path="/discos" element={unifiedCatalogElement} />
+            <Route path="/objetos" element={unifiedCatalogElement} />
+            <Route path="/busca" element={unifiedCatalogElement} />
             <Route
               path="/newsletter"
               element={
@@ -130,9 +123,9 @@ export default function App() {
               }
             />
             <Route
-              path="/busca"
+              path="/produto/:id"
               element={
-                <SearchResults
+                <ProductDetail
                   vinylRecords={vinylRecords}
                   sceneObjects={sceneObjects}
                   onAddToCart={handleAddToCart}
@@ -140,9 +133,19 @@ export default function App() {
               }
             />
             <Route
-              path="/produto/:id"
+              path="/artista/:slug"
               element={
-                <ProductDetail
+                <CreatorProfile
+                  vinylRecords={vinylRecords}
+                  sceneObjects={sceneObjects}
+                  onAddToCart={handleAddToCart}
+                />
+              }
+            />
+            <Route
+              path="/loja/:slug"
+              element={
+                <CreatorProfile
                   vinylRecords={vinylRecords}
                   sceneObjects={sceneObjects}
                   onAddToCart={handleAddToCart}
