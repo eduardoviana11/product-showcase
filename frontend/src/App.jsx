@@ -13,20 +13,13 @@ import Newsletter from './pages/Newsletter';
 import ProductDetail from './pages/ProductDetail';
 import SearchResults from './pages/SearchResults';
 
-// Automatically scroll to top on route change, or to #colecoes if navigating there
+// Automatically scroll to top on route change
 function ScrollToTop() {
-  const { pathname, hash } = useLocation();
+  const { pathname } = useLocation();
 
   useEffect(() => {
-    if (pathname === '/colecoes' || hash === '#colecoes') {
-      const el = document.getElementById('colecoes');
-      if (el) {
-        el.scrollIntoView({ behavior: 'smooth' });
-        return;
-      }
-    }
     window.scrollTo(0, 0);
-  }, [pathname, hash]);
+  }, [pathname]);
 
   return null;
 }

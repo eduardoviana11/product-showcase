@@ -81,7 +81,7 @@ export default function Home({
                   to="/colecoes"
                   className="inline-flex items-center justify-center font-['IBM_Plex_Mono'] uppercase tracking-[0.06em] text-xs xl:text-sm font-semibold px-6 xl:px-7 py-2.5 xl:py-3 bg-[#F4F2E9]/90 text-[#141512] border-2 border-[#141512] hover:bg-[#141512] hover:text-[#F4F2E9] hover:shadow-[3px_3px_0px_#141512] transition-all select-none"
                 >
-                  Nossa curadoria
+                  novas coleções
                 </Link>
               </div>
             </div>
@@ -114,7 +114,7 @@ export default function Home({
                 to="/colecoes"
                 className="inline-flex items-center justify-center font-['IBM_Plex_Mono'] uppercase tracking-[0.06em] text-xs sm:text-sm font-semibold px-6 sm:px-7 py-2.5 sm:py-3 bg-transparent text-[#141512] border-2 border-[#141512] hover:bg-[#141512] hover:text-[#F4F2E9] transition-all select-none"
               >
-                Nossa curadoria
+                novas coleções
               </Link>
             </div>
           </div>

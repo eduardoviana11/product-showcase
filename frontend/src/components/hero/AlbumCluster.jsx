@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { resolveAssetUrl } from '../../utils/assets';
-import { getProductId } from '../../utils/slug';
 
 const DEFAULT_ALBUMS = [
   {
@@ -44,7 +43,7 @@ const DEFAULT_ALBUMS = [
 ];
 
 /**
- * Exact placeholder slots measured from `hero-background.png` (1920x1080):
+ * Exact placeholder slots measured from `hero-background-2.png` (1920x1080):
  * - 5 rectangular/square placeholders (2 red + 3 black) for album covers
  * - 1 black circle placeholder for the custom vinyl disc
  */
@@ -125,33 +124,42 @@ export default function AlbumCluster({ albums = [] }) {
       return {
         ...candidate,
         resolvedImage: resolvedCandidateImg,
-        productId: getProductId(candidate),
       };
     }
 
     return {
       ...fallback,
       resolvedImage: fallback.image,
-      productId: getProductId(fallback),
     };
   });
 
   // Find a record with a custom vinyl disc image (e.g. Laufey's laufey-disc.png)
   const customVinylRecord =
     albums.find((a) => a && a.vinyl_image && a.vinyl_image.trim()) ||
-    DEFAULT_ALBUMS[4];
+    DEFAULT_ALBUMS[0];
 
   const customDiscSrc =
     resolveAssetUrl(customVinylRecord?.vinyl_image) || '/images/laufey-disc.png';
   const customDiscScale = Number(customVinylRecord?.vinyl_scale) || 1.18;
-  const customDiscProductId = getProductId(customVinylRecord);
 
   return (
     <div className="absolute inset-0 pointer-events-none select-none">
-      {/* Custom Vinyl Disc over the Black Circle Placeholder */}
+      {/* Entire Cluster Clickable Overlay -> navigates to Novidades (/discos?tab=new) */}
       <Link
-        to={`/produto/${customDiscProductId}`}
-        aria-label={`Ver disco ${customVinylRecord?.name || 'Personalizado'}`}
+        to="/discos?tab=new"
+        aria-label="Ver novidades em discos"
+        style={{
+          left: '53.5%',
+          top: '19%',
+          width: '40.5%',
+          height: '73%',
+          zIndex: 40,
+        }}
+        className="absolute pointer-events-auto block cursor-pointer"
+      />
+
+      {/* Custom Vinyl Disc over the Black Circle Placeholder */}
+      <div
         style={{
           left: VINYL_CIRCLE_SLOT.left,
           top: VINYL_CIRCLE_SLOT.top,
@@ -160,7 +168,7 @@ export default function AlbumCluster({ albums = [] }) {
           zIndex: VINYL_CIRCLE_SLOT.zIndex,
           transform: 'translate(-50%, -50%)',
         }}
-        className="absolute rounded-full overflow-hidden bg-[#141512] shadow-[8px_8px_20px_4px_rgba(20,21,18,0.75)] pointer-events-auto block"
+        className="absolute rounded-full overflow-hidden bg-[#141512] shadow-[8px_8px_20px_4px_rgba(20,21,18,0.75)] pointer-events-none block"
       >
         <img
           src={customDiscSrc}
@@ -173,17 +181,14 @@ export default function AlbumCluster({ albums = [] }) {
           style={{ transform: `scale(${customDiscScale})` }}
           className="w-full h-full object-contain select-none pointer-events-none"
         />
-      </Link>
+      </div>
 
       {/* 5 Album Covers over the Red and Black Square Placeholders */}
       {COVER_SLOTS.map((slot, index) => {
         const album = resolvedAlbums[index];
         return (
-          <Link
+          <div
             key={slot.id}
-            to={`/produto/${album.productId}`}
-            title={`${album.name} - ${album.artist}`}
-            aria-label={`Ver álbum ${album.name}`}
             style={{
               left: slot.left,
               top: slot.top,
@@ -192,14 +197,14 @@ export default function AlbumCluster({ albums = [] }) {
               zIndex: slot.zIndex,
               transform: `translate(-50%, -50%) rotate(${slot.rotate})`,
             }}
-            className={`absolute overflow-hidden bg-[#141512] border-2 border-[#141512] ${slot.shadowClasses} pointer-events-auto block`}
+            className={`absolute overflow-hidden bg-[#141512] border-2 border-[#141512] ${slot.shadowClasses} pointer-events-none block`}
           >
             <img
               src={album.resolvedImage}
               alt={`${album.name} - ${album.artist}`}
               className="w-full h-full object-cover select-none pointer-events-none block"
             />
-          </Link>
+          </div>
         );
       })}
     </div>

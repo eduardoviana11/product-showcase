@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
-import Button from './Button';
 
 const ITEMS_PER_PAGE = 4;
 
-export default function Carousel({ items = [], renderItem, title, subtitle, rightAction }) {
+export default function Carousel({
+  items = [],
+  renderItem,
+  title,
+  subtitle,
+  rightAction,
+}) {
   const [currentPage, setCurrentPage] = useState(0);
 
   const totalPages = Math.max(1, Math.ceil(items.length / ITEMS_PER_PAGE));
@@ -11,16 +16,16 @@ export default function Carousel({ items = [], renderItem, title, subtitle, righ
   const visibleItems = items.slice(startIndex, startIndex + ITEMS_PER_PAGE);
 
   const handlePrev = () => {
-    setCurrentPage((prev) => Math.max(0, prev - 1));
+    setCurrentPage((prev) => (prev === 0 ? totalPages - 1 : prev - 1));
   };
 
   const handleNext = () => {
-    setCurrentPage((prev) => Math.min(totalPages - 1, prev + 1));
+    setCurrentPage((prev) => (prev >= totalPages - 1 ? 0 : prev + 1));
   };
 
   return (
     <div className="w-full">
-      {/* Header with Title and Circular Controls */}
+      {/* Header with Title and Right Action */}
       <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
         <div>
           {subtitle && (
@@ -35,42 +40,68 @@ export default function Carousel({ items = [], renderItem, title, subtitle, righ
           )}
         </div>
 
-        {/* Carousel Navigation Controls */}
         <div className="flex items-center gap-4">
           <span className="font-['IBM_Plex_Mono'] text-xs font-semibold uppercase tracking-wider text-[#141512]/70">
-            {String(currentPage + 1).padStart(2, '0')} / {String(totalPages).padStart(2, '0')}
+            {String(currentPage + 1).padStart(2, '0')} /{' '}
+            {String(totalPages).padStart(2, '0')}
           </span>
-
-          <div className="flex items-center gap-2">
-            <Button
-              variant="circular"
-              onClick={handlePrev}
-              disabled={currentPage === 0}
-              ariaLabel="Página anterior de discos"
-            >
-              ←
-            </Button>
-            <Button
-              variant="circular"
-              onClick={handleNext}
-              disabled={currentPage >= totalPages - 1}
-              ariaLabel="Próxima página de discos"
-            >
-              →
-            </Button>
-          </div>
-
-          {rightAction && <div className="ml-2">{rightAction}</div>}
+          {rightAction && <div>{rightAction}</div>}
         </div>
       </div>
 
-      {/* 4-Item Grid/Slider for current page */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        {visibleItems.map((item, idx) => (
-          <div key={item.id || item.name || idx} className="h-full">
-            {renderItem ? renderItem(item) : null}
-          </div>
-        ))}
+      {/* 4-Item Grid/Slider with Side Arrow Buttons (matching ProductDetail slider style) */}
+      <div className="relative">
+        {totalPages > 1 && (
+          <button
+            type="button"
+            onClick={handlePrev}
+            aria-label="Página anterior de discos"
+            className="absolute -left-3 sm:-left-5 top-[calc((100%-118px)/2)] -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-[#FFFFFF]/95 border border-[#141512]/25 text-[#141512] shadow-sm flex items-center justify-center hover:bg-[#141512] hover:text-[#F4F2E9] transition-colors cursor-pointer"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="w-4 h-4"
+            >
+              <path d="M15 18l-6-6 6-6" />
+            </svg>
+          </button>
+        )}
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {visibleItems.map((item, idx) => (
+            <div key={item.id || item.name || idx} className="h-full">
+              {renderItem ? renderItem(item) : null}
+            </div>
+          ))}
+        </div>
+
+        {totalPages > 1 && (
+          <button
+            type="button"
+            onClick={handleNext}
+            aria-label="Próxima página de discos"
+            className="absolute -right-3 sm:-right-5 top-[calc((100%-118px)/2)] -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-[#FFFFFF]/95 border border-[#141512]/25 text-[#141512] shadow-sm flex items-center justify-center hover:bg-[#141512] hover:text-[#F4F2E9] transition-colors cursor-pointer"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="w-4 h-4"
+            >
+              <path d="M9 18l6-6-6-6" />
+            </svg>
+          </button>
+        )}
       </div>
     </div>
   );
