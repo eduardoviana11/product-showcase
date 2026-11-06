@@ -3,89 +3,33 @@ import { Link } from 'react-router-dom';
 
 export default function Footer() {
   return (
-    <footer className="bg-[#141512] text-[#F4F2E9] py-16 px-6 sm:px-12 lg:px-16 mt-auto">
-      <div className="max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 pb-12 border-b border-[#F4F2E9]/20">
-        {/* Brand Info */}
-        <div className="lg:col-span-2">
-          <Link to="/" className="font-['Anton'] text-4xl text-[#F4F2E9] tracking-wider uppercase mb-3 inline-block">
+    <footer className="bg-[#141512] text-[#F4F2E9] py-10 px-6 sm:px-12 lg:px-16 mt-auto border-t-2 border-[#141512]">
+      <div className="max-w-[1440px] mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+        {/* Brand & Study Project Info */}
+        <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6">
+          <Link
+            to="/"
+            className="font-['Anton'] text-3xl text-[#F4F2E9] tracking-wider uppercase leading-none hover:text-[#C5F43B] transition-colors"
+          >
             ZUNO
           </Link>
-          <p className="font-['Inter'] text-sm text-[#DADCD3]/80 max-w-sm leading-relaxed mb-6">
-            Curadoria musical para quem nunca termina de descobrir música. Clássicos, novidades e objetos da cena.
+          <p className="font-['Inter'] text-xs sm:text-sm text-[#DADCD3]/80">
+            Projeto de estudos de vitrine de discos e objetos musicais.
           </p>
-          <div className="font-['IBM_Plex_Mono'] text-[11px] text-[#C5F43B] uppercase tracking-wider">
-            FORTALEZA, BRASIL - 2026
-          </div>
         </div>
 
-        {/* Explore Column */}
-        <div>
-          <h4 className="font-['IBM_Plex_Mono'] text-xs uppercase tracking-wider font-semibold text-[#F4F2E9] mb-4">
-            EXPLORE
-          </h4>
-          <ul className="space-y-2.5 font-['Inter'] text-sm text-[#DADCD3]/80">
-            <li>
-              <Link to="/discos" className="hover:text-[#C5F43B]">
-                Todos os discos
-              </Link>
-            </li>
-            <li>
-              <Link to="/discos?tab=new" className="hover:text-[#C5F43B]">
-                Novidades
-              </Link>
-            </li>
-            <li>
-              <Link to="/discos?tab=featured" className="hover:text-[#C5F43B]">
-                Em destaque
-              </Link>
-            </li>
-            <li>
-              <Link to="/objetos" className="hover:text-[#C5F43B]">
-                Objetos da cena
-              </Link>
-            </li>
-            <li>
-              <Link to="/newsletter" className="hover:text-[#C5F43B]">
-                Carta da Estante (Newsletter)
-              </Link>
-            </li>
-          </ul>
+        {/* Author & GitHub Link */}
+        <div className="font-['IBM_Plex_Mono'] text-xs text-[#DADCD3]/90 flex flex-wrap items-center gap-1.5">
+          <span>Desenvolvido por</span>
+          <a
+            href="https://github.com/eduardoviana11"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[#C5F43B] font-semibold underline underline-offset-4 hover:text-white transition-colors"
+          >
+            Eduardo Viana
+          </a>
         </div>
-
-        {/* Conte com a gente */}
-        <div>
-          <h4 className="font-['IBM_Plex_Mono'] text-xs uppercase tracking-wider font-semibold text-[#F4F2E9] mb-4">
-            CONTE COM A GENTE
-          </h4>
-          <ul className="space-y-2.5 font-['Inter'] text-sm text-[#DADCD3]/80">
-            <li>
-              <span className="hover:text-[#C5F43B] cursor-pointer">Entrega e frete</span>
-            </li>
-            <li>
-              <span className="hover:text-[#C5F43B] cursor-pointer">Trocas e devoluções</span>
-            </li>
-            <li>
-              <span className="hover:text-[#C5F43B] cursor-pointer">Fale com a curadoria</span>
-            </li>
-          </ul>
-        </div>
-
-        {/* A cena continua */}
-        <div>
-          <h4 className="font-['IBM_Plex_Mono'] text-xs uppercase tracking-wider font-semibold text-[#F4F2E9] mb-4">
-            A MÚSICA CONTINUA
-          </h4>
-          <div className="space-y-2.5 font-['IBM_Plex_Mono'] text-xs text-[#DADCD3]/80 leading-relaxed">
-            <p className="text-[#C5F43B]">contato@zuno.com.br</p>
-            <p>PIX e cartão em até 3x sem juros</p>
-            <p>Seg a Sex, das 10h às 18h</p>
-          </div>
-        </div>
-      </div>
-
-      {/* Bottom copyright line */}
-      <div className="max-w-[1440px] mx-auto pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 font-['IBM_Plex_Mono'] text-[11px] text-[#DADCD3]/60">
-        <p>© 2026 ZUNO - TODOS OS DIREITOS RESERVADOS</p>
       </div>
     </footer>
   );

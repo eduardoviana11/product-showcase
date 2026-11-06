@@ -25,19 +25,24 @@ const SORT_OPTIONS = [
   { id: 'relevance', label: 'Relevância' },
   { id: 'price-asc', label: 'Menor preço' },
   { id: 'price-desc', label: 'Maior preço' },
-  { id: 'name', label: 'A – Z' },
+  { id: 'name', label: 'Nome (A - Z)' },
+  { id: 'name-desc', label: 'Nome (Z - A)' },
 ];
 
 const PAGE_SIZE = 8;
 
 export default function Discos({ vinylRecords = [], onAddToCart }) {
   const [searchParams, setSearchParams] = useSearchParams();
-  const urlTab = searchParams.get('tab') || (searchParams.get('filter') === 'em-destaque' ? 'featured' : 'all');
+  const urlTab =
+    searchParams.get('tab') ||
+    (searchParams.get('filter') === 'em-destaque' ? 'featured' : 'all');
   const urlQuery = searchParams.get('q') || '';
   const urlCategory = searchParams.get('category') || 'Todos';
+  const urlArtist = searchParams.get('artist') || 'Todos';
 
   const [storeTab, setStoreTab] = useState(urlTab);
   const [activeCategory, setActiveCategory] = useState(urlCategory);
+  const [activeArtist, setActiveArtist] = useState(urlArtist);
   const [sortBy, setSortBy] = useState('relevance');
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
   const [searchQuery, setSearchQuery] = useState(urlQuery);
@@ -50,11 +55,8 @@ export default function Discos({ vinylRecords = [], onAddToCart }) {
     } else {
       setStoreTab('all');
     }
-    if (searchParams.get('category')) {
-      setActiveCategory(searchParams.get('category'));
-    } else {
-      setActiveCategory('Todos');
-    }
+    setActiveCategory(searchParams.get('category') || 'Todos');
+    setActiveArtist(searchParams.get('artist') || 'Todos');
     if (searchParams.get('q') !== null) {
       setSearchQuery(searchParams.get('q'));
     }
@@ -72,7 +74,8 @@ export default function Discos({ vinylRecords = [], onAddToCart }) {
     ])
   );
 
-  const activeTab = STORE_TABS.find((tab) => tab.id === storeTab) || STORE_TABS[0];
+  const activeTab =
+    STORE_TABS.find((tab) => tab.id === storeTab) || STORE_TABS[0];
   const tabRecords = vinylRecords.filter((record) => isInTab(record, storeTab));
 
   const categories = [
@@ -80,34 +83,58 @@ export default function Discos({ vinylRecords = [], onAddToCart }) {
     ...Array.from(new Set(tabRecords.map((r) => r.category).filter(Boolean))),
   ];
 
+  const artists = [
+    'Todos',
+    ...Array.from(new Set(tabRecords.map((r) => r.artist).filter(Boolean))).sort(
+      (a, b) => a.localeCompare(b, 'pt-BR')
+    ),
+  ];
+
   const filteredRecords = tabRecords.filter((record) => {
     const matchesCategory =
       activeCategory === 'Todos' ||
       (record.category &&
         record.category.toLowerCase() === activeCategory.toLowerCase());
+    const matchesArtist =
+      activeArtist === 'Todos' ||
+      (record.artist &&
+        record.artist.toLowerCase() === activeArtist.toLowerCase());
     const matchesSearch =
       searchQuery.trim() === '' ||
       record.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      (record.artist && record.artist.toLowerCase().includes(searchQuery.toLowerCase()));
-    return matchesCategory && matchesSearch;
+      (record.artist &&
+        record.artist.toLowerCase().includes(searchQuery.toLowerCase())) ||
+      (record.category &&
+        record.category.toLowerCase().includes(searchQuery.toLowerCase()));
+    return matchesCategory && matchesArtist && matchesSearch;
   });
 
   const sortedRecords = [...filteredRecords].sort((a, b) => {
     if (sortBy === 'price-asc') return a.price - b.price;
     if (sortBy === 'price-desc') return b.price - a.price;
     if (sortBy === 'name') return a.name.localeCompare(b.name, 'pt-BR');
+    if (sortBy === 'name-desc') return b.name.localeCompare(a.name, 'pt-BR');
     return 0;
   });
 
   const selectStoreTab = (tabId) => {
     setStoreTab(tabId);
     setActiveCategory('Todos');
+    setActiveArtist('Todos');
     setVisibleCount(PAGE_SIZE);
     setSearchParams((prev) => {
       prev.set('tab', tabId);
+      prev.delete('category');
+      prev.delete('artist');
       return prev;
     });
   };
+
+  const hasActiveFilters =
+    activeCategory !== 'Todos' ||
+    activeArtist !== 'Todos' ||
+    searchQuery.trim() !== '' ||
+    sortBy !== 'relevance';
 
   return (
     <div className="max-w-[1440px] mx-auto px-6 sm:px-12 lg:px-16 py-12 lg:py-16">
@@ -117,7 +144,7 @@ export default function Discos({ vinylRecords = [], onAddToCart }) {
           ACERVO COMPLETO - EDIÇÕES FÍSICAS EM VINIL
         </span>
         <h1 className="font-['Anton'] text-5xl sm:text-7xl text-[#141512] uppercase tracking-wide leading-none">
-          DISCOS EM CATÁLOGO
+          {storeTab === 'new' ? 'NOVIDADES EM VINIL' : 'DISCOS EM CATÁLOGO'}
         </h1>
         <p className="font-['Inter'] text-base text-[#141512]/75 mt-3 max-w-2xl">
           Navegue por clássicos atemporais, prensagens comemorativas e novidades da cena independente e internacional.
@@ -139,10 +166,11 @@ export default function Discos({ vinylRecords = [], onAddToCart }) {
               role="tab"
               aria-selected={isActive}
               onClick={() => selectStoreTab(tab.id)}
-              className={`font-['Inter'] text-sm sm:text-base font-semibold pb-3 -mb-[2px] border-b-4 transition-colors cursor-pointer ${isActive
+              className={`font-['Inter'] text-sm sm:text-base font-semibold pb-3 -mb-[2px] border-b-4 transition-colors cursor-pointer ${
+                isActive
                   ? 'border-[#141512] text-[#141512]'
                   : 'border-transparent text-[#141512]/55 hover:text-[#141512]'
-                }`}
+              }`}
             >
               {tab.label}
               <span className="font-['IBM_Plex_Mono'] text-[11px] ml-2 align-middle">
@@ -157,59 +185,144 @@ export default function Discos({ vinylRecords = [], onAddToCart }) {
         {activeTab.blurb}
       </p>
 
-      {/* Genre chips & Sort */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
-        <div className="flex flex-wrap items-center gap-2" role="group" aria-label="Filtro de gêneros">
-          {categories.map((cat) => {
-            const isActive = activeCategory.toLowerCase() === cat.toLowerCase();
-            return (
-              <button
-                key={cat}
-                type="button"
-                onClick={() => {
-                  setActiveCategory(cat);
-                  setVisibleCount(PAGE_SIZE);
-                  setSearchParams((prev) => {
-                    if (cat === 'Todos') {
-                      prev.delete('category');
-                    } else {
-                      prev.set('category', cat);
-                    }
-                    return prev;
-                  });
-                }}
-                aria-pressed={isActive}
-                className={`font-['IBM_Plex_Mono'] text-[11px] font-semibold uppercase tracking-wider px-3 py-1.5 border-2 border-[#141512] transition-colors cursor-pointer ${isActive
-                    ? 'bg-[#141512] text-[#F4F2E9]'
-                    : 'bg-transparent text-[#141512] hover:bg-[#DADCD3]'
-                  }`}
-              >
-                {cat}
-              </button>
-            );
-          })}
+      {/* Dropdown Filter Bar */}
+      <div className="bg-[#FFFFFF] border-2 border-[#141512] rounded-lg p-4 mb-8 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+        <div className="flex flex-wrap items-center gap-3">
+          {/* Quick filter input */}
+          <div className="flex items-center">
+            <label htmlFor="discos-quick-filter" className="sr-only">
+              Filtrar por álbum ou artista
+            </label>
+            <input
+              id="discos-quick-filter"
+              type="search"
+              value={searchQuery}
+              onChange={(e) => {
+                setSearchQuery(e.target.value);
+                setVisibleCount(PAGE_SIZE);
+              }}
+              placeholder="Filtrar por nome..."
+              className="w-48 sm:w-56 bg-[#F4F2E9] border border-[#141512]/30 rounded-md px-3 py-2 font-['IBM_Plex_Mono'] text-xs text-[#141512] placeholder-[#141512]/50 focus:bg-white focus:border-[#141512] focus:outline-none"
+            />
+          </div>
+
+          {/* Genre Dropdown */}
+          <div className="flex items-center gap-1.5">
+            <label
+              htmlFor="genre-select"
+              className="font-['IBM_Plex_Mono'] text-[11px] font-semibold uppercase tracking-wider text-[#141512]/70"
+            >
+              Gênero:
+            </label>
+            <select
+              id="genre-select"
+              value={activeCategory}
+              onChange={(e) => {
+                const cat = e.target.value;
+                setActiveCategory(cat);
+                setVisibleCount(PAGE_SIZE);
+                setSearchParams((prev) => {
+                  if (cat === 'Todos') {
+                    prev.delete('category');
+                  } else {
+                    prev.set('category', cat);
+                  }
+                  return prev;
+                });
+              }}
+              className="bg-[#F4F2E9] border border-[#141512]/30 rounded-md px-3 py-2 font-['IBM_Plex_Mono'] text-xs font-semibold uppercase tracking-wider text-[#141512] cursor-pointer focus:outline-none focus:border-[#141512]"
+            >
+              {categories.map((cat) => (
+                <option key={cat} value={cat}>
+                  {cat === 'Todos' ? 'Todos os gêneros' : cat}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Artist Dropdown */}
+          <div className="flex items-center gap-1.5">
+            <label
+              htmlFor="artist-select"
+              className="font-['IBM_Plex_Mono'] text-[11px] font-semibold uppercase tracking-wider text-[#141512]/70"
+            >
+              Artista:
+            </label>
+            <select
+              id="artist-select"
+              value={activeArtist}
+              onChange={(e) => {
+                const art = e.target.value;
+                setActiveArtist(art);
+                setVisibleCount(PAGE_SIZE);
+                setSearchParams((prev) => {
+                  if (art === 'Todos') {
+                    prev.delete('artist');
+                  } else {
+                    prev.set('artist', art);
+                  }
+                  return prev;
+                });
+              }}
+              className="bg-[#F4F2E9] border border-[#141512]/30 rounded-md px-3 py-2 font-['IBM_Plex_Mono'] text-xs font-semibold uppercase tracking-wider text-[#141512] cursor-pointer max-w-[210px] truncate focus:outline-none focus:border-[#141512]"
+            >
+              {artists.map((art) => (
+                <option key={art} value={art}>
+                  {art === 'Todos' ? 'Todos os artistas' : art}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {hasActiveFilters && (
+            <button
+              type="button"
+              onClick={() => {
+                setActiveCategory('Todos');
+                setActiveArtist('Todos');
+                setSearchQuery('');
+                setSortBy('relevance');
+                setSearchParams((prev) => {
+                  prev.delete('category');
+                  prev.delete('artist');
+                  prev.delete('q');
+                  return prev;
+                });
+              }}
+              className="font-['IBM_Plex_Mono'] text-xs font-semibold uppercase tracking-wider text-[#141512] underline underline-offset-4 hover:text-black cursor-pointer ml-1"
+            >
+              Limpar filtros
+            </button>
+          )}
         </div>
 
-        <div className="flex items-center gap-3">
+        {/* Sort & Counter */}
+        <div className="flex items-center justify-between lg:justify-end gap-3 pt-3 lg:pt-0 border-t lg:border-t-0 border-[#141512]/10">
           <span className="font-['IBM_Plex_Mono'] text-xs font-semibold uppercase tracking-[0.08em] text-[#141512]">
             {String(sortedRecords.length).padStart(2, '0')}{' '}
             {sortedRecords.length === 1 ? 'DISCO' : 'DISCOS'}
           </span>
-          <label htmlFor="sort-select" className="sr-only">
-            Ordenar discos
-          </label>
-          <select
-            id="sort-select"
-            value={sortBy}
-            onChange={(e) => setSortBy(e.target.value)}
-            className="bg-[#F4F2E9] border-2 border-[#141512] px-3 py-1.5 font-['IBM_Plex_Mono'] text-[11px] font-semibold uppercase tracking-wider text-[#141512] cursor-pointer"
-          >
-            {SORT_OPTIONS.map((option) => (
-              <option key={option.id} value={option.id}>
-                {option.label}
-              </option>
-            ))}
-          </select>
+
+          <div className="flex items-center gap-1.5">
+            <label
+              htmlFor="sort-select"
+              className="font-['IBM_Plex_Mono'] text-[11px] font-semibold uppercase tracking-wider text-[#141512]/70"
+            >
+              Ordenar:
+            </label>
+            <select
+              id="sort-select"
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value)}
+              className="bg-[#F4F2E9] border border-[#141512]/30 rounded-md px-3 py-2 font-['IBM_Plex_Mono'] text-xs font-semibold uppercase tracking-wider text-[#141512] cursor-pointer focus:outline-none focus:border-[#141512]"
+            >
+              {SORT_OPTIONS.map((option) => (
+                <option key={option.id} value={option.id}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
       </div>
 
@@ -240,7 +353,7 @@ export default function Discos({ vinylRecords = [], onAddToCart }) {
           )}
         </>
       ) : (
-        <div className="py-16 text-center border-2 border-dashed border-[#141512] p-8">
+        <div className="py-16 text-center bg-white border-2 border-dashed border-[#141512] rounded-lg p-8">
           <p className="font-['IBM_Plex_Mono'] text-sm uppercase text-[#141512]">
             Nenhum disco encontrado com estes filtros.
           </p>
@@ -250,6 +363,7 @@ export default function Discos({ vinylRecords = [], onAddToCart }) {
             className="mt-4"
             onClick={() => {
               setActiveCategory('Todos');
+              setActiveArtist('Todos');
               setSearchQuery('');
               setStoreTab('all');
               setSearchParams({});

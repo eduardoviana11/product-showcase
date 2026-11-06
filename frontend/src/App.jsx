@@ -11,6 +11,7 @@ import Discos from './pages/Discos';
 import Objetos from './pages/Objetos';
 import Newsletter from './pages/Newsletter';
 import ProductDetail from './pages/ProductDetail';
+import SearchResults from './pages/SearchResults';
 
 // Automatically scroll to top on route change, or to #colecoes if navigating there
 function ScrollToTop() {
@@ -82,6 +83,8 @@ export default function App() {
         <Header
           cartCount={cartCount}
           onCartClick={handleCartClick}
+          vinylRecords={vinylRecords}
+          sceneObjects={sceneObjects}
         />
 
         {/* Main Routed Content */}
@@ -129,6 +132,16 @@ export default function App() {
               path="/newsletter"
               element={
                 <Newsletter
+                  onAddToCart={handleAddToCart}
+                />
+              }
+            />
+            <Route
+              path="/busca"
+              element={
+                <SearchResults
+                  vinylRecords={vinylRecords}
+                  sceneObjects={sceneObjects}
                   onAddToCart={handleAddToCart}
                 />
               }
