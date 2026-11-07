@@ -80,31 +80,107 @@ export default function CreatorProfile({
               slug: cSlug,
               name: getCreatorName(item),
               image: resolveAssetUrl(item.image),
+              categories: item.category ? [item.category] : [],
               count: 1,
             });
           } else {
-            map.get(cSlug).count += 1;
+            const entry = map.get(cSlug);
+            entry.count += 1;
+            if (!entry.image && item.image) {
+              entry.image = resolveAssetUrl(item.image);
+            }
+            if (item.category && !entry.categories.includes(item.category)) {
+              entry.categories.push(item.category);
+            }
           }
           return map;
         }, new Map()).values()
-      )
+      ).sort((a, b) => a.name.localeCompare(b.name, 'pt-BR'))
     : [];
+
+  // When no slug is provided (/artista/ or /loja/), render the directory of artists or stores (not their products)
+  if (!normalizedSlug) {
+    return (
+      <div className="max-w-[1440px] mx-auto px-6 sm:px-12 lg:px-16 py-8 lg:py-12">
+        {/* Breadcrumb */}
+        <nav
+          aria-label="Navegação estrutural"
+          className="mb-6 flex flex-wrap items-center gap-2 font-['Inter'] text-xs sm:text-sm text-[#141512]/70"
+        >
+          <Link to="/" className="hover:text-[#141512] transition-colors">
+            Início
+          </Link>
+          <span className="text-[#141512]/40">&gt;</span>
+          <span className="text-[#141512] font-medium">
+            {isStorePath ? 'Lojas' : 'Artistas'}
+          </span>
+        </nav>
+
+        {/* Page Header */}
+        <div className="mb-8 pb-6 border-b-2 border-[#141512]">
+          <h1 className="font-['Anton'] text-5xl sm:text-7xl text-[#141512] uppercase tracking-wide leading-none">
+            {isStorePath ? 'LOJAS' : 'ARTISTAS'}
+          </h1>
+        </div>
+
+        {/* Creators Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {directoryCreators.map((creator) => (
+            <Link
+              key={creator.slug}
+              to={`${isStorePath ? '/loja' : '/artista'}/${creator.slug}`}
+              className="group bg-[#FFFFFF] border-2 border-[#141512] rounded-lg p-6 flex flex-col justify-between gap-5 hover:shadow-[4px_4px_0px_#C5F43B] transition-all"
+            >
+              <div className="flex items-center gap-4">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-[#141512] border-2 border-[#141512] overflow-hidden shrink-0 flex items-center justify-center shadow-[3px_3px_0px_#C5F43B]">
+                  {creator.image ? (
+                    <img
+                      src={creator.image}
+                      alt={creator.name}
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <span className="font-['Anton'] text-2xl text-[#C5F43B] uppercase">
+                      {creator.name.charAt(0)}
+                    </span>
+                  )}
+                </div>
+
+                <div className="min-w-0">
+                  <span className="inline-block font-['IBM_Plex_Mono'] text-[10px] font-semibold uppercase tracking-[0.08em] px-2 py-0.5 bg-[#C5F43B] text-[#141512] border border-[#141512] mb-1.5">
+                    {isStorePath ? 'LOJA OFICIAL' : 'ARTISTA'}
+                  </span>
+                  <h2 className="font-['Anton'] text-2xl sm:text-3xl text-[#141512] uppercase tracking-wide leading-tight truncate group-hover:underline underline-offset-4">
+                    {creator.name}
+                  </h2>
+                </div>
+              </div>
+
+              <div className="pt-4 border-t border-[#141512]/15 flex items-center justify-between gap-2">
+                <span className="font-['IBM_Plex_Mono'] text-xs text-[#141512]/70 uppercase tracking-wider truncate">
+                  {creator.count}{' '}
+                  {creator.count === 1 ? 'item no catálogo' : 'itens no catálogo'}
+                </span>
+                <span className="font-['IBM_Plex_Mono'] text-xs font-semibold uppercase tracking-wider text-[#141512] shrink-0 group-hover:translate-x-0.5 transition-transform">
+                  Ver perfil →
+                </span>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   // Determine display name and whether this profile is an artist or store
   const firstMatched = ownerItems[0];
-  const displayName = !normalizedSlug
-    ? isStorePath
-      ? directoryCreators.length === 1
-        ? directoryCreators[0].name
-        : 'Lojas'
-      : 'Artistas'
-    : firstMatched
-      ? getCreatorName(firstMatched)
-      : normalizedSlug
-          .split('-')
-          .filter(Boolean)
-          .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-          .join(' ');
+  const displayName = firstMatched
+    ? getCreatorName(firstMatched)
+    : normalizedSlug
+        .split('-')
+        .filter(Boolean)
+        .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+        .join(' ');
 
   const isStoreRoute =
     isStorePath ||
@@ -160,24 +236,16 @@ export default function CreatorProfile({
           Início
         </Link>
         <span className="text-[#141512]/40">&gt;</span>
-        {normalizedSlug ? (
-          <>
-            <Link
-              to={isStoreRoute ? '/loja' : '/artista'}
-              className="hover:text-[#141512] transition-colors"
-            >
-              {isStoreRoute ? 'Lojas' : 'Artistas'}
-            </Link>
-            <span className="text-[#141512]/40">&gt;</span>
-            <span className="text-[#141512] font-medium truncate max-w-[260px] sm:max-w-md">
-              {displayName}
-            </span>
-          </>
-        ) : (
-          <span className="text-[#141512] font-medium">
-            {isStoreRoute ? 'Lojas' : 'Artistas'}
-          </span>
-        )}
+        <Link
+          to={isStoreRoute ? '/loja' : '/artista'}
+          className="hover:text-[#141512] transition-colors"
+        >
+          {isStoreRoute ? 'Lojas' : 'Artistas'}
+        </Link>
+        <span className="text-[#141512]/40">&gt;</span>
+        <span className="text-[#141512] font-medium truncate max-w-[260px] sm:max-w-md">
+          {displayName}
+        </span>
       </nav>
 
       {/* Creator / Store Profile Header Card */}
@@ -185,7 +253,7 @@ export default function CreatorProfile({
         <div className="flex items-center gap-5">
           {/* Avatar / Monogram */}
           <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-[#141512] border-2 border-[#141512] overflow-hidden shrink-0 flex items-center justify-center shadow-[4px_4px_0px_#C5F43B]">
-            {avatarSrc && (normalizedSlug || directoryCreators.length === 1) ? (
+            {avatarSrc ? (
               <img
                 src={avatarSrc}
                 alt={displayName}
@@ -218,22 +286,6 @@ export default function CreatorProfile({
           </div>
         </div>
       </div>
-
-      {/* Directory of Creators when visiting /artista/ or /loja/ without a specific slug */}
-      {!normalizedSlug && directoryCreators.length > 1 && (
-        <div className="mb-8 flex flex-wrap gap-2.5">
-          {directoryCreators.map((creator) => (
-            <Link
-              key={creator.slug}
-              to={`${isStorePath ? '/loja' : '/artista'}/${creator.slug}`}
-              className="inline-flex items-center gap-2.5 px-3.5 py-2 bg-[#FFFFFF] border-2 border-[#141512] rounded-md font-['IBM_Plex_Mono'] text-xs font-semibold uppercase tracking-wider text-[#141512] hover:bg-[#C5F43B] transition-colors"
-            >
-              <span>{creator.name}</span>
-              <span className="text-[#141512]/60">({creator.count})</span>
-            </Link>
-          ))}
-        </div>
-      )}
 
       {/* Filter & Sort Bar */}
       {ownerItems.length > 0 && (

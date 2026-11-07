@@ -136,15 +136,6 @@ export default function ProductDetail({
     });
   }
 
-  // If it's a vinyl and only 1 image was provided so far, include the vinyl disc preview as a 2nd slide
-  if (isVinyl && slides.length === 1) {
-    slides.push({
-      id: 'vinyl-disc-preview',
-      type: 'vinyl-disc',
-      alt: `Disco de vinil - ${name}`,
-    });
-  }
-
   const totalSlides = slides.length;
   const safeSlideIndex = activeSlide < totalSlides ? activeSlide : 0;
   const currentSlide = slides[safeSlideIndex];
