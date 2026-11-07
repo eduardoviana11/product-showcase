@@ -9,7 +9,6 @@ import TiltedTape from '../components/shapes/TiltedTape';
 import VinylDisc from '../components/shapes/VinylDisc';
 import Button from '../components/ui/Button';
 import {
-  showcaseCollections,
   recordOfTheWeek,
   magazineArticles,
 } from '../data/showcaseData';
@@ -17,7 +16,7 @@ import {
 export default function Home({
   vinylRecords = [],
   sceneObjects = [],
-  collections = showcaseCollections,
+  collections = [],
   onAddToCart,
 }) {
   return (
@@ -191,10 +190,7 @@ export default function Home({
               >
                 <div className="bg-[#141512] text-[#F4F2E9] border-2 border-[#141512] p-6 h-full flex flex-col justify-between hover:bg-[#1a1c18] transition-colors">
                   <div>
-                    <div className="flex items-center justify-between mb-6">
-                      <span className="font-['IBM_Plex_Mono'] text-[10px] uppercase tracking-widest text-[#C5F43B] font-semibold">
-                        {col.tag}
-                      </span>
+                    <div className="flex items-center justify-end mb-6">
                       <span className="font-['IBM_Plex_Mono'] text-[11px] uppercase tracking-wider text-[#DADCD3]">
                         {col.count}
                       </span>

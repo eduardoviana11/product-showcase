@@ -51,7 +51,7 @@ export default function Colecoes({
             href={`#${col.id}`}
             className="font-['IBM_Plex_Mono'] text-xs font-semibold uppercase tracking-wider px-4 py-2 border-2 border-[#141512] bg-[#FFFFFF] text-[#141512] hover:bg-[#141512] hover:text-[#F4F2E9] transition-colors"
           >
-            {col.tag} - {col.title}
+            {col.title}
           </a>
         ))}
       </nav>
@@ -80,9 +80,6 @@ export default function Colecoes({
                   />
                 )}
                 <div className="relative z-10">
-                  <span className="font-['IBM_Plex_Mono'] text-[11px] font-semibold uppercase tracking-[0.1em] text-[#141512] block mb-2">
-                    {col.tag}
-                  </span>
                   <h2
                     id={`${col.id}-title`}
                     className="font-['Anton'] text-4xl sm:text-5xl text-[#141512] uppercase tracking-wide leading-none"

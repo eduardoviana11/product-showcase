@@ -23,6 +23,7 @@ export default function CreatorProfile({
 }) {
   const { slug } = useParams();
   const location = useLocation();
+  const normalizedSlug = (slug || '').trim().toLowerCase();
 
   const [typeFilter, setTypeFilter] = useState('all'); // 'all' | 'vinyl' | 'object'
   const [categoryFilter, setCategoryFilter] = useState('Todos');
@@ -32,7 +33,7 @@ export default function CreatorProfile({
     setTypeFilter('all');
     setCategoryFilter('Todos');
     setSortBy('relevance');
-  }, [slug]);
+  }, [normalizedSlug, location.pathname]);
 
   // Combine all catalog products
   const allProducts = [
@@ -40,8 +41,20 @@ export default function CreatorProfile({
     ...sceneObjects.map((item) => ({ ...item, _isVinyl: false })),
   ];
 
-  // Match items belonging to this artist or store
+  const isStorePath = location.pathname.startsWith('/loja');
+
+  // Helper to check if an item belongs to a store vs an artist
+  const isItemStoreOwned = (item) => {
+    const artist = (item.artist || '').trim();
+    return !artist || artist.toLowerCase().includes('zuno');
+  };
+
+  // Match items belonging to this artist or store (or all of that route type when no slug is given)
   const ownerItems = allProducts.filter((item) => {
+    if (!normalizedSlug) {
+      return isStorePath ? isItemStoreOwned(item) : !isItemStoreOwned(item);
+    }
+
     const creatorSlug = getCreatorSlug(item);
     const artistSlug = item.artist ? slugifyProductName(item.artist) : '';
     const storeSlug = item.store ? slugifyProductName(item.store) : '';
@@ -49,25 +62,52 @@ export default function CreatorProfile({
       ? slugifyProductName(item.pickup_location)
       : '';
     return (
-      creatorSlug === slug ||
-      artistSlug === slug ||
-      storeSlug === slug ||
-      (slug.includes('zuno') &&
-        (creatorSlug.includes('zuno') || pickupSlug === slug))
+      creatorSlug === normalizedSlug ||
+      artistSlug === normalizedSlug ||
+      storeSlug === normalizedSlug ||
+      (normalizedSlug.includes('zuno') &&
+        (creatorSlug.includes('zuno') || pickupSlug === normalizedSlug))
     );
   });
 
+  // Build directory of unique creators for this route when viewing /artista/ or /loja/
+  const directoryCreators = !normalizedSlug
+    ? Array.from(
+        ownerItems.reduce((map, item) => {
+          const cSlug = getCreatorSlug(item);
+          if (!map.has(cSlug)) {
+            map.set(cSlug, {
+              slug: cSlug,
+              name: getCreatorName(item),
+              image: resolveAssetUrl(item.image),
+              count: 1,
+            });
+          } else {
+            map.get(cSlug).count += 1;
+          }
+          return map;
+        }, new Map()).values()
+      )
+    : [];
+
   // Determine display name and whether this profile is an artist or store
   const firstMatched = ownerItems[0];
-  const displayName = firstMatched
-    ? getCreatorName(firstMatched)
-    : slug
-      .split('-')
-      .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-      .join(' ');
+  const displayName = !normalizedSlug
+    ? isStorePath
+      ? directoryCreators.length === 1
+        ? directoryCreators[0].name
+        : 'Lojas'
+      : 'Artistas'
+    : firstMatched
+      ? getCreatorName(firstMatched)
+      : normalizedSlug
+          .split('-')
+          .filter(Boolean)
+          .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+          .join(' ');
 
   const isStoreRoute =
-    location.pathname.startsWith('/loja/') ||
+    isStorePath ||
     displayName.toLowerCase().includes('zuno') ||
     displayName.toLowerCase().includes('loja');
 
@@ -120,13 +160,24 @@ export default function CreatorProfile({
           Início
         </Link>
         <span className="text-[#141512]/40">&gt;</span>
-        <Link to="/busca" className="hover:text-[#141512] transition-colors">
-          {isStoreRoute ? 'Lojas' : 'Artistas'}
-        </Link>
-        <span className="text-[#141512]/40">&gt;</span>
-        <span className="text-[#141512] font-medium truncate max-w-[260px] sm:max-w-md">
-          {displayName}
-        </span>
+        {normalizedSlug ? (
+          <>
+            <Link
+              to={isStoreRoute ? '/loja' : '/artista'}
+              className="hover:text-[#141512] transition-colors"
+            >
+              {isStoreRoute ? 'Lojas' : 'Artistas'}
+            </Link>
+            <span className="text-[#141512]/40">&gt;</span>
+            <span className="text-[#141512] font-medium truncate max-w-[260px] sm:max-w-md">
+              {displayName}
+            </span>
+          </>
+        ) : (
+          <span className="text-[#141512] font-medium">
+            {isStoreRoute ? 'Lojas' : 'Artistas'}
+          </span>
+        )}
       </nav>
 
       {/* Creator / Store Profile Header Card */}
@@ -134,7 +185,7 @@ export default function CreatorProfile({
         <div className="flex items-center gap-5">
           {/* Avatar / Monogram */}
           <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-[#141512] border-2 border-[#141512] overflow-hidden shrink-0 flex items-center justify-center shadow-[4px_4px_0px_#C5F43B]">
-            {avatarSrc ? (
+            {avatarSrc && (normalizedSlug || directoryCreators.length === 1) ? (
               <img
                 src={avatarSrc}
                 alt={displayName}
@@ -142,7 +193,7 @@ export default function CreatorProfile({
               />
             ) : (
               <span className="font-['Anton'] text-3xl text-[#C5F43B] uppercase">
-                {displayName.charAt(0)}
+                {(displayName || 'Z').charAt(0)}
               </span>
             )}
           </div>
@@ -167,6 +218,22 @@ export default function CreatorProfile({
           </div>
         </div>
       </div>
+
+      {/* Directory of Creators when visiting /artista/ or /loja/ without a specific slug */}
+      {!normalizedSlug && directoryCreators.length > 1 && (
+        <div className="mb-8 flex flex-wrap gap-2.5">
+          {directoryCreators.map((creator) => (
+            <Link
+              key={creator.slug}
+              to={`${isStorePath ? '/loja' : '/artista'}/${creator.slug}`}
+              className="inline-flex items-center gap-2.5 px-3.5 py-2 bg-[#FFFFFF] border-2 border-[#141512] rounded-md font-['IBM_Plex_Mono'] text-xs font-semibold uppercase tracking-wider text-[#141512] hover:bg-[#C5F43B] transition-colors"
+            >
+              <span>{creator.name}</span>
+              <span className="text-[#141512]/60">({creator.count})</span>
+            </Link>
+          ))}
+        </div>
+      )}
 
       {/* Filter & Sort Bar */}
       {ownerItems.length > 0 && (

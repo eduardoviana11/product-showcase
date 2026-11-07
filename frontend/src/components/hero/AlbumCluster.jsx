@@ -2,46 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { resolveAssetUrl } from '../../utils/assets';
 
-const DEFAULT_ALBUMS = [
-  {
-    id: 'bewitched-the-goddess-edition',
-    name: 'Bewitched: The Goddess Edition',
-    artist: 'Laufey',
-    image:
-      'https://cdn-images.dzcdn.net/images/cover/d24bc027d049dca1591200130a54dd8f/500x500-000000-80-0-0.jpg',
-    vinyl_image: '/images/laufey-disc.png',
-    vinyl_scale: 1.13,
-  },
-  {
-    id: 'acabou-chorare',
-    name: 'ACABOU CHORARE',
-    artist: 'Novos Baianos',
-    image:
-      'https://s2-g1.glbimg.com/6decO-W6pm8HCNM5ZubgXSQidMc=/0x0:1500x1500/924x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2022/v/v/sIqlXeTTWdgokE2oJEEA/novosbaianoscapa1972.jpg',
-  },
-  {
-    id: 'igor',
-    name: 'Igor',
-    artist: 'Tyler, the Creator',
-    image:
-      'https://media.pitchfork.com/photos/6454f9ce60430f8f9be0fb09/1:1/w_320,c_limit/Tyler-the-Creator-Igor.jpg',
-  },
-  {
-    id: 'bad-remastered',
-    name: 'Bad (Remastered)',
-    artist: 'Michael Jackson',
-    image:
-      'https://cdn-images.dzcdn.net/images/cover/cad261eafd0c6c15811200d5039b5b50/500x500-000000-80-0-0.jpg',
-  },
-  {
-    id: 'clube-da-esquina',
-    name: 'CLUBE DA ESQUINA',
-    artist: 'Milton Nascimento & Lô Borges',
-    image:
-      'https://media.pitchfork.com/photos/5b894e5ddb74e05a6446ffd1/1:1/w_320,c_limit/clube%20da%20esquina.jpg%20.jpg',
-  },
-];
-
 /**
  * Exact placeholder slots measured from `hero/hero-background-2.png` (1920x1080):
  * - 5 rectangular/square placeholders (2 red + 3 black) for album covers
@@ -114,10 +74,9 @@ const VINYL_CIRCLE_SLOT = {
 };
 
 export default function AlbumCluster({ albums = [] }) {
-  // Resolve the 5 album covers from catalog or fallback defaults
+  // Resolve up to 5 album covers from backend catalog
   const resolvedAlbums = COVER_SLOTS.map((slot, index) => {
     const candidate = albums[index];
-    const fallback = DEFAULT_ALBUMS[index] || DEFAULT_ALBUMS[0];
     const resolvedCandidateImg = candidate ? resolveAssetUrl(candidate.image) : '';
 
     if (candidate && resolvedCandidateImg) {
@@ -127,19 +86,17 @@ export default function AlbumCluster({ albums = [] }) {
       };
     }
 
-    return {
-      ...fallback,
-      resolvedImage: fallback.image,
-    };
+    return null;
   });
 
-  // Find a record with a custom vinyl disc image (e.g. Laufey's laufey-disc.png)
-  const customVinylRecord =
-    albums.find((a) => a && a.vinyl_image && a.vinyl_image.trim()) ||
-    DEFAULT_ALBUMS[0];
+  // Find a record with a custom vinyl disc image from backend
+  const customVinylRecord = albums.find(
+    (a) => a && a.vinyl_image && a.vinyl_image.trim()
+  );
 
-  const customDiscSrc =
-    resolveAssetUrl(customVinylRecord?.vinyl_image) || '/images/laufey-disc.png';
+  const customDiscSrc = customVinylRecord
+    ? resolveAssetUrl(customVinylRecord.vinyl_image)
+    : '';
   const customDiscScale = Number(customVinylRecord?.vinyl_scale) || 1.18;
 
   return (
@@ -159,33 +116,31 @@ export default function AlbumCluster({ albums = [] }) {
       />
 
       {/* Custom Vinyl Disc over the Black Circle Placeholder */}
-      <div
-        style={{
-          left: VINYL_CIRCLE_SLOT.left,
-          top: VINYL_CIRCLE_SLOT.top,
-          width: VINYL_CIRCLE_SLOT.width,
-          height: VINYL_CIRCLE_SLOT.height,
-          zIndex: VINYL_CIRCLE_SLOT.zIndex,
-          transform: 'translate(-50%, -50%)',
-        }}
-        className="absolute rounded-full overflow-hidden bg-[#141512] shadow-[8px_8px_20px_4px_rgba(20,21,18,0.75)] pointer-events-none block"
-      >
-        <img
-          src={customDiscSrc}
-          alt={customVinylRecord?.name || 'Disco personalizado'}
-          onError={(e) => {
-            if (!e.currentTarget.src.endsWith('/images/laufey-disc.png')) {
-              e.currentTarget.src = '/images/laufey-disc.png';
-            }
+      {customDiscSrc && (
+        <div
+          style={{
+            left: VINYL_CIRCLE_SLOT.left,
+            top: VINYL_CIRCLE_SLOT.top,
+            width: VINYL_CIRCLE_SLOT.width,
+            height: VINYL_CIRCLE_SLOT.height,
+            zIndex: VINYL_CIRCLE_SLOT.zIndex,
+            transform: 'translate(-50%, -50%)',
           }}
-          style={{ transform: `scale(${customDiscScale})` }}
-          className="w-full h-full object-contain select-none pointer-events-none"
-        />
-      </div>
+          className="absolute rounded-full overflow-hidden bg-[#141512] shadow-[8px_8px_20px_4px_rgba(20,21,18,0.75)] pointer-events-none block"
+        >
+          <img
+            src={customDiscSrc}
+            alt={customVinylRecord?.name || 'Disco personalizado'}
+            style={{ transform: `scale(${customDiscScale})` }}
+            className="w-full h-full object-contain select-none pointer-events-none"
+          />
+        </div>
+      )}
 
       {/* 5 Album Covers over the Red and Black Square Placeholders */}
       {COVER_SLOTS.map((slot, index) => {
         const album = resolvedAlbums[index];
+        if (!album || !album.resolvedImage) return null;
         return (
           <div
             key={slot.id}

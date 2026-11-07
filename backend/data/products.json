@@ -651,10 +651,158 @@
       ]
     },
     {
+      "id": "tabua-de-esmeralda",
+      "type": "vinyl",
+      "name": "A Tábua de Esmeralda",
+      "artist": "Jorge Ben",
+      "description": "A obra-prima mística do samba-rock. Violões rítmicos inconfundíveis, arranjos de cordas celestiais e letras sobre alquimia, espaço e espiritualidade.",
+      "price": 275.00,
+      "image": "https://cdn.dooca.store/101284/products/pgkiyxrwx1qyprv9z9jfluno8xedkerepika_1600x1600+fill_ffffff.jpg?v=1723858313",
+      "images": [
+        "https://cdn.dooca.store/101284/products/pgkiyxrwx1qyprv9z9jfluno8xedkerepika_1600x1600+fill_ffffff.jpg?v=1723858313",
+        "https://universalmusic.vtexassets.com/arquivos/ids/197234-1200-auto?v=639100613437030000&width=1200&height=auto&aspect=true"
+      ],
+      "category": "MPB",
+      "weight_grams": 140,
+      "tracks_count": 11,
+      "pickup_location": "Estúdio ZUNO",
+      "cover_variant": "orange-stripes",
+      "featured": false,
+      "is_new": false,
+      "tracklist": [
+        {
+          "number": "01",
+          "title": "Os Alquimistas Estão Chegando os Alquimistas",
+          "duration": "3:16"
+        },
+        {
+          "number": "02",
+          "title": "O Homem da Gravata Florida",
+          "duration": "3:05"
+        },
+        {
+          "number": "03",
+          "title": "Errare Humanum Est",
+          "duration": "4:50"
+        },
+        {
+          "number": "04",
+          "title": "Menina Mulher da Pele Preta",
+          "duration": "2:57"
+        },
+        {
+          "number": "05",
+          "title": "Zumbi",
+          "duration": "3:30"
+        },
+        {
+          "number": "06",
+          "title": "Brother",
+          "duration": "2:54"
+        },
+        {
+          "number": "07",
+          "title": "Minha Teimosia, Uma Arma Pra Te Conquistar",
+          "duration": "2:41"
+        },
+        {
+          "number": "08",
+          "title": "Magnólia",
+          "duration": "3:14"
+        },
+        {
+          "number": "09",
+          "title": "Os Alquimistas Estão Chegando (Reprise)",
+          "duration": "1:20"
+        },
+        {
+          "number": "10",
+          "title": "Hermes Trismegisto e sua Celeste Tábua de Esmeralda",
+          "duration": "5:30"
+        },
+        {
+          "number": "11",
+          "title": "Cinco Minutos (5 Minutos)",
+          "duration": "2:50"
+        }
+      ]
+    },
+    {
+      "id": "alucinacao",
+      "type": "vinyl",
+      "name": "Alucinação",
+      "artist": "Belchior",
+      "description": "O retrato cortante da juventude urbana brasileira. Letras densas, melodias folk e um canto rasgado que transformaram este álbum na trilha sonora de uma geração que perdia a inocência.",
+      "price": 280.00,
+      "image": "https://thumb.wikimedia.org/wikipedia/pt/thumb/a/aa/Capa_de_Alucina%C3%A7%C3%A3o.jpg/250px-Capa_de_Alucina%C3%A7%C3%A3o.jpg?utm_source=pt.wikipedia.org&utm_campaign=parser&utm_content=thumbnail",
+      "images": [
+        "https://thumb.wikimedia.org/wikipedia/pt/thumb/a/aa/Capa_de_Alucina%C3%A7%C3%A3o.jpg/250px-Capa_de_Alucina%C3%A7%C3%A3o.jpg?utm_source=pt.wikipedia.org&utm_campaign=parser&utm_content=thumbnail"
+      ],
+      "category": "MPB",
+      "weight_grams": 180,
+      "tracks_count": 10,
+      "pickup_location": "Estúdio ZUNO",
+      "cover_variant": "solid-color",
+      "featured": false,
+      "is_new": false,
+      "tracklist": [
+        {
+          "number": "01",
+          "title": "Apenas um Rapaz Latino-Americano",
+          "duration": "4:17"
+        },
+        {
+          "number": "02",
+          "title": "Velha Roupa Colorida",
+          "duration": "4:49"
+        },
+        {
+          "number": "03",
+          "title": "Como Nossos Pais",
+          "duration": "4:42"
+        },
+        {
+          "number": "04",
+          "title": "Sujeito de Sorte",
+          "duration": "3:20"
+        },
+        {
+          "number": "05",
+          "title": "Como o Diabo Gosta",
+          "duration": "2:33"
+        },
+        {
+          "number": "06",
+          "title": "Alucinação",
+          "duration": "4:54"
+        },
+        {
+          "number": "07",
+          "title": "Não Leve Flores",
+          "duration": "4:11"
+        },
+        {
+          "number": "08",
+          "title": "A Palo Seco",
+          "duration": "2:56"
+        },
+        {
+          "number": "09",
+          "title": "Fotografia 3x4",
+          "duration": "5:27"
+        },
+        {
+          "number": "10",
+          "title": "Antes do Fim",
+          "duration": "1:00"
+        }
+      ]
+    },
+    {
       "id": "clube-da-esquina",
       "type": "vinyl",
       "name": "CLUBE DA ESQUINA",
-      "artist": "Milton Nascimento & Lô Borges",
+      "artist": "Milton Nascimento",
       "description": "Marco da música brasileira gravado em 1972, unindo harmonias mineiras, canção popular, bossa nova e psicodelia.",
       "price": 249.9,
       "image": "https://media.pitchfork.com/photos/5b894e5ddb74e05a6446ffd1/1:1/w_320,c_limit/clube%20da%20esquina.jpg%20.jpg",
@@ -733,6 +881,364 @@
         }
       ],
       "_comentario": "-> ITEM DE EXEMPLO: featured/is_new definem as abas da loja no back/filtros. 'images' aceita várias fotos para o slider na tela de produto."
+    },
+    {
+      "id": "harrys-house",
+      "type": "vinyl",
+      "name": "Harry's House",
+      "artist": "Harry Styles",
+      "description": "Um pop leve, ensolarado e nostálgico. Perfeito para o fim de tarde, misturando sintetizadores quentes e baixos marcantes com o frescor da brisa de verão.",
+      "price": 329.90,
+      "image": "https://thumb.wikimedia.org/wikipedia/pt/thumb/d/d5/Harry_Styles_-_Harry%27s_House.png/250px-Harry_Styles_-_Harry%27s_House.png?utm_source=pt.wikipedia.org&utm_campaign=parser&utm_content=thumbnail",
+      "images": [
+        "https://thumb.wikimedia.org/wikipedia/pt/thumb/d/d5/Harry_Styles_-_Harry%27s_House.png/250px-Harry_Styles_-_Harry%27s_House.png?utm_source=pt.wikipedia.org&utm_campaign=parser&utm_content=thumbnail"
+      ],
+      "category": "Pop",
+      "weight_grams": 180,
+      "tracks_count": 13,
+      "pickup_location": "Estúdio ZUNO",
+      "cover_variant": "coastal-bands",
+      "featured": false,
+      "is_new": true,
+      "tracklist": [
+        {
+          "number": "01",
+          "title": "Music for a Sushi Restaurant",
+          "duration": "3:14"
+        },
+        {
+          "number": "02",
+          "title": "Late Night Talking",
+          "duration": "2:58"
+        },
+        {
+          "number": "03",
+          "title": "Grapejuice",
+          "duration": "3:12"
+        },
+        {
+          "number": "04",
+          "title": "As It Was",
+          "duration": "2:47"
+        },
+        {
+          "number": "05",
+          "title": "Daylight",
+          "duration": "2:45"
+        },
+        {
+          "number": "06",
+          "title": "Little Freak",
+          "duration": "3:22"
+        },
+        {
+          "number": "07",
+          "title": "Matilda",
+          "duration": "4:05"
+        },
+        {
+          "number": "08",
+          "title": "Cinema",
+          "duration": "4:03"
+        },
+        {
+          "number": "09",
+          "title": "Daydreaming",
+          "duration": "3:07"
+        },
+        {
+          "number": "10",
+          "title": "Keep Driving",
+          "duration": "2:59"
+        },
+        {
+          "number": "11",
+          "title": "Satellite",
+          "duration": "3:37"
+        },
+        {
+          "number": "12",
+          "title": "Boyfriends",
+          "duration": "3:12"
+        },
+        {
+          "number": "13",
+          "title": "Love of My Life",
+          "duration": "3:11"
+        }
+      ]
+    },
+    {
+      "id": "in-between-dreams",
+      "type": "vinyl",
+      "name": "In Between Dreams",
+      "artist": "Jack Johnson",
+      "description": "O clássico absoluto da música praiana acústica. Um disco despretensioso guiado por violões e ritmos suaves que entrega instantaneamente o clima de pé na areia.",
+      "price": 289.90,
+      "image": "https://thumb.wikimedia.org/wikipedia/pt/thumb/7/74/InBetweenDreams.jpg/250px-InBetweenDreams.jpg?utm_source=pt.wikipedia.org&utm_campaign=parser&utm_content=thumbnail",
+      "images": [
+        "https://thumb.wikimedia.org/wikipedia/pt/thumb/7/74/InBetweenDreams.jpg/250px-InBetweenDreams.jpg?utm_source=pt.wikipedia.org&utm_campaign=parser&utm_content=thumbnail",
+        "https://universalmusic.vtexassets.com/arquivos/ids/194536-1200-auto?v=638943449802530000&width=1200&height=auto&aspect=true",
+        "https://mundovinyl.com.br/wp-content/uploads/2022/12/jack-johnson-in-between-dreams-150x152.jpeg",
+        "https://mundovinyl.com.br/wp-content/uploads/2022/12/jack-johnson-in-between-dreams-2d9c17e1-150x150.jpg",
+        "https://mundovinyl.com.br/wp-content/uploads/2022/12/jack-johnson-in-between-dreams-150x150.jpg"
+      ],
+      "category": "Canção",
+      "weight_grams": 140,
+      "tracks_count": 14,
+      "pickup_location": "Estúdio ZUNO",
+      "cover_variant": "orange-stripes",
+      "featured": false,
+      "is_new": false,
+      "tracklist": [
+        {
+          "number": "01",
+          "title": "Better Together",
+          "duration": "3:27"
+        },
+        {
+          "number": "02",
+          "title": "Never Know",
+          "duration": "3:32"
+        },
+        {
+          "number": "03",
+          "title": "Banana Pancakes",
+          "duration": "3:11"
+        },
+        {
+          "number": "04",
+          "title": "Good People",
+          "duration": "3:28"
+        },
+        {
+          "number": "05",
+          "title": "No Other Way",
+          "duration": "3:09"
+        },
+        {
+          "number": "06",
+          "title": "Sitting, Waiting, Wishing",
+          "duration": "3:03"
+        },
+        {
+          "number": "07",
+          "title": "Staple It Together",
+          "duration": "3:16"
+        },
+        {
+          "number": "08",
+          "title": "Situations",
+          "duration": "1:17"
+        },
+        {
+          "number": "09",
+          "title": "Crying Shame",
+          "duration": "3:06"
+        },
+        {
+          "number": "10",
+          "title": "If I Could",
+          "duration": "2:24"
+        },
+        {
+          "number": "11",
+          "title": "Breakdown",
+          "duration": "3:32"
+        },
+        {
+          "number": "12",
+          "title": "Belle",
+          "duration": "1:42"
+        },
+        {
+          "number": "13",
+          "title": "Do You Remember",
+          "duration": "2:24"
+        },
+        {
+          "number": "14",
+          "title": "Constellations",
+          "duration": "3:21"
+        }
+      ]
+    },
+    {
+      "id": "currents",
+      "type": "vinyl",
+      "name": "Currents",
+      "artist": "Tame Impala",
+      "description": "Psicodelia moderna com baixos dançantes e texturas sintéticas. A trilha sonora definitiva para quando o sol encosta no horizonte urbano ou litorâneo.",
+      "price": 349.90,
+      "image": "https://akamai.sscdn.co/letras/360x360/albuns/e/8/f/1/435571730471495.jpg",
+      "images": [
+        "https://akamai.sscdn.co/letras/360x360/albuns/e/8/f/1/435571730471495.jpg"
+      ],
+      "category": "Psicodelia",
+      "weight_grams": 180,
+      "tracks_count": 13,
+      "pickup_location": "Estúdio ZUNO",
+      "cover_variant": "purple-circle",
+      "featured": false,
+      "is_new": false,
+      "tracklist": [
+        {
+          "number": "01",
+          "title": "Let It Happen",
+          "duration": "7:46"
+        },
+        {
+          "number": "02",
+          "title": "Nangs",
+          "duration": "1:47"
+        },
+        {
+          "number": "03",
+          "title": "The Moment",
+          "duration": "4:15"
+        },
+        {
+          "number": "04",
+          "title": "Yes I'm Changing",
+          "duration": "4:30"
+        },
+        {
+          "number": "05",
+          "title": "Eventually",
+          "duration": "5:19"
+        },
+        {
+          "number": "06",
+          "title": "Gossip",
+          "duration": "0:55"
+        },
+        {
+          "number": "07",
+          "title": "The Less I Know The Better",
+          "duration": "3:36"
+        },
+        {
+          "number": "08",
+          "title": "Past Life",
+          "duration": "3:47"
+        },
+        {
+          "number": "09",
+          "title": "Disciples",
+          "duration": "1:48"
+        },
+        {
+          "number": "10",
+          "title": "Cause I'm A Man",
+          "duration": "4:01"
+        },
+        {
+          "number": "11",
+          "title": "Reality in Motion",
+          "duration": "4:12"
+        },
+        {
+          "number": "12",
+          "title": "Love/Paranoia",
+          "duration": "3:06"
+        },
+        {
+          "number": "13",
+          "title": "New Person, Same Old Mistakes",
+          "duration": "6:02"
+        }
+      ]
+    },
+    {
+      "id": "norman-fucking-rockwell",
+      "type": "vinyl",
+      "name": "Norman Fucking Rockwell!",
+      "artist": "Lana Del Rey",
+      "description": "Uma carta de amor melancólica e sublime à Califórnia. Baladas de piano e surf rock suave que formam o retrato perfeito do fim de tarde na costa oeste.",
+      "price": 315.00,
+      "image": "https://t2.genius.com/unsafe/344x344/https%3A%2F%2Fimages.genius.com%2Feb4b2006ef1fa773c1418956ef8fb2d1.1000x1000x1.png",
+      "images": [
+        "https://t2.genius.com/unsafe/344x344/https%3A%2F%2Fimages.genius.com%2Feb4b2006ef1fa773c1418956ef8fb2d1.1000x1000x1.png"
+      ],
+      "category": "Pop",
+      "weight_grams": 180,
+      "tracks_count": 14,
+      "pickup_location": "Estúdio ZUNO",
+      "cover_variant": "coastal-bands",
+      "featured": false,
+      "is_new": false,
+      "tracklist": [
+        {
+          "number": "01",
+          "title": "Norman fucking Rockwell",
+          "duration": "4:08"
+        },
+        {
+          "number": "02",
+          "title": "Mariners Apartment Complex",
+          "duration": "4:06"
+        },
+        {
+          "number": "03",
+          "title": "Venice Bitch",
+          "duration": "9:38"
+        },
+        {
+          "number": "04",
+          "title": "Fuck it I love you",
+          "duration": "3:38"
+        },
+        {
+          "number": "05",
+          "title": "Doin' Time",
+          "duration": "3:22"
+        },
+        {
+          "number": "06",
+          "title": "Love song",
+          "duration": "3:49"
+        },
+        {
+          "number": "07",
+          "title": "Cinnamon Girl",
+          "duration": "5:00"
+        },
+        {
+          "number": "08",
+          "title": "How to disappear",
+          "duration": "3:48"
+        },
+        {
+          "number": "09",
+          "title": "California",
+          "duration": "5:05"
+        },
+        {
+          "number": "10",
+          "title": "The Next Best American Record",
+          "duration": "5:49"
+        },
+        {
+          "number": "11",
+          "title": "The greatest",
+          "duration": "5:00"
+        },
+        {
+          "number": "12",
+          "title": "Bartender",
+          "duration": "4:23"
+        },
+        {
+          "number": "13",
+          "title": "Happiness is a butterfly",
+          "duration": "4:32"
+        },
+        {
+          "number": "14",
+          "title": "hope is a dangerous thing...",
+          "duration": "5:24"
+        }
+      ]
     }
   ],
   "scene_objects": [
@@ -796,32 +1302,32 @@
   ],
   "collections": [
     {
-      "id": "meia-noite",
-      "tag": "COLEÇÃO 01",
-      "title": "DEPOIS DA MEIA-NOITE",
-      "description": "Eletrônica, paisagens e outras horas.",
+      "id": "brisa-leve",
+      "title": "BRISA LEVE",
+      "description": "Para aproveitar o fim de tarde",
       "accent": "#C5F43B",
       "product_ids": [
-        "bewitched-the-goddess-edition",
-        "sos",
-        "iceman",
-        "igor"
+        "harrys-house",
+        "in-between-dreams",
+        "norman-fucking-rockwell",
+        "currents",
+        "sos"
       ]
     },
     {
       "id": "brasil-inventa",
-      "tag": "COLEÇÃO 02",
       "title": "UM BRASIL QUE INVENTA",
-      "description": "Canções que puxam novos caminhos.",
+      "description": "Grandes tesouros da música brasileira em vinil",
       "accent": "#DADCD3",
       "product_ids": [
+        "tabua-de-esmeralda",
         "acabou-chorare",
-        "clube-da-esquina"
+        "clube-da-esquina",
+        "alucinacao"
       ]
     },
     {
       "id": "ouvir-inteiro",
-      "tag": "COLEÇÃO 03",
       "title": "PARA OUVIR POR INTEIRO",
       "description": "Do primeiro sulco à última pausa.",
       "accent": "#C5F43B",

@@ -1,7 +1,21 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { resolveAssetUrl } from '../../utils/assets';
-import { getProductId } from '../../utils/slug';
+import {
+  getProductId,
+  getCreatorName,
+  getCreatorSlug,
+  getCreatorHref,
+} from '../../utils/slug';
+
+function normalizeText(text) {
+  if (!text || typeof text !== 'string') return '';
+  return text
+    .normalize('NFKD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .trim();
+}
 
 export default function Header({
   cartCount = 0,
@@ -17,15 +31,6 @@ export default function Header({
   const searchInputRef = useRef(null);
   const navigate = useNavigate();
   const location = useLocation();
-
-  // Sync internalQuery when URL ?q= changes
-  useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    const qParam = params.get('q');
-    if (qParam !== null) {
-      setInternalQuery(qParam);
-    }
-  }, [location.search]);
 
   // Close search modal on route change
   useEffect(() => {
@@ -76,53 +81,65 @@ export default function Header({
     ...sceneObjects.map((item) => ({ ...item, _isVinyl: false })),
   ];
 
-  const trimmedQuery = internalQuery.trim().toLowerCase();
+  // Build unique artists / stores from the catalog
+  const allCreators = Array.from(
+    allCatalogItems
+      .reduce((map, item) => {
+        const name = getCreatorName(item);
+        const slug = getCreatorSlug(item);
+        const href = getCreatorHref(item);
+        const isArtist = href.startsWith('/artista/');
+        if (!map.has(slug)) {
+          map.set(slug, {
+            slug,
+            name,
+            href,
+            isArtist,
+            image: resolveAssetUrl(item.image),
+            count: 1,
+          });
+        } else {
+          const existing = map.get(slug);
+          existing.count += 1;
+          if (!existing.image && item.image) {
+            existing.image = resolveAssetUrl(item.image);
+          }
+        }
+        return map;
+      }, new Map())
+      .values()
+  );
+
+  const trimmedQuery = normalizeText(internalQuery);
+
+  const suggestedCreators = trimmedQuery
+    ? allCreators
+        .filter((creator) => normalizeText(creator.name).includes(trimmedQuery))
+        .slice(0, 4)
+    : [];
 
   const suggestedProducts = trimmedQuery
     ? allCatalogItems
         .filter((item) => {
-          const inName =
-            item.name && item.name.toLowerCase().includes(trimmedQuery);
-          const inArtist =
-            item.artist && item.artist.toLowerCase().includes(trimmedQuery);
-          const inCategory =
-            item.category && item.category.toLowerCase().includes(trimmedQuery);
+          const inName = normalizeText(item.name).includes(trimmedQuery);
+          const inArtist = normalizeText(item.artist).includes(trimmedQuery);
+          const inCreator = normalizeText(getCreatorName(item)).includes(trimmedQuery);
+          const inCategory = normalizeText(item.category).includes(trimmedQuery);
           const inTracks =
             Array.isArray(item.tracklist) &&
-            item.tracklist.some(
-              (t) => t.title && t.title.toLowerCase().includes(trimmedQuery)
+            item.tracklist.some((t) =>
+              normalizeText(t.title).includes(trimmedQuery)
             );
-          return Boolean(inName || inArtist || inCategory || inTracks);
+          return Boolean(inName || inArtist || inCreator || inCategory || inTracks);
         })
-        .slice(0, 6)
+        .slice(0, 5)
     : allCatalogItems.slice(0, 5);
 
-  const searchParams = new URLSearchParams(location.search);
-  const currentTab = searchParams.get('tab');
-  const currentType = searchParams.get('type');
+  const hasAnySuggestion =
+    suggestedCreators.length > 0 || suggestedProducts.length > 0;
 
-  const isNewActive =
-    (location.pathname === '/discos' || location.pathname === '/busca') &&
-    currentTab === 'new';
-  const isObjetosActive =
-    location.pathname === '/objetos' ||
-    ((location.pathname === '/discos' || location.pathname === '/busca') &&
-      currentType === 'object');
-  const isDiscosActive =
-    (location.pathname === '/discos' &&
-      currentTab !== 'new' &&
-      currentType !== 'object') ||
-    (location.pathname === '/busca' &&
-      currentType === 'vinyl' &&
-      currentTab !== 'new');
-  const isNewsletterActive = location.pathname === '/newsletter';
-
-  const getLinkClasses = (isActive) =>
-    `font-['Inter'] text-sm font-semibold transition-colors cursor-pointer ${
-      isActive
-        ? 'text-[#141512] underline underline-offset-4 decoration-2 decoration-[#141512]'
-        : 'text-[#141512]/80 hover:text-[#141512] hover:underline underline-offset-4'
-    }`;
+  const navLinkClass =
+    "font-['Inter'] text-sm font-semibold text-[#141512]/80 hover:text-[#141512] hover:underline underline-offset-4 transition-colors cursor-pointer";
 
   return (
     <>
@@ -153,19 +170,16 @@ export default function Header({
               className="hidden lg:flex items-center gap-6"
               aria-label="Navegação principal"
             >
-              <Link to="/discos" className={getLinkClasses(isDiscosActive)}>
+              <Link to="/busca?type=vinyl" className={navLinkClass}>
                 Discos
               </Link>
-              <Link to="/discos?tab=new" className={getLinkClasses(isNewActive)}>
+              <Link to="/busca?tab=new" className={navLinkClass}>
                 Novidades
               </Link>
-              <Link to="/objetos" className={getLinkClasses(isObjetosActive)}>
+              <Link to="/busca?type=object" className={navLinkClass}>
                 Objetos
               </Link>
-              <Link
-                to="/newsletter"
-                className={getLinkClasses(isNewsletterActive)}
-              >
+              <Link to="/newsletter" className={navLinkClass}>
                 Newsletter
               </Link>
             </nav>
@@ -240,8 +254,57 @@ export default function Header({
                     </span>
                   </div>
 
-                  {suggestedProducts.length > 0 ? (
+                  {hasAnySuggestion ? (
                     <ul className="divide-y divide-[#141512]/10 max-h-80 overflow-y-auto">
+                      {/* Matching Artists / Stores */}
+                      {suggestedCreators.map((creator) => (
+                        <li key={`creator-${creator.slug}`}>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setIsSearchModalOpen(false);
+                              navigate(creator.href);
+                            }}
+                            className="w-full px-4 py-2.5 flex items-center justify-between gap-3 text-left hover:bg-[#F4F2E9] transition-colors cursor-pointer"
+                          >
+                            <div className="flex items-center gap-3 min-w-0">
+                              <div className="w-11 h-11 rounded-full bg-[#141512] border border-[#141512] overflow-hidden shrink-0 flex items-center justify-center">
+                                {creator.image ? (
+                                  <img
+                                    src={creator.image}
+                                    alt={creator.name}
+                                    className="w-full h-full object-cover"
+                                  />
+                                ) : (
+                                  <span className="font-['Anton'] text-xs text-[#C5F43B] uppercase">
+                                    {creator.name.charAt(0)}
+                                  </span>
+                                )}
+                              </div>
+
+                              <div className="min-w-0">
+                                <p className="font-['Inter'] text-sm font-semibold text-[#141512] truncate">
+                                  {creator.name}
+                                </p>
+                                <p className="font-['IBM_Plex_Mono'] text-[11px] text-[#141512]/60 truncate">
+                                  {creator.count}{' '}
+                                  {creator.count === 1
+                                    ? 'item no catálogo'
+                                    : 'itens no catálogo'}
+                                </p>
+                              </div>
+                            </div>
+
+                            <div className="shrink-0 text-right">
+                              <span className="inline-block font-['IBM_Plex_Mono'] text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 bg-[#C5F43B] text-[#141512] border border-[#141512]">
+                                {creator.isArtist ? 'Artista' : 'Loja'}
+                              </span>
+                            </div>
+                          </button>
+                        </li>
+                      ))}
+
+                      {/* Matching Products */}
                       {suggestedProducts.map((item) => {
                         const itemId = getProductId(item);
                         const thumbUrl = resolveAssetUrl(item.image);
@@ -324,7 +387,10 @@ export default function Header({
             {/* Carrinho Button */}
             <button
               type="button"
-              onClick={onCartClick}
+              onClick={() => {
+                if (onCartClick) onCartClick();
+                navigate('/carrinho');
+              }}
               aria-label={`Carrinho de compras com ${cartCount} itens`}
               className="relative p-2 text-[#141512] hover:opacity-75 transition-opacity cursor-pointer flex items-center justify-center"
             >

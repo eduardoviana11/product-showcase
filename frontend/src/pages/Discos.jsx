@@ -4,6 +4,15 @@ import ProductCard from '../components/ui/ProductCard';
 import Button from '../components/ui/Button';
 import { getProductId } from '../utils/slug';
 
+function normalizeText(text) {
+  if (!text || typeof text !== 'string') return '';
+  return text
+    .normalize('NFKD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .trim();
+}
+
 const SORT_OPTIONS = [
   { id: 'relevance', label: 'Relevância' },
   { id: 'price-asc', label: 'Menor preço' },
@@ -54,15 +63,21 @@ export default function Discos({
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
   const [searchQuery, setSearchQuery] = useState(searchParams.get('q') || '');
 
-  // Keep state synchronized when navigating via Header links or URL changes
+  const urlQueryParam = searchParams.get('q') || '';
+
+  // Sync filters when URL route/params change from navigation
   useEffect(() => {
     setTypeFilter(getInitialTypeFromUrl());
     setSectionFilter(getInitialSectionFromUrl());
     setActiveCategory(searchParams.get('category') || 'Todos');
     setActiveCreator(searchParams.get('artist') || 'Todos');
-    setSearchQuery(searchParams.get('q') || '');
     setVisibleCount(PAGE_SIZE);
   }, [location.pathname, searchParams]);
+
+  // Only update local filter input when the URL ?q= parameter itself changes (e.g. submitted from navbar search)
+  useEffect(() => {
+    setSearchQuery(urlQueryParam);
+  }, [urlQueryParam]);
 
   // Unified product pool with normalized metadata
   const allProducts = [
@@ -119,17 +134,16 @@ export default function Discos({
       (item._creator &&
         item._creator.toLowerCase() === activeCreator.toLowerCase());
 
-    const q = searchQuery.trim().toLowerCase();
+    const q = normalizeText(searchQuery);
     const matchesSearch =
       !q ||
-      (item.name && item.name.toLowerCase().includes(q)) ||
-      (item._creator && item._creator.toLowerCase().includes(q)) ||
-      (item.category && item.category.toLowerCase().includes(q)) ||
-      (item.description && item.description.toLowerCase().includes(q)) ||
+      normalizeText(item.name).includes(q) ||
+      normalizeText(item.artist).includes(q) ||
+      normalizeText(item._creator).includes(q) ||
+      normalizeText(item.category).includes(q) ||
+      normalizeText(item.description).includes(q) ||
       (Array.isArray(item.tracklist) &&
-        item.tracklist.some(
-          (t) => t.title && t.title.toLowerCase().includes(q)
-        ));
+        item.tracklist.some((t) => normalizeText(t.title).includes(q)));
 
     return matchesCategory && matchesCreator && matchesSearch;
   });
@@ -143,7 +157,7 @@ export default function Discos({
     return 0;
   });
 
-  // Helper to update URL query params cleanly
+  // Helper to update URL query params cleanly on the unified /busca route
   const updateUrlParams = (updates) => {
     const nextParams = new URLSearchParams(searchParams);
     Object.entries(updates).forEach(([key, value]) => {
@@ -151,76 +165,21 @@ export default function Discos({
         value === null ||
         value === undefined ||
         value === '' ||
-        value === 'Todos'
+        value === 'Todos' ||
+        value === 'all'
       ) {
         nextParams.delete(key);
       } else {
         nextParams.set(key, value);
       }
     });
-    // If user switches type away from '/objetos', keep URL on '/busca' or '/discos' so path doesn't conflict
-    if (
-      location.pathname === '/objetos' &&
-      updates.type &&
-      updates.type !== 'object'
-    ) {
-      navigate(`/busca?${nextParams.toString()}`);
+    const queryString = nextParams.toString();
+    if (location.pathname !== '/busca') {
+      navigate(queryString ? `/busca?${queryString}` : '/busca', { replace: true });
       return;
     }
-    setSearchParams(nextParams);
+    setSearchParams(nextParams, { replace: true });
   };
-
-  // Dynamic Header Title & Subtitle based on active filters
-  const getPageHeader = () => {
-    if (searchQuery.trim()) {
-      return {
-        kicker: 'BUSCA NO CATÁLOGO ZUNO',
-        title: `RESULTADOS PARA "${searchQuery.trim()}"`,
-        description:
-          'Explore discos de vinil, novidades e objetos da cena encontrados para a sua pesquisa.',
-      };
-    }
-    if (sectionFilter === 'new') {
-      return {
-        kicker: 'LANÇAMENTOS E PRENSAGENS RECENTES',
-        title: 'NOVIDADES EM CATÁLOGO',
-        description:
-          'Itens que acabaram de chegar ao acervo da ZUNO. Filtre por tipo de produto, gênero ou artista.',
-      };
-    }
-    if (sectionFilter === 'featured') {
-      return {
-        kicker: 'CURADORIA ESPECIAL ZUNO',
-        title: 'ITENS EM DESTAQUE',
-        description:
-          'Nossa seleção de edições essenciais em vinil e objetos da cena.',
-      };
-    }
-    if (typeFilter === 'object') {
-      return {
-        kicker: 'ARTEFATOS E PRODUTOS FÍSICOS - MERCH & EDIÇÕES',
-        title: 'OBJETOS DA CENA',
-        description:
-          'A música também mora fora do disco. Ecobags com serigrafia artesanal, cadernos de escuta e cartazes numerados.',
-      };
-    }
-    if (typeFilter === 'vinyl') {
-      return {
-        kicker: 'ACERVO COMPLETO - EDIÇÕES FÍSICAS EM VINIL',
-        title: 'DISCOS EM CATÁLOGO',
-        description:
-          'Navegue por clássicos atemporais, prensagens comemorativas e novidades da cena independente e internacional.',
-      };
-    }
-    return {
-      kicker: 'ACERVO GERAL - DISCOS, NOVIDADES E OBJETOS',
-      title: 'CATÁLOGO COMPLETO',
-      description:
-        'Explore todos os produtos da ZUNO em um só lugar utilizando os filtros abaixo.',
-    };
-  };
-
-  const headerInfo = getPageHeader();
 
   const hasActiveFilters =
     typeFilter !== 'all' ||
@@ -238,22 +197,16 @@ export default function Discos({
     setSearchQuery('');
     setSortBy('relevance');
     setVisibleCount(PAGE_SIZE);
-    navigate('/busca');
+    navigate('/busca', { replace: true });
   };
 
   return (
     <div className="max-w-[1440px] mx-auto px-6 sm:px-12 lg:px-16 py-12 lg:py-16">
-      {/* Dynamic Page Header */}
+      {/* Page Header */}
       <div className="mb-8 pb-6 border-b-2 border-[#141512]">
-        <span className="font-['IBM_Plex_Mono'] text-xs font-semibold text-[#141512] uppercase tracking-[0.08em] block mb-2">
-          {headerInfo.kicker}
-        </span>
         <h1 className="font-['Anton'] text-5xl sm:text-7xl text-[#141512] uppercase tracking-wide leading-none">
-          {headerInfo.title}
+          CATÁLOGO
         </h1>
-        <p className="font-['Inter'] text-base text-[#141512]/75 mt-3 max-w-2xl">
-          {headerInfo.description}
-        </p>
       </div>
 
       {/* Generalized Filter Bar covering all product types */}
@@ -272,7 +225,9 @@ export default function Discos({
                 const val = e.target.value;
                 setSearchQuery(val);
                 setVisibleCount(PAGE_SIZE);
-                updateUrlParams({ q: val });
+                if (!val && searchParams.has('q')) {
+                  updateUrlParams({ q: '' });
+                }
               }}
               placeholder="Filtrar por termo..."
               className="w-48 sm:w-56 bg-[#F4F2E9] border border-[#141512]/30 rounded-md pl-3 pr-8 py-2 font-['IBM_Plex_Mono'] text-xs text-[#141512] placeholder-[#141512]/50 focus:bg-white focus:border-[#141512] focus:outline-none"
@@ -283,7 +238,9 @@ export default function Discos({
                 onClick={() => {
                   setSearchQuery('');
                   setVisibleCount(PAGE_SIZE);
-                  updateUrlParams({ q: '' });
+                  if (searchParams.has('q')) {
+                    updateUrlParams({ q: '' });
+                  }
                 }}
                 aria-label="Limpar termo de filtro"
                 className="absolute right-2 top-1/2 -translate-y-1/2 p-0.5 text-[#141512] hover:opacity-70 transition-opacity cursor-pointer flex items-center justify-center"
