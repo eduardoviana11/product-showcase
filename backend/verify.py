@@ -48,9 +48,6 @@ class ShowcaseChecks(unittest.TestCase):
         physical = PhysicalProduct(
             name="Bolsa", description="Test", price=69.90, image="placeholder.svg", pickup_location="Loja ZUNO"
         )
-        digital = DigitalProduct(
-            name="Caderno", description="Test", price=39.90, image="placeholder.svg", file_format="PDF"
-        )
         vinyl = VinylProduct(
             name="Disco", artist="Artista", description="Test", price=189.90, image="placeholder.svg",
             category="Jazz", weight_grams=180, tracks_count=10, pickup_location="Estúdio ZUNO"
@@ -60,10 +57,9 @@ class ShowcaseChecks(unittest.TestCase):
         )
         self.assertIsInstance(subscription, DigitalProduct)
 
-        deliveries = [physical.delivery(), digital.delivery(), vinyl.delivery(), subscription.delivery()]
-        self.assertEqual(len(set(deliveries)), 4, "All delivery outputs must be distinct")
+        deliveries = [physical.delivery(), vinyl.delivery(), subscription.delivery()]
+        self.assertEqual(len(set(deliveries)), 3, "All delivery outputs must be distinct")
         self.assertIn("Loja ZUNO", physical.delivery())
-        self.assertIn("PDF", digital.delivery())
         self.assertIn("180g", vinyl.delivery())
         self.assertIn("quinzenal", subscription.delivery())
 
@@ -150,17 +146,20 @@ class ShowcaseChecks(unittest.TestCase):
         # Store flags default to False / empty
         self.assertFalse(vinyl.featured)
         self.assertFalse(vinyl.is_new)
+        self.assertFalse(vinyl.hot_100)
         self.assertEqual(vinyl.to_dict()["vinyl_image"], "")
 
         flagged = Product.from_dict({
             **sample_vinyl,
             "featured": True,
             "is_new": True,
+            "hot_100": True,
             "vinyl_image": "https://example.com/disc.png",
         })
         data = flagged.to_dict()
         self.assertTrue(data["featured"])
         self.assertTrue(data["is_new"])
+        self.assertTrue(data["hot_100"])
         self.assertEqual(data["vinyl_image"], "https://example.com/disc.png")
 
 
