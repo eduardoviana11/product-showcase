@@ -124,9 +124,22 @@ export default function Home({
           </div>
         </div>
 
-        {/* Mobile / Tablet Stacked Hero (Preserves exact 16:9 placeholder alignment) */}
+        {/* Mobile / Tablet Stacked Hero (Cluster on top, text below) */}
         <div className="lg:hidden flex flex-col">
-          <div className="px-4 sm:px-8 md:px-12 pt-6 sm:pt-8 pb-4 flex flex-col items-start">
+          {/* Cropped Right-Half View of the 16:9 Hero Canvas for Mobile/Tablet */}
+          <div className="relative w-full overflow-hidden pt-2">
+            <div className="relative w-[195%] -ml-[92%] aspect-[16/9]">
+              <img
+                src="/images/hero/hero-background-2.png"
+                alt=""
+                aria-hidden="true"
+                className="absolute inset-0 w-full h-full object-fill select-none pointer-events-none z-0"
+              />
+              <AlbumCluster albums={vinylRecords} />
+            </div>
+          </div>
+
+          <div className="px-4 sm:px-8 md:px-12 pt-4 sm:pt-6 pb-8 sm:pb-10 flex flex-col items-start">
             <h1 className="font-['Anton'] text-[38px] sm:text-[58px] md:text-[72px] text-[#141512] uppercase leading-[1.05] tracking-normal mb-4 sm:mb-5">
               O SEU PRÓXIMO
               <br className="hidden sm:inline" /> DISCO FAVORITO
@@ -152,19 +165,6 @@ export default function Home({
               >
                 novas coleções
               </Link>
-            </div>
-          </div>
-
-          {/* Cropped Right-Half View of the 16:9 Hero Canvas for Mobile/Tablet */}
-          <div className="relative w-full overflow-hidden pb-4">
-            <div className="relative w-[195%] -ml-[92%] aspect-[16/9]">
-              <img
-                src="/images/hero/hero-background-2.png"
-                alt=""
-                aria-hidden="true"
-                className="absolute inset-0 w-full h-full object-fill select-none pointer-events-none z-0"
-              />
-              <AlbumCluster albums={vinylRecords} />
             </div>
           </div>
         </div>
