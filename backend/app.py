@@ -66,6 +66,11 @@ def apply_local_media(item):
     if media["cover"]:
         merged["image"] = media["cover"]
         images.insert(0, media["cover"])
+    elif (
+        not merged.get("image") or merged.get("image") == "placeholder.svg"
+    ) and media["gallery"]:
+        merged["image"] = media["gallery"][0]
+        images.insert(0, media["gallery"][0])
     elif merged.get("image") and merged["image"] not in images:
         images.insert(0, merged["image"])
     if media["vinyl"]:

@@ -9,6 +9,9 @@ export default function Footer() {
         <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6">
           <Link
             to="/"
+            onClick={() => {
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
             className="font-['Anton'] text-3xl text-[#F4F2E9] tracking-wider uppercase leading-none hover:text-[#C5F43B] transition-colors"
           >
             ZUNO

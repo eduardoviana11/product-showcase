@@ -29,11 +29,19 @@ export function getProductId(product) {
  */
 export function getCreatorName(product) {
   if (!product) return 'Loja ZUNO';
-  const raw = (product.artist || product.store || '').trim();
-  if (!raw || raw.toLowerCase().includes('zuno')) {
-    return (product.store && product.store.trim()) || 'Loja ZUNO';
+  const artist = (product.artist || '').trim();
+  if (artist && !artist.toLowerCase().includes('zuno')) {
+    return artist;
   }
-  return raw;
+  const store = (product.store || '').trim();
+  if (store) {
+    return store;
+  }
+  const pickup = (product.pickup_location || '').trim();
+  if (pickup && product.type !== 'vinyl') {
+    return pickup;
+  }
+  return artist || 'Loja ZUNO';
 }
 
 /**

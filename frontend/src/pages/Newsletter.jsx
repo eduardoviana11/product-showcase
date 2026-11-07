@@ -112,13 +112,13 @@ export default function Newsletter({ onAddToCart }) {
                 <span className="font-bold text-[#C5F43B]">✓</span> Ensaios inéditos e análises faixa-a-faixa exclusivas
               </li>
               <li className="flex items-center gap-2">
-                <span className="font-bold text-[#C5F43B]">✓</span> Reserva antecipada em tiragens limitadas de vinil
+                <span className="font-bold text-[#C5F43B]">✓</span> Acesso a produtos oficiais exclusivos
               </li>
               <li className="flex items-center gap-2">
                 <span className="font-bold text-[#C5F43B]">✓</span> 10% de desconto permanente em todo o acervo de discos
               </li>
               <li className="flex items-center gap-2">
-                <span className="font-bold text-[#C5F43B]">✓</span> Envio quinzenal direto para sua caixa de entrada
+                <span className="font-bold text-[#C5F43B]">✓</span> Envio semanal direto para sua caixa de entrada
               </li>
             </ul>
           </div>

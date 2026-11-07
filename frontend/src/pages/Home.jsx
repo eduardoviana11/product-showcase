@@ -8,10 +8,9 @@ import PulseMark from '../components/shapes/PulseMark';
 import TiltedTape from '../components/shapes/TiltedTape';
 import VinylDisc from '../components/shapes/VinylDisc';
 import Button from '../components/ui/Button';
-import {
-  recordOfTheWeek,
-  magazineArticles,
-} from '../data/showcaseData';
+import { resolveAssetUrl } from '../utils/assets';
+import { getProductId } from '../utils/slug';
+import { recordOfTheWeek } from '../data/showcaseData';
 
 export default function Home({
   vinylRecords = [],
@@ -19,6 +18,43 @@ export default function Home({
   collections = [],
   onAddToCart,
 }) {
+  const newHitsRecords = vinylRecords.filter(
+    (r) => Boolean(r.is_new) && Boolean(r.featured)
+  );
+
+  const hot100Records = vinylRecords.filter((r) => Boolean(r.hot_100));
+
+  const featuredAlbum =
+    vinylRecords.find((r) => getProductId(r) === 'iceman') ||
+    vinylRecords.find(
+      (r) => r.name && r.name.trim().toLowerCase() === 'iceman'
+    );
+
+  const weekRecord = {
+    id: featuredAlbum ? getProductId(featuredAlbum) : recordOfTheWeek.id,
+    kicker: recordOfTheWeek.kicker,
+    badge: recordOfTheWeek.badge,
+    title: featuredAlbum?.name || recordOfTheWeek.title,
+    artist: featuredAlbum?.artist || recordOfTheWeek.artist,
+    description: featuredAlbum?.description || recordOfTheWeek.description,
+    specs: featuredAlbum
+      ? `VINIL PRETO, ${featuredAlbum.weight_grams || 180} G, ${
+          featuredAlbum.tracks_count || 18
+        } FAIXAS`
+      : recordOfTheWeek.specs,
+    price: featuredAlbum?.formatted_price || recordOfTheWeek.price,
+    cta: recordOfTheWeek.cta,
+    imageSrc: resolveAssetUrl(featuredAlbum?.image),
+    vinylImage: featuredAlbum?.vinyl_image,
+    vinylScale: featuredAlbum?.vinyl_scale || 1.0,
+    cartProduct: featuredAlbum || {
+      id: recordOfTheWeek.id,
+      name: recordOfTheWeek.title,
+      artist: recordOfTheWeek.artist,
+      price: 380.0,
+      formatted_price: recordOfTheWeek.price,
+    },
+  };
   return (
     <div className="flex flex-col">
       {/* 1. HERO SECTION WITH CANVA COLLAGE BACKGROUND & DYNAMIC PLACEHOLDERS */}
@@ -134,13 +170,48 @@ export default function Home({
         </div>
       </section>
 
-      {/* 2. 4-ITEM CAROUSEL SECTION */}
+      {/* 2A. 4-ITEM CAROUSEL SECTION: NOVOS HITS (is_new && featured) */}
       <section className="border-b-2 border-[#141512] py-10 sm:py-16 px-4 sm:px-8 lg:px-16 bg-[#F4F2E9]">
         <div className="max-w-[1440px] mx-auto">
           <Carousel
-            title="CHEGOU. É PRA OUVIR."
-            subtitle="GARIMPO FRESCO - EDIÇÕES EM DESTAQUE"
-            items={vinylRecords}
+            title="NOVOS HITS"
+            subtitle="EDIÇÕES EM DESTAQUE"
+            items={newHitsRecords}
+            rightAction={
+              <Link
+                to="/discos"
+                className="hidden sm:inline-flex items-center font-['IBM_Plex_Mono'] text-xs font-bold uppercase tracking-wider text-[#141512] hover:underline underline-offset-4 ml-4"
+              >
+                Ver todos os discos →
+              </Link>
+            }
+            renderItem={(record) => (
+              <ProductCard
+                product={record}
+                isVinyl={true}
+                onAction={onAddToCart}
+              />
+            )}
+          />
+
+          <div className="mt-8 text-center sm:hidden">
+            <Link
+              to="/discos"
+              className="font-['IBM_Plex_Mono'] text-xs font-bold uppercase tracking-wider text-[#141512] underline underline-offset-4"
+            >
+              Ver todos os discos →
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* 2B. 4-ITEM CAROUSEL SECTION: BILLBOARD TOP 100 */}
+      <section className="border-b-2 border-[#141512] py-10 sm:py-16 px-4 sm:px-8 lg:px-16 bg-[#F4F2E9]">
+        <div className="max-w-[1440px] mx-auto">
+          <Carousel
+            title="NO TOPO DAS PARADAS"
+            subtitle="DIRETO DO BILLBOARD HOT 100"
+            items={hot100Records}
             rightAction={
               <Link
                 to="/discos"
@@ -174,10 +245,10 @@ export default function Home({
         <div className="max-w-[1440px] mx-auto">
           <div className="mb-8 sm:mb-10 pb-6 border-b-2 border-[#141512]">
             <span className="font-['IBM_Plex_Mono'] text-xs font-semibold text-[#141512] uppercase tracking-[0.08em] block mb-2">
-              NÃO É UM GÊNERO, É UM PONTO DE PARTIDA.
+              ÁLBUNS QUE COMBINAM
             </span>
             <h2 className="font-['Anton'] text-4xl sm:text-6xl text-[#141512] uppercase tracking-wide leading-none">
-              SIGA A SUA CURIOSIDADE.
+              COLEÇÕES OFICIAIS ZUNO
             </h2>
           </div>
 
@@ -229,59 +300,79 @@ export default function Home({
                 <PulseMark color="acid" size={34} />
               </div>
               <div className="absolute -bottom-4 left-6 z-30">
-                <TiltedTape>{recordOfTheWeek.badge}</TiltedTape>
+                <TiltedTape>{weekRecord.badge}</TiltedTape>
               </div>
 
               <div className="relative w-full h-full bg-[#1b262c] border-2 border-[#C5F43B] shadow-[8px_8px_0px_rgba(197,244,59,0.3)]">
                 <div className="absolute top-3 bottom-3 right-0 aspect-square translate-x-[34%] z-0">
-                  <VinylDisc labelText="MARÉ" />
+                  <VinylDisc
+                    labelText={weekRecord.title}
+                    image={weekRecord.vinylImage}
+                    scale={weekRecord.vinylScale}
+                  />
                 </div>
 
-                <div className="relative z-10 w-full h-full bg-[#1a252c] p-6 sm:p-8 flex flex-col justify-between border-r border-[#C5F43B]/30">
-                  <div>
-                    <span className="font-['IBM_Plex_Mono'] text-[10px] text-[#C5F43B] uppercase tracking-widest block mb-2">
-                      ZUNO DESTAQUE - SEMANA 42
-                    </span>
-                    <h3 className="font-['Anton'] text-4xl sm:text-5xl text-[#F4F2E9] uppercase leading-none">
-                      {recordOfTheWeek.title}
-                    </h3>
-                    <p className="font-['Inter'] text-base text-[#DADCD3] font-medium mt-1">
-                      {recordOfTheWeek.artist}
-                    </p>
-                  </div>
+                <Link
+                  to={`/produto/${weekRecord.id}`}
+                  aria-label={`Ver detalhes de ${weekRecord.title}`}
+                  className="relative z-10 w-full h-full bg-[#1a252c] block overflow-hidden border-r border-[#C5F43B]/30"
+                >
+                  {weekRecord.imageSrc ? (
+                    <img
+                      src={weekRecord.imageSrc}
+                      alt={`Capa do álbum ${weekRecord.title} - ${weekRecord.artist}`}
+                      className="w-full h-full object-cover select-none"
+                    />
+                  ) : (
+                    <div className="w-full h-full p-6 sm:p-8 flex flex-col justify-between">
+                      <div>
+                        <span className="font-['IBM_Plex_Mono'] text-[10px] text-[#C5F43B] uppercase tracking-widest block mb-2">
+                          ZUNO DESTAQUE
+                        </span>
+                        <h3 className="font-['Anton'] text-4xl sm:text-5xl text-[#F4F2E9] uppercase leading-none">
+                          {weekRecord.title}
+                        </h3>
+                        <p className="font-['Inter'] text-base text-[#DADCD3] font-medium mt-1">
+                          {weekRecord.artist}
+                        </p>
+                      </div>
 
-                  <div className="space-y-2">
-                    <div className="h-8 bg-[#2d404d]" />
-                    <div className="h-4 bg-[#415b6d]" />
-                    <div className="h-2 bg-[#C5F43B]" />
-                    <p className="font-['IBM_Plex_Mono'] text-[9px] text-[#DADCD3]/70 pt-2 uppercase">
-                      EDIÇÃO ESPECIAL NUMERADA
-                    </p>
-                  </div>
-                </div>
+                      <div className="space-y-2">
+                        <div className="h-8 bg-[#2d404d]" />
+                        <div className="h-4 bg-[#415b6d]" />
+                        <div className="h-2 bg-[#C5F43B]" />
+                      </div>
+                    </div>
+                  )}
+                </Link>
               </div>
             </div>
           </div>
 
           <div className="lg:col-span-6 flex flex-col items-start lg:pl-6">
             <span className="font-['IBM_Plex_Mono'] text-xs font-semibold text-[#C5F43B] uppercase tracking-[0.1em] mb-3">
-              {recordOfTheWeek.kicker}
+              {weekRecord.kicker}
             </span>
 
-            <h2 className="font-['Anton'] text-4xl sm:text-6xl text-[#F4F2E9] uppercase tracking-wide leading-tight mb-4">
-              {recordOfTheWeek.title}
-            </h2>
+            <Link
+              to={`/produto/${weekRecord.id}`}
+              className="hover:underline decoration-[#C5F43B] underline-offset-4"
+            >
+              <h2 className="font-['Anton'] text-4xl sm:text-6xl text-[#F4F2E9] uppercase tracking-wide leading-tight mb-4">
+                {weekRecord.title}
+              </h2>
+            </Link>
 
             <p className="font-['Inter'] text-lg font-semibold text-[#DADCD3] mb-4">
-              {recordOfTheWeek.artist}
+              {weekRecord.artist}
             </p>
 
             <p className="font-['Inter'] text-base text-[#DADCD3]/85 leading-relaxed mb-6 max-w-xl">
-              {recordOfTheWeek.description}
+              {weekRecord.description}
             </p>
 
             <div className="font-['IBM_Plex_Mono'] text-xs uppercase tracking-wider text-[#F4F2E9] bg-[#22241F] border-l-4 border-[#C5F43B] py-2 px-4 mb-8">
-              {recordOfTheWeek.specs}
+              {weekRecord.specs}
             </div>
 
             <div className="flex flex-wrap items-center gap-6">
@@ -290,21 +381,16 @@ export default function Home({
                   VALOR DE LANÇAMENTO
                 </span>
                 <span className="font-['IBM_Plex_Mono'] text-2xl font-bold text-[#C5F43B]">
-                  {recordOfTheWeek.price}
+                  {weekRecord.price}
                 </span>
               </div>
 
               <Button
                 variant="primary"
                 size="lg"
-                onClick={() =>
-                  onAddToCart({
-                    name: recordOfTheWeek.title,
-                    formatted_price: recordOfTheWeek.price,
-                  })
-                }
+                onClick={() => onAddToCart(weekRecord.cartProduct)}
               >
-                {recordOfTheWeek.cta}
+                {weekRecord.cta}
               </Button>
             </div>
           </div>
@@ -317,10 +403,10 @@ export default function Home({
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8 sm:mb-10 pb-6 border-b-2 border-[#141512]">
             <div>
               <span className="font-['IBM_Plex_Mono'] text-xs font-semibold text-[#141512] uppercase tracking-[0.08em] block mb-2">
-                A MÚSICA TAMBÉM MORA FORA DO DISCO
+                PRA LEVAR A CENA JUNTO
               </span>
               <h2 className="font-['Anton'] text-4xl sm:text-6xl text-[#141512] uppercase tracking-wide leading-none">
-                PRA LEVAR A CENA JUNTO.
+                PRODUTOS OFICIAIS
               </h2>
             </div>
             <Link
@@ -344,54 +430,7 @@ export default function Home({
         </div>
       </section>
 
-      {/* 6. MAGAZINE SECTION */}
-      <section className="border-b-2 border-[#141512] py-10 sm:py-16 px-4 sm:px-8 lg:px-16 bg-[#F4F2E9]">
-        <div className="max-w-[1440px] mx-auto">
-          <div className="flex items-start justify-between mb-8 sm:mb-10 pb-6 border-b-2 border-[#141512]">
-            <div>
-              <span className="font-['IBM_Plex_Mono'] text-xs font-semibold text-[#141512] uppercase tracking-[0.08em] block mb-2">
-                REVISTA - HISTÓRIAS PARA AMPLIAR A ESCUTA
-              </span>
-              <h2 className="font-['Anton'] text-4xl sm:text-6xl text-[#141512] uppercase tracking-wide leading-none">
-                TEM MAIS ENTRE OS SULCOS.
-              </h2>
-            </div>
-            <PulseMark color="dark" size={32} />
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
-            {magazineArticles.map((article) => (
-              <article
-                key={article.id}
-                className="bg-[#F4F2E9] border-2 border-[#141512] p-6 flex flex-col justify-between hover:shadow-[4px_4px_0px_#141512] transition-all"
-              >
-                <div>
-                  <span className="font-['IBM_Plex_Mono'] text-xs font-semibold text-[#141512]/75 uppercase tracking-wider block mb-3">
-                    {article.kicker}
-                  </span>
-                  <h3 className="font-['Anton'] text-2xl uppercase tracking-wide text-[#141512] leading-tight mb-2">
-                    {article.title}
-                  </h3>
-                  <p className="font-['Inter'] text-xs font-semibold text-[#141512]/80 mb-3">
-                    {article.author}
-                  </p>
-                  <p className="font-['Inter'] text-sm text-[#141512]/75 leading-relaxed">
-                    {article.summary}
-                  </p>
-                </div>
-
-                <div className="pt-6 border-t border-[#141512]/15 mt-6">
-                  <span className="font-['IBM_Plex_Mono'] text-xs font-bold text-[#141512] uppercase tracking-wider hover:underline cursor-pointer">
-                    LER MATÉRIA COMPLETA →
-                  </span>
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 7. NEWSLETTER BANNER (TEASER TO /newsletter) */}
+      {/* 6. NEWSLETTER BANNER (TEASER TO /newsletter) */}
       <section className="bg-[#C5F43B] text-[#141512] border-b-2 border-[#141512] py-12 sm:py-16 px-4 sm:px-8 lg:px-16 select-none">
         <div className="max-w-[1440px] mx-auto max-w-3xl text-center flex flex-col items-center">
           <span className="font-['IBM_Plex_Mono'] text-xs font-semibold uppercase tracking-[0.1em] text-[#141512] mb-3">
@@ -399,11 +438,11 @@ export default function Home({
           </span>
 
           <h2 className="font-['Anton'] text-3xl sm:text-5xl lg:text-6xl uppercase tracking-wide leading-tight mb-4 text-[#141512]">
-            SEU PRÓXIMO DISCO PODE COMEÇAR AQUI.
+            SEU PRÓXIMO DISCO PODE COMEÇAR AQUI
           </h2>
 
           <p className="font-['Inter'] text-base sm:text-lg text-[#141512]/90 max-w-xl leading-relaxed mb-8">
-            Ensaios inéditos, primeiras prensagens reservadas e curadoria musical sem ruído, direto na sua caixa de entrada.
+            Newsletter semanal, acesso antecipado a álbuns selecionados e produtos ZUNO exclusivos.
           </p>
 
           <Link

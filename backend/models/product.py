@@ -29,10 +29,12 @@ class Product(ABC):
         cover_variant="coastal-bands",
         featured=False,
         is_new=False,
+        hot_100=False,
         vinyl_image="",
         vinyl_scale=1.0,
         product_id=None,
         images=None,
+        store="",
     ):
         self.id = product_id or generate_product_slug(name)
         self.name = name
@@ -43,11 +45,13 @@ class Product(ABC):
         self.category = category
         self.specs_meta = specs_meta
         self.artist = artist
+        self.store = store
         self.action_label = action_label
         self.cover_variant = cover_variant
         # Store merchandising flags and optional custom vinyl disc artwork.
         self.featured = featured
         self.is_new = is_new
+        self.hot_100 = bool(hot_100)
         self.vinyl_image = vinyl_image
         self.vinyl_scale = float(vinyl_scale)
 
@@ -75,6 +79,7 @@ class Product(ABC):
             "type": "product",
             "name": self.name,
             "artist": self.artist,
+            "store": self.store,
             "description": self.description,
             "price": self.price,
             "formatted_price": self.formatted_price(),
@@ -87,6 +92,7 @@ class Product(ABC):
             "cover_variant": self.cover_variant,
             "featured": self.featured,
             "is_new": self.is_new,
+            "hot_100": self.hot_100,
             "vinyl_image": self.vinyl_image,
             "vinyl_scale": self.vinyl_scale,
         }
@@ -98,10 +104,12 @@ class Product(ABC):
         store_flags = {
             "featured": bool(data.get("featured", False)),
             "is_new": bool(data.get("is_new", False)),
+            "hot_100": bool(data.get("hot_100", False)),
             "vinyl_image": data.get("vinyl_image", ""),
             "vinyl_scale": float(data.get("vinyl_scale", 1.0)),
             "product_id": data.get("id"),
             "images": data.get("images", []),
+            "store": data.get("store", ""),
         }
         if product_type == "vinyl":
             return VinylProduct(
@@ -178,10 +186,12 @@ class PhysicalProduct(Product):
         cover_variant="object-minimal",
         featured=False,
         is_new=False,
+        hot_100=False,
         vinyl_image="",
         vinyl_scale=1.0,
         product_id=None,
         images=None,
+        store="",
     ):
         super().__init__(
             name,
@@ -195,10 +205,12 @@ class PhysicalProduct(Product):
             cover_variant=cover_variant,
             featured=featured,
             is_new=is_new,
+            hot_100=hot_100,
             vinyl_image=vinyl_image,
             vinyl_scale=vinyl_scale,
             product_id=product_id,
             images=images,
+            store=store,
         )
         self.pickup_location = pickup_location
 
@@ -229,10 +241,12 @@ class DigitalProduct(Product):
         cover_variant="digital-minimal",
         featured=False,
         is_new=False,
+        hot_100=False,
         vinyl_image="",
         vinyl_scale=1.0,
         product_id=None,
         images=None,
+        store="",
     ):
         super().__init__(
             name,
@@ -246,10 +260,12 @@ class DigitalProduct(Product):
             cover_variant=cover_variant,
             featured=featured,
             is_new=is_new,
+            hot_100=hot_100,
             vinyl_image=vinyl_image,
             vinyl_scale=vinyl_scale,
             product_id=product_id,
             images=images,
+            store=store,
         )
         self.file_format = file_format
 
@@ -280,11 +296,13 @@ class VinylProduct(PhysicalProduct):
         cover_variant="coastal-bands",
         featured=False,
         is_new=False,
+        hot_100=False,
         vinyl_image="",
         vinyl_scale=1.0,
         tracklist=None,
         product_id=None,
         images=None,
+        store="",
     ):
         specs_meta = f"VINIL PRETO, {weight_grams} G, {tracks_count} FAIXAS"
         super().__init__(
@@ -300,10 +318,12 @@ class VinylProduct(PhysicalProduct):
             cover_variant=cover_variant,
             featured=featured,
             is_new=is_new,
+            hot_100=hot_100,
             vinyl_image=vinyl_image,
             vinyl_scale=vinyl_scale,
             product_id=product_id,
             images=images,
+            store=store,
         )
         self.weight_grams = weight_grams
         self.tracks_count = tracks_count
@@ -340,10 +360,12 @@ class SubscriptionProduct(DigitalProduct):
         cover_variant="newsletter-minimal",
         featured=False,
         is_new=False,
+        hot_100=False,
         vinyl_image="",
         vinyl_scale=1.0,
         product_id=None,
         images=None,
+        store="",
     ):
         super().__init__(
             name=name,
@@ -358,10 +380,12 @@ class SubscriptionProduct(DigitalProduct):
             cover_variant=cover_variant,
             featured=featured,
             is_new=is_new,
+            hot_100=hot_100,
             vinyl_image=vinyl_image,
             vinyl_scale=vinyl_scale,
             product_id=product_id,
             images=images,
+            store=store,
         )
         self.frequency = frequency
 

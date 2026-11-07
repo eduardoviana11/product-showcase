@@ -545,7 +545,7 @@ export default function ProductDetail({
                 <button
                   type="button"
                   onClick={handleBuyClick}
-                  className="flex-1 h-12 sm:h-14 px-6 rounded-xl bg-[#C5F43B] hover:bg-[#b8e62e] text-[#141512] border border-[#141512]/25 font-['IBM_Plex_Mono'] text-sm sm:text-base font-bold uppercase tracking-wider flex items-center justify-center gap-2.5 transition-colors cursor-pointer"
+                  className="w-full sm:w-auto sm:flex-1 h-14 min-h-[56px] py-3.5 sm:py-0 px-6 rounded-xl bg-[#C5F43B] hover:bg-[#b8e62e] text-[#141512] border border-[#141512]/25 font-['IBM_Plex_Mono'] text-sm sm:text-base font-bold uppercase tracking-wider flex items-center justify-center gap-2.5 transition-colors cursor-pointer"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"

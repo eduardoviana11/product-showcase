@@ -71,13 +71,13 @@ body {
   );
 }
 
-/* Touch devices without hover show the vinyl partially out by default */
+/* Touch / mobile devices keep the vinyl closed inside the sleeve */
 @media (hover: none) {
   .vinyl-slide-element {
-    transform: translateX(18%) !important;
+    transform: translateX(0) !important;
   }
   .cover-slide-element {
-    transform: translateX(-18%) !important;
+    transform: translateX(0) !important;
   }
 }
 

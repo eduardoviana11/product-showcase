@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useLocation, Link } from 'react-router-dom';
 import ProductCard from '../components/ui/ProductCard';
+import FilterDropdown from '../components/ui/FilterDropdown';
 import { resolveAssetUrl } from '../utils/assets';
 import {
   getProductId,
@@ -289,82 +290,58 @@ export default function CreatorProfile({
 
       {/* Filter & Sort Bar */}
       {ownerItems.length > 0 && (
-        <div className="bg-[#FFFFFF] border-2 border-[#141512] rounded-lg p-4 mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
-          <div className="flex flex-wrap items-center gap-3">
+        <div className="bg-[#FFFFFF] border-2 border-[#141512] rounded-lg p-3.5 sm:p-4 mb-8 flex flex-col md:flex-row md:items-center justify-between gap-3 sm:gap-4">
+          <div className="grid grid-cols-2 sm:flex sm:flex-wrap items-center gap-2.5 sm:gap-3">
             {/* Type Filter */}
-            <div className="flex items-center gap-1.5">
-              <label
-                htmlFor="creator-type-select"
-                className="font-['IBM_Plex_Mono'] text-[11px] font-semibold uppercase tracking-wider text-[#141512]/70"
-              >
-                Tipo:
-              </label>
-              <select
-                id="creator-type-select"
-                value={typeFilter}
-                onChange={(e) => {
-                  setTypeFilter(e.target.value);
-                  setCategoryFilter('Todos');
-                }}
-                className="bg-[#F4F2E9] border border-[#141512]/30 rounded-md px-3 py-2 font-['IBM_Plex_Mono'] text-xs font-semibold uppercase tracking-wider text-[#141512] cursor-pointer focus:outline-none focus:border-[#141512]"
-              >
-                <option value="all">Todos ({ownerItems.length})</option>
-                <option value="vinyl">Discos ({ownerVinylCount})</option>
-                <option value="object">Objetos ({ownerObjectCount})</option>
-              </select>
-            </div>
+            <FilterDropdown
+              label="Tipo"
+              value={typeFilter}
+              options={[
+                { value: 'all', label: `Todos (${ownerItems.length})` },
+                { value: 'vinyl', label: `Discos (${ownerVinylCount})` },
+                { value: 'object', label: `Objetos (${ownerObjectCount})` },
+              ]}
+              onChange={(val) => {
+                setTypeFilter(val);
+                setCategoryFilter('Todos');
+              }}
+              isActive={typeFilter !== 'all'}
+              fullWidth={true}
+            />
 
             {/* Category Filter */}
             {availableCategories.length > 2 && (
-              <div className="flex items-center gap-1.5">
-                <label
-                  htmlFor="creator-cat-select"
-                  className="font-['IBM_Plex_Mono'] text-[11px] font-semibold uppercase tracking-wider text-[#141512]/70"
-                >
-                  Categoria:
-                </label>
-                <select
-                  id="creator-cat-select"
-                  value={categoryFilter}
-                  onChange={(e) => setCategoryFilter(e.target.value)}
-                  className="bg-[#F4F2E9] border border-[#141512]/30 rounded-md px-3 py-2 font-['IBM_Plex_Mono'] text-xs font-semibold uppercase tracking-wider text-[#141512] cursor-pointer focus:outline-none focus:border-[#141512]"
-                >
-                  {availableCategories.map((cat) => (
-                    <option key={cat} value={cat}>
-                      {cat === 'Todos' ? 'Todas as categorias' : cat}
-                    </option>
-                  ))}
-                </select>
-              </div>
+              <FilterDropdown
+                label="Categoria"
+                value={categoryFilter}
+                options={availableCategories.map((cat) => ({
+                  value: cat,
+                  label: cat === 'Todos' ? 'Todas as categorias' : cat,
+                }))}
+                onChange={setCategoryFilter}
+                isActive={categoryFilter !== 'Todos'}
+                fullWidth={true}
+              />
             )}
           </div>
 
-          <div className="flex items-center justify-between md:justify-end gap-3 pt-3 md:pt-0 border-t md:border-t-0 border-[#141512]/10">
+          <div className="flex items-center justify-between md:justify-end gap-3 pt-2.5 md:pt-0 border-t md:border-t-0 border-[#141512]/10">
             <span className="font-['IBM_Plex_Mono'] text-xs font-semibold uppercase tracking-[0.08em] text-[#141512]">
               {String(sortedItems.length).padStart(2, '0')}{' '}
               {sortedItems.length === 1 ? 'ITEM' : 'ITENS'}
             </span>
 
-            <div className="flex items-center gap-1.5">
-              <label
-                htmlFor="creator-sort-select"
-                className="font-['IBM_Plex_Mono'] text-[11px] font-semibold uppercase tracking-wider text-[#141512]/70"
-              >
-                Ordenar:
-              </label>
-              <select
-                id="creator-sort-select"
-                value={sortBy}
-                onChange={(e) => setSortBy(e.target.value)}
-                className="bg-[#F4F2E9] border border-[#141512]/30 rounded-md px-3 py-2 font-['IBM_Plex_Mono'] text-xs font-semibold uppercase tracking-wider text-[#141512] cursor-pointer focus:outline-none focus:border-[#141512]"
-              >
-                {SORT_OPTIONS.map((option) => (
-                  <option key={option.id} value={option.id}>
-                    {option.label}
-                  </option>
-                ))}
-              </select>
-            </div>
+            <FilterDropdown
+              label="Ordenar"
+              value={sortBy}
+              options={SORT_OPTIONS.map((option) => ({
+                value: option.id,
+                label: option.label,
+              }))}
+              onChange={setSortBy}
+              isActive={sortBy !== 'relevance'}
+              align="right"
+            />
           </div>
         </div>
       )}

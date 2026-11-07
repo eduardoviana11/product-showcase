@@ -312,6 +312,334 @@
       ]
     },
     {
+      "id": "deadbeat",
+      "type": "vinyl",
+      "name": "Deadbeat",
+      "artist": "Tame Impala",
+      "description": "Uma viagem imersiva e psicodélica guiada por sintetizadores espaciais e a sonoridade inconfundível do projeto de Kevin Parker.",
+      "price": 299.90,
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSzkgcIQfvXlc1QnRNlJhuRzFexso_UOm7AI0HpfrZ5g&s=10",
+      "images": [
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSzkgcIQfvXlc1QnRNlJhuRzFexso_UOm7AI0HpfrZ5g&s=10"
+      ],
+      "category": "Indie Rock",
+      "weight_grams": 140,
+      "tracks_count": 12,
+      "pickup_location": "Estúdio ZUNO",
+      "cover_variant": "psychedelic-swirl",
+      "featured": true,
+      "hot_100": true,
+      "is_new": true,
+      "tracklist": [
+        {
+          "number": "01",
+          "title": "My Old Ways",
+          "duration": "4:58"
+        },
+        {
+          "number": "02",
+          "title": "No Reply",
+          "duration": "3:35"
+        },
+        {
+          "number": "03",
+          "title": "Dracula",
+          "duration": "3:25"
+        },
+        {
+          "number": "04",
+          "title": "Loser",
+          "duration": "3:43"
+        },
+        {
+          "number": "05",
+          "title": "Oblivion",
+          "duration": "4:28"
+        },
+        {
+          "number": "06",
+          "title": "Not My World",
+          "duration": "4:14"
+        },
+        {
+          "number": "07",
+          "title": "Piece of Heaven",
+          "duration": "4:44"
+        },
+        {
+          "number": "08",
+          "title": "Obsolete",
+          "duration": "4:23"
+        },
+        {
+          "number": "09",
+          "title": "Ethereal Connection",
+          "duration": "7:42"
+        },
+        {
+          "number": "10",
+          "title": "See You on Monday (You're Lost)",
+          "duration": "3:34"
+        },
+        {
+          "number": "11",
+          "title": "Afterthought",
+          "duration": "4:01"
+        },
+        {
+          "number": "12",
+          "title": "End of Summer",
+          "duration": "7:12"
+        }
+      ]
+    },
+    {
+      "id": "you-seem-pretty-sad-for-a-girl-so-in-love",
+      "type": "vinyl",
+      "name": "You Seem Pretty Sad for a Girl So in Love",
+      "artist": "Olivia Rodrigo",
+      "description": "Um álbum cru e emocional que explora as nuances da desilusão amorosa, angústia adolescente e autodescoberta com letras afiadas e melodias intensas.",
+      "price": 319.90,
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR37L0_zrXxav8lpHIxX9ujA44-fApo7CUlk2ED-7FCDw&s=10",
+      "images": [
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR37L0_zrXxav8lpHIxX9ujA44-fApo7CUlk2ED-7FCDw&s=10"
+      ],
+      "category": "Pop",
+      "weight_grams": 180,
+      "tracks_count": 13,
+      "pickup_location": "Estúdio ZUNO",
+      "cover_variant": "purple-marble",
+      "featured": true,
+      "hot_100": true,
+      "is_new": true,
+      "tracklist": [
+        {
+          "number": "01",
+          "title": "Drop Dead",
+          "duration": "3:44"
+        },
+        {
+          "number": "02",
+          "title": "Stupid Song",
+          "duration": "3:29"
+        },
+        {
+          "number": "03",
+          "title": "Honeybee",
+          "duration": "3:43"
+        },
+        {
+          "number": "04",
+          "title": "Maggots for Brains",
+          "duration": "4:00"
+        },
+        {
+          "number": "05",
+          "title": "U + Me = <3",
+          "duration": "4:07"
+        },
+        {
+          "number": "06",
+          "title": "My Way",
+          "duration": "3:00"
+        },
+        {
+          "number": "07",
+          "title": "Purple",
+          "duration": "4:00"
+        },
+        {
+          "number": "08",
+          "title": "The Cure",
+          "duration": "4:57"
+        },
+        {
+          "number": "09",
+          "title": "Begged",
+          "duration": "3:37"
+        },
+        {
+          "number": "10",
+          "title": "What's Wrong with Me (with Robert Smith)",
+          "duration": "3:44"
+        },
+        {
+          "number": "11",
+          "title": "Less",
+          "duration": "3:13"
+        },
+        {
+          "number": "12",
+          "title": "Expectations",
+          "duration": "3:41"
+        },
+        {
+          "number": "13",
+          "title": "Cigarette Smoke",
+          "duration": "5:40"
+        }
+      ]
+    },
+    {
+      "id": "prima",
+      "type": "vinyl",
+      "name": "Prima",
+      "artist": "Adéla",
+      "description": "Um álbum ousado e provocativo que mistura batidas eletrônicas com pop irreverente, redefinindo a atitude da nova geração.",
+      "price": 279.90,
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQHd1nhprdPBRRP4VO7l0zNixT0AfRiGxtLctBAjM4OA&s=10",
+      "images": [
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQHd1nhprdPBRRP4VO7l0zNixT0AfRiGxtLctBAjM4OA&s=10"
+      ],
+      "category": "Pop",
+      "weight_grams": 140,
+      "tracks_count": 11,
+      "pickup_location": "Estúdio ZUNO",
+      "cover_variant": "red-translucent",
+      "featured": false,
+      "hot_100": true,
+      "is_new": true,
+      "tracklist": [
+        {
+          "number": "01",
+          "title": "KGB",
+          "duration": "2:38"
+        },
+        {
+          "number": "02",
+          "title": "Nicole Kidman",
+          "duration": "3:01"
+        },
+        {
+          "number": "03",
+          "title": "I'm the Man",
+          "duration": "2:30"
+        },
+        {
+          "number": "04",
+          "title": "Boys",
+          "duration": "2:24"
+        },
+        {
+          "number": "05",
+          "title": "Red Bottoms",
+          "duration": "3:06"
+        },
+        {
+          "number": "06",
+          "title": "Hitachi",
+          "duration": "3:36"
+        },
+        {
+          "number": "07",
+          "title": "Fantasize",
+          "duration": "3:03"
+        },
+        {
+          "number": "08",
+          "title": "Starving Artist",
+          "duration": "3:00"
+        },
+        {
+          "number": "09",
+          "title": "Marijuana",
+          "duration": "1:50"
+        },
+        {
+          "number": "10",
+          "title": "Therapy",
+          "duration": "3:00"
+        },
+        {
+          "number": "11",
+          "title": "Ain't in LA",
+          "duration": "3:04"
+        }
+      ]
+    },
+    {
+      "id": "the-life-of-a-showgirl",
+      "type": "vinyl",
+      "name": "The Life of a Showgirl",
+      "artist": "Taylor Swift",
+      "description": "Uma narrativa teatral e intimista, onde Taylor Swift mergulha nos bastidores do estrelato com composições profundamente confessionais.",
+      "price": 349.90,
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0jDSg1NvMW320Ma_jCwwNniKorfQb8eC0y9xtQL4Fdg&s=10",
+      "images": [
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0jDSg1NvMW320Ma_jCwwNniKorfQb8eC0y9xtQL4Fdg&s=10"
+      ],
+      "category": "Pop",
+      "weight_grams": 180,
+      "tracks_count": 12,
+      "pickup_location": "Estúdio ZUNO",
+      "cover_variant": "glitter-gold",
+      "featured": true,
+      "hot_100": true,
+      "is_new": true,
+      "tracklist": [
+        {
+          "number": "01",
+          "title": "The Fate of Ophelia",
+          "duration": "3:46"
+        },
+        {
+          "number": "02",
+          "title": "Elizabeth Taylor",
+          "duration": "3:28"
+        },
+        {
+          "number": "03",
+          "title": "Opalite",
+          "duration": "3:55"
+        },
+        {
+          "number": "04",
+          "title": "Father Figure",
+          "duration": "3:32"
+        },
+        {
+          "number": "05",
+          "title": "Eldest Daughter",
+          "duration": "4:06"
+        },
+        {
+          "number": "06",
+          "title": "Ruin the Friendship",
+          "duration": "3:40"
+        },
+        {
+          "number": "07",
+          "title": "Actually Romantic",
+          "duration": "2:43"
+        },
+        {
+          "number": "08",
+          "title": "Wish List",
+          "duration": "3:27"
+        },
+        {
+          "number": "09",
+          "title": "Wood",
+          "duration": "2:30"
+        },
+        {
+          "number": "10",
+          "title": "Cancelled!",
+          "duration": "3:31"
+        },
+        {
+          "number": "11",
+          "title": "Honey",
+          "duration": "3:01"
+        },
+        {
+          "number": "12",
+          "title": "The Life of a Showgirl (part. de Sabrina Carpenter)",
+          "duration": "4:01"
+        }
+      ]
+    },
+    {
       "id": "iceman",
       "type": "vinyl",
       "name": "ICEMAN",
@@ -327,7 +655,8 @@
       "tracks_count": 18,
       "pickup_location": "Estúdio ZUNO",
       "cover_variant": "solid-color",
-      "featured": false,
+      "featured": true,
+      "hot_100": true,
       "is_new": true,
       "tracklist": [
         {
@@ -1074,7 +1403,7 @@
       "images": [
         "https://akamai.sscdn.co/letras/360x360/albuns/e/8/f/1/435571730471495.jpg"
       ],
-      "category": "Psicodelia",
+      "category": "Indie Rock",
       "weight_grams": 180,
       "tracks_count": 13,
       "pickup_location": "Estúdio ZUNO",
@@ -1243,30 +1572,36 @@
   ],
   "scene_objects": [
     {
-      "id": "bolsa-escuta-livre",
+      "id": "quadro-igor-tyler-the-creator",
       "type": "physical",
-      "name": "BOLSA ESCUTA LIVRE",
-      "description": "Para carregar até 15 LPs com reforço duplo na alça.",
-      "price": 69.9,
-      "image": "placeholder.svg",
-      "images": [],
+      "name": "Quadro - Tyler, The Creator (IGOR)",
+      "artist": "Tyler, the Creator",
+      "description": "Produzimos seu quadro em até 7 dias úteis, além do tempo de envio.",
+      "price": 99.9,
+      "image": "https://acdn-us.mitiendanube.com/stores/001/604/608/products/sem-titulo-aaede0946433f4b97417417839813774-640-0.webp",
+      "images": [
+        "https://acdn-us.mitiendanube.com/stores/001/604/608/products/sem-titulo-aaede0946433f4b97417417839813774-640-0.webp"
+      ],
       "pickup_location": "Loja ZUNO",
       "category": "Objetos",
-      "specs_meta": "ALGODÃO CRU · SERIGRAFIA · 38 × 42 CM",
+      "specs_meta": "21 × 30 CM - Moldura 2x1 (2cm espessura / 1cm de altura)",
       "action_label": "Ver objeto",
       "cover_variant": "tote-bag"
     },
     {
-      "id": "cartaz-frequencia-comum",
+      "id": "showgirl-ecobag-taylor-swift",
       "type": "physical",
-      "name": "CARTAZ FREQUÊNCIA COMUM",
-      "description": "Tiragem numerada impressa manualmente em papel encorpado.",
+      "name": "Showgirl - Ecobag",
+      "artist": "Taylor Swift",
+      "description": "Inspirado no álbum The Life of a Showgirl, é perfeito para carregar seus vinis.",
       "price": 89.9,
-      "image": "placeholder.svg",
-      "images": [],
+      "image": "https://www.rollingstone.com/wp-content/uploads/2025/08/il_1588xN.7180677263_4eui.webp",
+      "images": [
+        "https://www.rollingstone.com/wp-content/uploads/2025/08/il_1588xN.7180677263_4eui.webp"
+      ],
       "pickup_location": "Loja ZUNO",
       "category": "Objetos",
-      "specs_meta": "SERIGRAFIA EM 2 CORES · 30 × 42 CM",
+      "specs_meta": "30 × 42 CM",
       "action_label": "Ver objeto",
       "cover_variant": "screenprint-poster"
     },
@@ -1274,10 +1609,13 @@
       "id": "caderno-de-escuta-vol-01",
       "type": "digital",
       "name": "CADERNO DE ESCUTA - VOL. 01",
+      "store": "ZUNO",
       "description": "Ensaios curtos, fichas de prensagem e notas de estúdio.",
       "price": 39.9,
-      "image": "placeholder.svg",
-      "images": [],
+      "image": "products/caderno-de-escuta-vol-01/gallery/cover.png",
+      "images": [
+        "products/caderno-de-escuta-vol-01/gallery/cover.png"
+      ],
       "file_format": "Impresso + PDF",
       "category": "Objetos",
       "specs_meta": "PUBLICAÇÃO INDEPENDENTE · 64 PÁGINAS",
@@ -1329,7 +1667,7 @@
     {
       "id": "ouvir-inteiro",
       "title": "PARA OUVIR POR INTEIRO",
-      "description": "Do primeiro sulco à última pausa.",
+      "description": "Maiores hits das noites urbanas",
       "accent": "#C5F43B",
       "product_ids": [
         "bad-remastered",

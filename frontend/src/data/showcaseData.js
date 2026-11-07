@@ -14,16 +14,17 @@ export const showcasePromises = [
 ];
 
 export const recordOfTheWeek = {
+  id: "iceman",
   kicker: "NA AGULHA - O DISCO DA SEMANA",
-  badge: "EDIÇÃO LIMITADA - 300 CÓPIAS",
-  title: "MARÉ IMÓVEL",
-  artist: "Linha d'Água",
+  badge: "EDIÇÃO EM VINIL - 180 G",
+  title: "ICEMAN",
+  artist: "Drake",
   description:
-    "Gravado entre o litoral e a cidade, o primeiro álbum do quarteto encontra a psicodelia brasileira nas pequenas marés do cotidiano.",
-  specs: "VINIL PRETO, 180 G, 10 FAIXAS - 38 MIN",
-  price: "R$ 189,90",
+    "Lançado de surpresa em maio de 2026, o nono álbum de estúdio do rapper canadense consolida seu impacto cultural com batidas refinadas e participações pesadas como Future e 21 Savage.",
+  specs: "VINIL PRETO, 180 G, 18 FAIXAS",
+  price: "R$ 380,00",
   cta: "Levar para a coleção",
-  coverVariant: "coastal-bands",
+  coverVariant: "solid-color",
 };
 
 export const magazineArticles = [

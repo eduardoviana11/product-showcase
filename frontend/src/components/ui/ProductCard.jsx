@@ -173,19 +173,25 @@ export default function ProductCard({
       onMouseLeave={() => setIsHovered(false)}
     >
       <div className="flex flex-col flex-grow">
-        {/* 1. TOP CONTAINER WITH SOFT NEUTRAL BACKGROUND */}
+        {/* 1. TOP CONTAINER WITH WHITE BACKGROUND */}
         <Link
           to={`/produto/${productId}`}
-          className="w-full bg-[#E5E6DF] aspect-[1.14/1] p-3 sm:p-5 lg:p-6 flex items-center justify-center relative overflow-hidden cursor-pointer focus:outline-none"
+          className="w-full bg-[#FFFFFF] aspect-[1.14/1] p-3 sm:p-5 lg:p-6 flex items-center justify-center relative overflow-hidden cursor-pointer focus:outline-none"
           aria-label={`Ver detalhes de ${name}`}
         >
           {/* Cover + Vinyl Sleeve Center Unit */}
-          <div className="relative aspect-square w-[72%] sm:w-[64%] max-w-[220px] flex items-center justify-center">
-            {/* Sliding Vinyl Record behind the sleeve */}
+          <div
+            className={`relative aspect-square ${
+              isVinyl
+                ? 'w-[76%] sm:w-[66%] max-w-[230px]'
+                : 'w-[88%] sm:w-[86%] max-w-[300px]'
+            } flex items-center justify-center`}
+          >
+            {/* Sliding Vinyl Record behind the sleeve (desktop only) */}
             {isVinyl && (
               <div
-                className={`absolute inset-y-1 right-0 aspect-square transition-transform duration-300 ease-out pointer-events-none z-0 vinyl-slide-element ${
-                  isHovered ? 'translate-x-[25%]' : 'translate-x-0'
+                className={`hidden lg:block absolute inset-y-1 right-0 aspect-square transition-transform duration-300 ease-out pointer-events-none z-0 vinyl-slide-element ${
+                  isHovered ? 'lg:translate-x-[25%]' : 'translate-x-0'
                 }`}
               >
                 <VinylDisc
@@ -195,11 +201,13 @@ export default function ProductCard({
               </div>
             )}
 
-            {/* Sleeve Cover in the foreground */}
+            {/* Sleeve Cover / Object Image in the foreground */}
             <div
-              className={`relative z-10 w-full h-full aspect-square bg-[#141512] shadow-[0px_4px_16px_rgba(0,0,0,0.18)] overflow-hidden border border-black/10 transition-transform duration-300 ease-out ${
-                isVinyl ? 'cover-slide-element' : ''
-              } ${isVinyl && isHovered ? '-translate-x-[25%]' : 'translate-x-0'}`}
+              className={`relative z-10 w-full h-full aspect-square bg-[#FFFFFF] overflow-hidden transition-transform duration-300 ease-out ${
+                isVinyl
+                  ? 'shadow-[0px_4px_16px_rgba(0,0,0,0.18)] border border-black/10 cover-slide-element'
+                  : ''
+              } ${isVinyl && isHovered ? 'lg:-translate-x-[25%]' : 'translate-x-0'}`}
             >
               {hasRealImage ? (
                 <img

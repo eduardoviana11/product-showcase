@@ -44,6 +44,7 @@ export default function Colecoes({
       <div className="flex flex-col gap-12 sm:gap-16">
         {collections.map((col) => {
           const bannerUrl = resolveAssetUrl(col.image);
+          const isLightBannerText = col.id === 'ouvir-inteiro';
           return (
             <section
               key={col.id}
@@ -66,15 +67,25 @@ export default function Colecoes({
                 <div className="relative z-10">
                   <h2
                     id={`${col.id}-title`}
-                    className="font-['Anton'] text-3xl sm:text-5xl text-[#141512] uppercase tracking-wide leading-none"
+                    className={`font-['Anton'] text-3xl sm:text-5xl uppercase tracking-wide leading-none ${
+                      isLightBannerText ? 'text-[#F4F2E9]' : 'text-[#141512]'
+                    }`}
                   >
                     {col.title}
                   </h2>
-                  <p className="font-['Inter'] text-sm sm:text-base text-[#141512]/80 mt-2">
+                  <p
+                    className={`font-['Inter'] text-sm sm:text-base mt-2 ${
+                      isLightBannerText ? 'text-[#F4F2E9]/90' : 'text-[#141512]/80'
+                    }`}
+                  >
                     {col.description}
                   </p>
                 </div>
-                <span className="relative z-10 font-['IBM_Plex_Mono'] text-xs font-semibold uppercase tracking-wider text-[#141512] shrink-0">
+                <span
+                  className={`relative z-10 font-['IBM_Plex_Mono'] text-xs font-semibold uppercase tracking-wider shrink-0 ${
+                    isLightBannerText ? 'text-[#F4F2E9]' : 'text-[#141512]'
+                  }`}
+                >
                   {String(col.records.length).padStart(2, '0')}{' '}
                   {col.records.length === 1 ? 'disco' : 'discos'}
                 </span>
