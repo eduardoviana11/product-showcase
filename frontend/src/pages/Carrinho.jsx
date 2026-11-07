@@ -21,7 +21,7 @@ function CartThumb({ product }) {
   const hasImage = Boolean(src) && !imageError;
 
   return (
-    <div className="w-24 sm:w-28 aspect-square bg-[#141512] border border-black/10 overflow-hidden shrink-0">
+    <div className="w-20 sm:w-28 aspect-square bg-[#141512] border border-black/10 overflow-hidden shrink-0">
       {hasImage ? (
         <img
           src={src}
@@ -52,13 +52,13 @@ export default function Carrinho({
   );
 
   return (
-    <div className="max-w-[1440px] mx-auto px-6 sm:px-12 lg:px-16 py-12 lg:py-16">
+    <div className="max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-16 py-8 sm:py-12 lg:py-16">
       {/* Page header */}
-      <div className="mb-8 pb-6 border-b-2 border-[#141512]">
+      <div className="mb-6 sm:mb-8 pb-4 sm:pb-6 border-b-2 border-[#141512]">
         <span className="font-['IBM_Plex_Mono'] text-xs font-semibold text-[#141512] uppercase tracking-[0.08em] block mb-2">
           SUA SELEÇÃO ATÉ AGORA
         </span>
-        <h1 className="font-['Anton'] text-5xl sm:text-7xl text-[#141512] uppercase tracking-wide leading-none">
+        <h1 className="font-['Anton'] text-4xl sm:text-7xl text-[#141512] uppercase tracking-wide leading-none">
           CARRINHO
         </h1>
         <p className="font-['Inter'] text-base text-[#141512]/75 mt-3 max-w-2xl">
@@ -116,7 +116,7 @@ export default function Carrinho({
                       </p>
                     </div>
 
-                    <div className="flex sm:flex-col items-center sm:items-end justify-between sm:justify-start gap-3">
+                    <div className="flex flex-wrap sm:flex-col items-center sm:items-end justify-between sm:justify-start gap-2.5 sm:gap-3">
                       {/* Quantity stepper */}
                       <div
                         className="inline-flex items-center border-2 border-[#141512] bg-[#FFFFFF]"

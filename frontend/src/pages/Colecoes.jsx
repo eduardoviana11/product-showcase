@@ -26,22 +26,22 @@ export default function Colecoes({
   }));
 
   return (
-    <div className="max-w-[1440px] mx-auto px-6 sm:px-12 lg:px-16 py-12 lg:py-16">
+    <div className="max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-16 py-8 sm:py-12 lg:py-16">
       {/* Page header */}
-      <div className="mb-12 pb-6 border-b-2 border-[#141512]">
+      <div className="mb-8 sm:mb-12 pb-6 border-b-2 border-[#141512]">
         <span className="font-['IBM_Plex_Mono'] text-xs font-semibold text-[#141512] uppercase tracking-[0.08em] block mb-2">
           NÃO É UM GÊNERO, É UM PONTO DE PARTIDA.
         </span>
-        <h1 className="font-['Anton'] text-5xl sm:text-7xl text-[#141512] uppercase tracking-wide leading-none">
+        <h1 className="font-['Anton'] text-4xl sm:text-7xl text-[#141512] uppercase tracking-wide leading-none">
           SIGA A SUA CURIOSIDADE.
         </h1>
-        <p className="font-['Inter'] text-base text-[#141512]/75 mt-3 max-w-2xl">
+        <p className="font-['Inter'] text-sm sm:text-base text-[#141512]/75 mt-3 max-w-2xl">
           Seleções montadas pela curadoria da ZUNO para você explorar a música por clima, não por rótulo.
         </p>
       </div>
 
       {/* Collections */}
-      <div className="flex flex-col gap-16">
+      <div className="flex flex-col gap-12 sm:gap-16">
         {collections.map((col) => {
           const bannerUrl = resolveAssetUrl(col.image);
           return (
@@ -52,7 +52,7 @@ export default function Colecoes({
               aria-labelledby={`${col.id}-title`}
             >
               <div
-                className="relative overflow-hidden rounded-lg border-2 border-[#141512] p-6 sm:p-8 mb-8 flex flex-col sm:flex-row sm:items-end justify-between gap-4"
+                className="relative overflow-hidden rounded-lg border-2 border-[#141512] p-5 sm:p-8 mb-6 sm:mb-8 flex flex-col sm:flex-row sm:items-end justify-between gap-4"
                 style={bannerUrl ? undefined : { backgroundColor: col.accent }}
               >
                 {bannerUrl && (
@@ -66,7 +66,7 @@ export default function Colecoes({
                 <div className="relative z-10">
                   <h2
                     id={`${col.id}-title`}
-                    className="font-['Anton'] text-4xl sm:text-5xl text-[#141512] uppercase tracking-wide leading-none"
+                    className="font-['Anton'] text-3xl sm:text-5xl text-[#141512] uppercase tracking-wide leading-none"
                   >
                     {col.title}
                   </h2>
@@ -81,7 +81,7 @@ export default function Colecoes({
               </div>
 
               {col.records.length > 0 ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-10">
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-3.5 sm:gap-x-6 gap-y-6 sm:gap-y-10">
                   {col.records.map((record) => (
                     <ProductCard
                       key={`${col.id}-${getProductId(record)}`}

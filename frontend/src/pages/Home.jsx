@@ -90,8 +90,8 @@ export default function Home({
 
         {/* Mobile / Tablet Stacked Hero (Preserves exact 16:9 placeholder alignment) */}
         <div className="lg:hidden flex flex-col">
-          <div className="px-6 sm:px-12 pt-8 pb-4 flex flex-col items-start">
-            <h1 className="font-['Anton'] text-[44px] sm:text-[62px] md:text-[72px] text-[#141512] uppercase leading-[1.05] tracking-normal mb-4 sm:mb-5">
+          <div className="px-4 sm:px-8 md:px-12 pt-6 sm:pt-8 pb-4 flex flex-col items-start">
+            <h1 className="font-['Anton'] text-[38px] sm:text-[58px] md:text-[72px] text-[#141512] uppercase leading-[1.05] tracking-normal mb-4 sm:mb-5">
               O SEU PRÓXIMO
               <br className="hidden sm:inline" /> DISCO FAVORITO
               <br className="hidden sm:inline" /> ESTÁ AQUI
@@ -135,7 +135,7 @@ export default function Home({
       </section>
 
       {/* 2. 4-ITEM CAROUSEL SECTION */}
-      <section className="border-b-2 border-[#141512] py-16 px-6 sm:px-12 lg:px-16 bg-[#F4F2E9]">
+      <section className="border-b-2 border-[#141512] py-10 sm:py-16 px-4 sm:px-8 lg:px-16 bg-[#F4F2E9]">
         <div className="max-w-[1440px] mx-auto">
           <Carousel
             title="CHEGOU. É PRA OUVIR."
@@ -170,9 +170,9 @@ export default function Home({
       </section>
 
       {/* 3. COLLECTIONS SECTION */}
-      <section id="colecoes" className="border-b-2 border-[#141512] py-16 px-6 sm:px-12 lg:px-16 bg-[#F4F2E9]">
+      <section id="colecoes" className="border-b-2 border-[#141512] py-10 sm:py-16 px-4 sm:px-8 lg:px-16 bg-[#F4F2E9]">
         <div className="max-w-[1440px] mx-auto">
-          <div className="mb-10 pb-6 border-b-2 border-[#141512]">
+          <div className="mb-8 sm:mb-10 pb-6 border-b-2 border-[#141512]">
             <span className="font-['IBM_Plex_Mono'] text-xs font-semibold text-[#141512] uppercase tracking-[0.08em] block mb-2">
               NÃO É UM GÊNERO, É UM PONTO DE PARTIDA.
             </span>
@@ -181,7 +181,7 @@ export default function Home({
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
             {collections.map((col) => (
               <OffsetCutout
                 key={col.id}
@@ -221,10 +221,10 @@ export default function Home({
       </section>
 
       {/* 4. RECORD OF THE WEEK */}
-      <section className="bg-[#141512] text-[#F4F2E9] border-b-2 border-[#141512] py-20 px-6 sm:px-12 lg:px-16 relative overflow-hidden">
-        <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      <section className="bg-[#141512] text-[#F4F2E9] border-b-2 border-[#141512] py-14 sm:py-20 px-4 sm:px-8 lg:px-16 relative overflow-hidden">
+        <div className="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 sm:gap-12 items-center">
           <div className="lg:col-span-6 flex justify-center lg:justify-start">
-            <div className="relative w-72 sm:w-88 md:w-96 aspect-square">
+            <div className="relative w-56 sm:w-80 md:w-96 aspect-square mr-8 sm:mr-12 lg:mr-0">
               <div className="absolute -top-6 -left-6 z-20">
                 <PulseMark color="acid" size={34} />
               </div>
@@ -312,9 +312,9 @@ export default function Home({
       </section>
 
       {/* 5. SCENE OBJECTS PREVIEW */}
-      <section className="border-b-2 border-[#141512] py-16 px-6 sm:px-12 lg:px-16 bg-[#F4F2E9]">
+      <section className="border-b-2 border-[#141512] py-10 sm:py-16 px-4 sm:px-8 lg:px-16 bg-[#F4F2E9]">
         <div className="max-w-[1440px] mx-auto">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10 pb-6 border-b-2 border-[#141512]">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8 sm:mb-10 pb-6 border-b-2 border-[#141512]">
             <div>
               <span className="font-['IBM_Plex_Mono'] text-xs font-semibold text-[#141512] uppercase tracking-[0.08em] block mb-2">
                 A MÚSICA TAMBÉM MORA FORA DO DISCO
@@ -331,7 +331,7 @@ export default function Home({
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-3.5 sm:gap-6 lg:gap-8">
             {sceneObjects.slice(0, 3).map((obj) => (
               <ProductCard
                 key={obj.name}
@@ -345,9 +345,9 @@ export default function Home({
       </section>
 
       {/* 6. MAGAZINE SECTION */}
-      <section className="border-b-2 border-[#141512] py-16 px-6 sm:px-12 lg:px-16 bg-[#F4F2E9]">
+      <section className="border-b-2 border-[#141512] py-10 sm:py-16 px-4 sm:px-8 lg:px-16 bg-[#F4F2E9]">
         <div className="max-w-[1440px] mx-auto">
-          <div className="flex items-start justify-between mb-10 pb-6 border-b-2 border-[#141512]">
+          <div className="flex items-start justify-between mb-8 sm:mb-10 pb-6 border-b-2 border-[#141512]">
             <div>
               <span className="font-['IBM_Plex_Mono'] text-xs font-semibold text-[#141512] uppercase tracking-[0.08em] block mb-2">
                 REVISTA - HISTÓRIAS PARA AMPLIAR A ESCUTA
@@ -359,7 +359,7 @@ export default function Home({
             <PulseMark color="dark" size={32} />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
             {magazineArticles.map((article) => (
               <article
                 key={article.id}
@@ -392,7 +392,7 @@ export default function Home({
       </section>
 
       {/* 7. NEWSLETTER BANNER (TEASER TO /newsletter) */}
-      <section className="bg-[#C5F43B] text-[#141512] border-b-2 border-[#141512] py-16 px-6 sm:px-12 lg:px-16 select-none">
+      <section className="bg-[#C5F43B] text-[#141512] border-b-2 border-[#141512] py-12 sm:py-16 px-4 sm:px-8 lg:px-16 select-none">
         <div className="max-w-[1440px] mx-auto max-w-3xl text-center flex flex-col items-center">
           <span className="font-['IBM_Plex_Mono'] text-xs font-semibold uppercase tracking-[0.1em] text-[#141512] mb-3">
             CARTA DA ESTANTE - ASSINATURA EDITORIAL

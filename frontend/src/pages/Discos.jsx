@@ -201,19 +201,19 @@ export default function Discos({
   };
 
   return (
-    <div className="max-w-[1440px] mx-auto px-6 sm:px-12 lg:px-16 py-12 lg:py-16">
+    <div className="max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-16 py-8 sm:py-12 lg:py-16">
       {/* Page Header */}
-      <div className="mb-8 pb-6 border-b-2 border-[#141512]">
-        <h1 className="font-['Anton'] text-5xl sm:text-7xl text-[#141512] uppercase tracking-wide leading-none">
+      <div className="mb-6 sm:mb-8 pb-4 sm:pb-6 border-b-2 border-[#141512]">
+        <h1 className="font-['Anton'] text-4xl sm:text-7xl text-[#141512] uppercase tracking-wide leading-none">
           CATÁLOGO
         </h1>
       </div>
 
       {/* Generalized Filter Bar covering all product types */}
-      <div className="bg-[#FFFFFF] border-2 border-[#141512] rounded-lg p-4 mb-8 flex flex-col xl:flex-row xl:items-center justify-between gap-4">
-        <div className="flex flex-wrap items-center gap-3">
+      <div className="bg-[#FFFFFF] border-2 border-[#141512] rounded-lg p-3.5 sm:p-4 mb-8 flex flex-col xl:flex-row xl:items-center justify-between gap-4">
+        <div className="flex flex-wrap items-center gap-2.5 sm:gap-3">
           {/* 1. Search / Filter by term with custom black X button */}
-          <div className="relative flex items-center">
+          <div className="relative flex items-center w-full sm:w-auto">
             <label htmlFor="catalog-quick-filter" className="sr-only">
               Filtrar por nome, artista ou categoria
             </label>
@@ -230,7 +230,7 @@ export default function Discos({
                 }
               }}
               placeholder="Filtrar por termo..."
-              className="w-48 sm:w-56 bg-[#F4F2E9] border border-[#141512]/30 rounded-md pl-3 pr-8 py-2 font-['IBM_Plex_Mono'] text-xs text-[#141512] placeholder-[#141512]/50 focus:bg-white focus:border-[#141512] focus:outline-none"
+              className="w-full sm:w-56 bg-[#F4F2E9] border border-[#141512]/30 rounded-md pl-3 pr-8 py-2 font-['IBM_Plex_Mono'] text-xs text-[#141512] placeholder-[#141512]/50 focus:bg-white focus:border-[#141512] focus:outline-none"
             />
             {searchQuery && (
               <button
@@ -264,10 +264,10 @@ export default function Discos({
           </div>
 
           {/* 2. Product Type Dropdown (Todos / Discos / Objetos) */}
-          <div className="flex items-center gap-1.5">
+          <div className="flex items-center justify-between sm:justify-start gap-1.5 w-full sm:w-auto">
             <label
               htmlFor="type-select"
-              className="font-['IBM_Plex_Mono'] text-[11px] font-semibold uppercase tracking-wider text-[#141512]/70"
+              className="font-['IBM_Plex_Mono'] text-[11px] font-semibold uppercase tracking-wider text-[#141512]/70 shrink-0"
             >
               Tipo:
             </label>
@@ -286,7 +286,7 @@ export default function Discos({
                   artist: 'Todos',
                 });
               }}
-              className="bg-[#F4F2E9] border border-[#141512]/30 rounded-md px-3 py-2 font-['IBM_Plex_Mono'] text-xs font-semibold uppercase tracking-wider text-[#141512] cursor-pointer focus:outline-none focus:border-[#141512]"
+              className="flex-1 sm:flex-initial bg-[#F4F2E9] border border-[#141512]/30 rounded-md px-3 py-2 font-['IBM_Plex_Mono'] text-xs font-semibold uppercase tracking-wider text-[#141512] cursor-pointer focus:outline-none focus:border-[#141512]"
             >
               <option value="all">Todos os produtos</option>
               <option value="vinyl">Discos de Vinil</option>
@@ -295,10 +295,10 @@ export default function Discos({
           </div>
 
           {/* 3. Section / Highlight Dropdown (Todo o acervo / Novidades / Em destaque) */}
-          <div className="flex items-center gap-1.5">
+          <div className="flex items-center justify-between sm:justify-start gap-1.5 w-full sm:w-auto">
             <label
               htmlFor="section-select"
-              className="font-['IBM_Plex_Mono'] text-[11px] font-semibold uppercase tracking-wider text-[#141512]/70"
+              className="font-['IBM_Plex_Mono'] text-[11px] font-semibold uppercase tracking-wider text-[#141512]/70 shrink-0"
             >
               Seção:
             </label>
@@ -314,7 +314,7 @@ export default function Discos({
                   type: typeFilter,
                 });
               }}
-              className="bg-[#F4F2E9] border border-[#141512]/30 rounded-md px-3 py-2 font-['IBM_Plex_Mono'] text-xs font-semibold uppercase tracking-wider text-[#141512] cursor-pointer focus:outline-none focus:border-[#141512]"
+              className="flex-1 sm:flex-initial bg-[#F4F2E9] border border-[#141512]/30 rounded-md px-3 py-2 font-['IBM_Plex_Mono'] text-xs font-semibold uppercase tracking-wider text-[#141512] cursor-pointer focus:outline-none focus:border-[#141512]"
             >
               <option value="all">Todo o acervo</option>
               <option value="new">Novidades</option>
@@ -323,10 +323,10 @@ export default function Discos({
           </div>
 
           {/* 4. Generalized Category / Genre Dropdown */}
-          <div className="flex items-center gap-1.5">
+          <div className="flex items-center justify-between sm:justify-start gap-1.5 w-full sm:w-auto">
             <label
               htmlFor="category-select"
-              className="font-['IBM_Plex_Mono'] text-[11px] font-semibold uppercase tracking-wider text-[#141512]/70"
+              className="font-['IBM_Plex_Mono'] text-[11px] font-semibold uppercase tracking-wider text-[#141512]/70 shrink-0"
             >
               Categoria:
             </label>
@@ -339,7 +339,7 @@ export default function Discos({
                 setVisibleCount(PAGE_SIZE);
                 updateUrlParams({ category: cat, type: typeFilter });
               }}
-              className="bg-[#F4F2E9] border border-[#141512]/30 rounded-md px-3 py-2 font-['IBM_Plex_Mono'] text-xs font-semibold uppercase tracking-wider text-[#141512] cursor-pointer focus:outline-none focus:border-[#141512]"
+              className="flex-1 sm:flex-initial bg-[#F4F2E9] border border-[#141512]/30 rounded-md px-3 py-2 font-['IBM_Plex_Mono'] text-xs font-semibold uppercase tracking-wider text-[#141512] cursor-pointer focus:outline-none focus:border-[#141512]"
             >
               {categories.map((cat) => (
                 <option key={cat} value={cat}>
@@ -350,10 +350,10 @@ export default function Discos({
           </div>
 
           {/* 5. Generalized Artist / Store Dropdown */}
-          <div className="flex items-center gap-1.5">
+          <div className="flex items-center justify-between sm:justify-start gap-1.5 w-full sm:w-auto">
             <label
               htmlFor="creator-select"
-              className="font-['IBM_Plex_Mono'] text-[11px] font-semibold uppercase tracking-wider text-[#141512]/70"
+              className="font-['IBM_Plex_Mono'] text-[11px] font-semibold uppercase tracking-wider text-[#141512]/70 shrink-0"
             >
               Artista / Loja:
             </label>
@@ -366,7 +366,7 @@ export default function Discos({
                 setVisibleCount(PAGE_SIZE);
                 updateUrlParams({ artist: creator, type: typeFilter });
               }}
-              className="bg-[#F4F2E9] border border-[#141512]/30 rounded-md px-3 py-2 font-['IBM_Plex_Mono'] text-xs font-semibold uppercase tracking-wider text-[#141512] cursor-pointer max-w-[200px] truncate focus:outline-none focus:border-[#141512]"
+              className="flex-1 sm:flex-initial bg-[#F4F2E9] border border-[#141512]/30 rounded-md px-3 py-2 font-['IBM_Plex_Mono'] text-xs font-semibold uppercase tracking-wider text-[#141512] cursor-pointer sm:max-w-[200px] truncate focus:outline-none focus:border-[#141512]"
             >
               {creators.map((creator) => (
                 <option key={creator} value={creator}>
@@ -420,7 +420,7 @@ export default function Discos({
       {/* Unified Product Grid */}
       {sortedProducts.length > 0 ? (
         <>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-10">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-3.5 sm:gap-x-6 gap-y-6 sm:gap-y-10">
             {sortedProducts.slice(0, visibleCount).map((product) => (
               <ProductCard
                 key={`${product._isVinyl ? 'v' : 'o'}-${getProductId(product)}`}

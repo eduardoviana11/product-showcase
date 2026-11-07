@@ -236,7 +236,7 @@ export default function ProductDetail({
   const hasTracklist = Array.isArray(tracklist) && tracklist.length > 0;
 
   return (
-    <div className="max-w-[1440px] mx-auto px-6 sm:px-12 lg:px-16 py-6 sm:py-10">
+    <div className="max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-16 py-6 sm:py-10">
       {/* 1. BREADCRUMB BAR */}
       <nav
         aria-label="Navegação estrutural"
@@ -707,7 +707,7 @@ export default function ProductDetail({
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-10">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-3.5 sm:gap-x-6 gap-y-6 sm:gap-y-10">
             {relatedProducts.map((relItem) => {
               const relIsVinyl =
                 relItem.type === 'vinyl' ||

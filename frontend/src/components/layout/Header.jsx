@@ -155,17 +155,17 @@ export default function Header({
 
       {/* 2. HEADER NAVIGATION */}
       <header className="sticky top-0 z-40 bg-[#F4F2E9] border-b-2 border-[#141512]">
-        <div className="max-w-[1440px] mx-auto px-6 sm:px-12 lg:px-16 h-20 flex items-center justify-between gap-6">
-          {/* Brand Wordmark & Nav Links */}
-          <div className="flex items-center gap-8">
+        <div className="max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-16 py-3 lg:py-0 lg:h-20 flex flex-wrap lg:flex-nowrap items-center justify-between gap-y-2.5 gap-x-4 lg:gap-6">
+          {/* Brand Wordmark & Desktop Nav Links */}
+          <div className="order-1 flex items-center gap-8 md:mr-auto">
             <Link
               to="/"
-              className="font-['Anton'] text-4xl sm:text-5xl tracking-wider text-[#141512] uppercase leading-none hover:text-black transition-colors"
+              className="font-['Anton'] text-3xl sm:text-5xl tracking-wider text-[#141512] uppercase leading-none hover:text-black transition-colors"
             >
               ZUNO
             </Link>
 
-            {/* Nav Links */}
+            {/* Desktop Nav Links */}
             <nav
               className="hidden lg:flex items-center gap-6"
               aria-label="Navegação principal"
@@ -185,34 +185,35 @@ export default function Header({
             </nav>
           </div>
 
-          {/* Search & Cart Controls */}
-          <div className="flex items-center gap-4">
-            {/* Search Input + Suggestions Modal */}
-            <div ref={searchContainerRef} className="relative hidden md:block">
-              <form onSubmit={handleSearchSubmit} className="relative flex items-center">
-                <label htmlFor="search-input" className="sr-only">
-                  Buscar discos, artistas ou objetos
-                </label>
-                <input
-                  ref={searchInputRef}
-                  id="search-input"
-                  type="text"
-                  autoComplete="off"
-                  value={internalQuery}
-                  onFocus={() => setIsSearchModalOpen(true)}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Escape') {
-                      setIsSearchModalOpen(false);
-                    }
-                  }}
-                  onChange={(e) => {
-                    setInternalQuery(e.target.value);
-                    setIsSearchModalOpen(true);
-                    if (onSearchChange) onSearchChange(e.target.value);
-                  }}
-                  placeholder="BUSCAR DISCO, ARTISTA OU OBJETO..."
-                  className="w-72 sm:w-80 md:w-[420px] lg:w-[520px] xl:w-[600px] bg-[#FFFFFF] border-2 border-[#141512] rounded-md pl-3.5 pr-10 py-2 font-['IBM_Plex_Mono'] text-xs uppercase tracking-wide text-[#141512] placeholder-[#141512]/45 focus:bg-[#FFFFFF] focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0 !outline-none"
-                />
+          {/* Search Input + Suggestions Modal */}
+          <div
+            ref={searchContainerRef}
+            className="order-3 md:order-2 relative w-full md:w-auto"
+          >
+            <form onSubmit={handleSearchSubmit} className="relative flex items-center">
+              <label htmlFor="search-input" className="sr-only">
+                Buscar discos, artistas ou objetos
+              </label>
+              <input
+                ref={searchInputRef}
+                id="search-input"
+                type="text"
+                autoComplete="off"
+                value={internalQuery}
+                onFocus={() => setIsSearchModalOpen(true)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Escape') {
+                    setIsSearchModalOpen(false);
+                  }
+                }}
+                onChange={(e) => {
+                  setInternalQuery(e.target.value);
+                  setIsSearchModalOpen(true);
+                  if (onSearchChange) onSearchChange(e.target.value);
+                }}
+                placeholder="BUSCAR DISCO, ARTISTA OU OBJETO..."
+                className="w-full md:w-80 lg:w-[440px] xl:w-[580px] bg-[#FFFFFF] border-2 border-[#141512] rounded-md pl-3.5 pr-10 py-2 font-['IBM_Plex_Mono'] text-xs uppercase tracking-wide text-[#141512] placeholder-[#141512]/45 focus:bg-[#FFFFFF] focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0 !outline-none"
+              />
 
                 {/* Custom Larger Black Clear (X) Button */}
                 {internalQuery && (
@@ -373,18 +374,19 @@ export default function Header({
                     onClick={handleSearchSubmit}
                     className="w-full px-4 py-2.5 bg-[#141512] text-[#F4F2E9] hover:bg-[#232520] font-['IBM_Plex_Mono'] text-xs font-semibold uppercase tracking-wider flex items-center justify-between transition-colors cursor-pointer"
                   >
-                    <span>
+                    <span className="truncate pr-2">
                       {trimmedQuery
                         ? `Ver todos os resultados para "${internalQuery.trim()}"`
                         : 'Ver todo o catálogo com filtros'}
                     </span>
-                    <span className="text-[#C5F43B]">ENTER ↵</span>
+                    <span className="text-[#C5F43B] shrink-0">ENTER ↵</span>
                   </button>
                 </div>
               )}
-            </div>
+          </div>
 
-            {/* Carrinho Button */}
+          {/* Carrinho Button */}
+          <div className="order-2 md:order-3 flex items-center">
             <button
               type="button"
               onClick={() => {
@@ -414,6 +416,25 @@ export default function Header({
               </span>
             </button>
           </div>
+
+          {/* Mobile & Tablet Navigation Bar */}
+          <nav
+            className="order-4 w-full flex lg:hidden items-center justify-between sm:justify-start gap-4 sm:gap-8 pt-2 border-t border-[#141512]/15 overflow-x-auto"
+            aria-label="Navegação mobile"
+          >
+            <Link to="/busca?type=vinyl" className={navLinkClass}>
+              Discos
+            </Link>
+            <Link to="/busca?tab=new" className={navLinkClass}>
+              Novidades
+            </Link>
+            <Link to="/busca?type=object" className={navLinkClass}>
+              Objetos
+            </Link>
+            <Link to="/newsletter" className={navLinkClass}>
+              Newsletter
+            </Link>
+          </nav>
         </div>
       </header>
     </>

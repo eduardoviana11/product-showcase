@@ -101,7 +101,7 @@ export default function CreatorProfile({
   // When no slug is provided (/artista/ or /loja/), render the directory of artists or stores (not their products)
   if (!normalizedSlug) {
     return (
-      <div className="max-w-[1440px] mx-auto px-6 sm:px-12 lg:px-16 py-8 lg:py-12">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-16 py-6 sm:py-8 lg:py-12">
         {/* Breadcrumb */}
         <nav
           aria-label="Navegação estrutural"
@@ -117,22 +117,22 @@ export default function CreatorProfile({
         </nav>
 
         {/* Page Header */}
-        <div className="mb-8 pb-6 border-b-2 border-[#141512]">
-          <h1 className="font-['Anton'] text-5xl sm:text-7xl text-[#141512] uppercase tracking-wide leading-none">
+        <div className="mb-6 sm:mb-8 pb-4 sm:pb-6 border-b-2 border-[#141512]">
+          <h1 className="font-['Anton'] text-4xl sm:text-7xl text-[#141512] uppercase tracking-wide leading-none">
             {isStorePath ? 'LOJAS' : 'ARTISTAS'}
           </h1>
         </div>
 
         {/* Creators Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3.5 sm:gap-6">
           {directoryCreators.map((creator) => (
             <Link
               key={creator.slug}
               to={`${isStorePath ? '/loja' : '/artista'}/${creator.slug}`}
-              className="group bg-[#FFFFFF] border-2 border-[#141512] rounded-lg p-6 flex flex-col justify-between gap-5 hover:shadow-[4px_4px_0px_#C5F43B] transition-all"
+              className="group bg-[#FFFFFF] border-2 border-[#141512] rounded-lg p-3.5 sm:p-6 flex flex-col justify-between gap-3.5 sm:gap-5 hover:shadow-[4px_4px_0px_#C5F43B] transition-all"
             >
-              <div className="flex items-center gap-4">
-                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-[#141512] border-2 border-[#141512] overflow-hidden shrink-0 flex items-center justify-center shadow-[3px_3px_0px_#C5F43B]">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4">
+                <div className="w-12 h-12 sm:w-20 sm:h-20 rounded-full bg-[#141512] border-2 border-[#141512] overflow-hidden shrink-0 flex items-center justify-center shadow-[3px_3px_0px_#C5F43B]">
                   {creator.image ? (
                     <img
                       src={creator.image}
@@ -140,29 +140,29 @@ export default function CreatorProfile({
                       className="w-full h-full object-cover"
                     />
                   ) : (
-                    <span className="font-['Anton'] text-2xl text-[#C5F43B] uppercase">
+                    <span className="font-['Anton'] text-xl sm:text-2xl text-[#C5F43B] uppercase">
                       {creator.name.charAt(0)}
                     </span>
                   )}
                 </div>
 
-                <div className="min-w-0">
-                  <span className="inline-block font-['IBM_Plex_Mono'] text-[10px] font-semibold uppercase tracking-[0.08em] px-2 py-0.5 bg-[#C5F43B] text-[#141512] border border-[#141512] mb-1.5">
+                <div className="min-w-0 w-full">
+                  <span className="inline-block font-['IBM_Plex_Mono'] text-[9px] sm:text-[10px] font-semibold uppercase tracking-[0.08em] px-1.5 sm:px-2 py-0.5 bg-[#C5F43B] text-[#141512] border border-[#141512] mb-1 sm:mb-1.5">
                     {isStorePath ? 'LOJA OFICIAL' : 'ARTISTA'}
                   </span>
-                  <h2 className="font-['Anton'] text-2xl sm:text-3xl text-[#141512] uppercase tracking-wide leading-tight truncate group-hover:underline underline-offset-4">
+                  <h2 className="font-['Anton'] text-lg sm:text-3xl text-[#141512] uppercase tracking-wide leading-tight truncate group-hover:underline underline-offset-4">
                     {creator.name}
                   </h2>
                 </div>
               </div>
 
-              <div className="pt-4 border-t border-[#141512]/15 flex items-center justify-between gap-2">
-                <span className="font-['IBM_Plex_Mono'] text-xs text-[#141512]/70 uppercase tracking-wider truncate">
+              <div className="pt-3 sm:pt-4 border-t border-[#141512]/15 flex items-center justify-between gap-2">
+                <span className="font-['IBM_Plex_Mono'] text-[10px] sm:text-xs text-[#141512]/70 uppercase tracking-wider truncate">
                   {creator.count}{' '}
-                  {creator.count === 1 ? 'item no catálogo' : 'itens no catálogo'}
+                  {creator.count === 1 ? 'item' : 'itens'}
                 </span>
-                <span className="font-['IBM_Plex_Mono'] text-xs font-semibold uppercase tracking-wider text-[#141512] shrink-0 group-hover:translate-x-0.5 transition-transform">
-                  Ver perfil →
+                <span className="font-['IBM_Plex_Mono'] text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-[#141512] shrink-0 group-hover:translate-x-0.5 transition-transform">
+                  Ver →
                 </span>
               </div>
             </Link>
@@ -226,7 +226,7 @@ export default function CreatorProfile({
   });
 
   return (
-    <div className="max-w-[1440px] mx-auto px-6 sm:px-12 lg:px-16 py-8 lg:py-12">
+    <div className="max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-16 py-6 sm:py-8 lg:py-12">
       {/* Breadcrumb */}
       <nav
         aria-label="Navegação estrutural"
@@ -371,7 +371,7 @@ export default function CreatorProfile({
 
       {/* Owner Items Grid */}
       {sortedItems.length > 0 ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-10">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-3.5 sm:gap-x-6 gap-y-6 sm:gap-y-10">
           {sortedItems.map((product) => (
             <ProductCard
               key={`${product._isVinyl ? 'v' : 'o'}-${getProductId(product)}`}

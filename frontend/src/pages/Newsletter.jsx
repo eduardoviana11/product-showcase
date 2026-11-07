@@ -22,24 +22,24 @@ export default function Newsletter({ onAddToCart }) {
   };
 
   return (
-    <div className="max-w-[1440px] mx-auto px-6 sm:px-12 lg:px-16 py-12 lg:py-16">
+    <div className="max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-16 py-8 sm:py-12 lg:py-16">
       {/* Header */}
-      <div className="mb-12 pb-6 border-b-2 border-[#141512]">
+      <div className="mb-8 sm:mb-12 pb-6 border-b-2 border-[#141512]">
         <span className="font-['IBM_Plex_Mono'] text-xs font-semibold text-[#141512] uppercase tracking-[0.08em] block mb-2">
           PUBLICAÇÃO DIGITAL & CURADORIA - CARTA DA ESTANTE
         </span>
-        <h1 className="font-['Anton'] text-5xl sm:text-7xl text-[#141512] uppercase tracking-wide leading-none">
+        <h1 className="font-['Anton'] text-4xl sm:text-7xl text-[#141512] uppercase tracking-wide leading-none">
           A MÚSICA EM PROFUNDIDADE.
         </h1>
-        <p className="font-['Inter'] text-base sm:text-lg text-[#141512]/80 mt-3 max-w-2xl leading-relaxed">
+        <p className="font-['Inter'] text-sm sm:text-lg text-[#141512]/80 mt-3 max-w-2xl leading-relaxed">
           Sem algoritmos, sem ruído. Uma leitura quinzenal com ensaios sobre gravações históricas, bastidores de estúdio e recomendações que você não encontra em playlists automáticas.
         </p>
       </div>
 
       {/* Plans Comparison */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch mb-16">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 items-stretch mb-12 sm:mb-16">
         {/* Free Plan */}
-        <div className="bg-[#DADCD3] border-2 border-[#141512] p-8 flex flex-col justify-between">
+        <div className="bg-[#DADCD3] border-2 border-[#141512] p-5 sm:p-8 flex flex-col justify-between">
           <div>
             <span className="font-['IBM_Plex_Mono'] text-xs font-semibold uppercase tracking-wider text-[#141512] block mb-2">
               PLANO GRATUITO
@@ -88,8 +88,8 @@ export default function Newsletter({ onAddToCart }) {
         </div>
 
         {/* Premium Paid Plan */}
-        <div className="bg-[#141512] text-[#F4F2E9] border-2 border-[#141512] p-8 flex flex-col justify-between shadow-[8px_8px_0px_#C5F43B] relative overflow-hidden">
-          <div className="absolute top-4 right-4 bg-[#C5F43B] text-[#141512] px-3 py-1 font-['IBM_Plex_Mono'] text-[10px] uppercase font-bold tracking-widest">
+        <div className="bg-[#141512] text-[#F4F2E9] border-2 border-[#141512] p-5 sm:p-8 flex flex-col justify-between shadow-[6px_6px_0px_#C5F43B] sm:shadow-[8px_8px_0px_#C5F43B] relative overflow-hidden">
+          <div className="self-start sm:absolute sm:top-4 sm:right-4 mb-3 sm:mb-0 bg-[#C5F43B] text-[#141512] px-3 py-1 font-['IBM_Plex_Mono'] text-[10px] uppercase font-bold tracking-widest">
             MAIS POPULAR
           </div>
 

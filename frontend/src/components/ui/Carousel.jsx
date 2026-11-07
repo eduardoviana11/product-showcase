@@ -56,7 +56,7 @@ export default function Carousel({
             type="button"
             onClick={handlePrev}
             aria-label="Página anterior de discos"
-            className="absolute -left-3 sm:-left-5 top-[calc((100%-118px)/2)] -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-[#FFFFFF]/95 border border-[#141512]/25 text-[#141512] shadow-sm flex items-center justify-center hover:bg-[#141512] hover:text-[#F4F2E9] transition-colors cursor-pointer"
+            className="absolute -left-2 sm:-left-4 lg:-left-5 top-1/2 lg:top-[calc((100%-118px)/2)] -translate-y-1/2 z-20 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-[#FFFFFF]/95 border border-[#141512]/25 text-[#141512] shadow-sm flex items-center justify-center hover:bg-[#141512] hover:text-[#F4F2E9] transition-colors cursor-pointer"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -73,7 +73,7 @@ export default function Carousel({
           </button>
         )}
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-6">
           {visibleItems.map((item, idx) => (
             <div key={item.id || item.name || idx} className="h-full">
               {renderItem ? renderItem(item) : null}
@@ -86,7 +86,7 @@ export default function Carousel({
             type="button"
             onClick={handleNext}
             aria-label="Próxima página de discos"
-            className="absolute -right-3 sm:-right-5 top-[calc((100%-118px)/2)] -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-[#FFFFFF]/95 border border-[#141512]/25 text-[#141512] shadow-sm flex items-center justify-center hover:bg-[#141512] hover:text-[#F4F2E9] transition-colors cursor-pointer"
+            className="absolute -right-2 sm:-right-4 lg:-right-5 top-1/2 lg:top-[calc((100%-118px)/2)] -translate-y-1/2 z-20 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-[#FFFFFF]/95 border border-[#141512]/25 text-[#141512] shadow-sm flex items-center justify-center hover:bg-[#141512] hover:text-[#F4F2E9] transition-colors cursor-pointer"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"

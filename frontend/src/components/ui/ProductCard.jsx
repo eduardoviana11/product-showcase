@@ -176,11 +176,11 @@ export default function ProductCard({
         {/* 1. TOP CONTAINER WITH SOFT NEUTRAL BACKGROUND */}
         <Link
           to={`/produto/${productId}`}
-          className="w-full bg-[#E5E6DF] aspect-[1.14/1] p-5 sm:p-6 flex items-center justify-center relative overflow-hidden cursor-pointer focus:outline-none"
+          className="w-full bg-[#E5E6DF] aspect-[1.14/1] p-3 sm:p-5 lg:p-6 flex items-center justify-center relative overflow-hidden cursor-pointer focus:outline-none"
           aria-label={`Ver detalhes de ${name}`}
         >
           {/* Cover + Vinyl Sleeve Center Unit */}
-          <div className="relative aspect-square w-[64%] max-w-[220px] flex items-center justify-center">
+          <div className="relative aspect-square w-[72%] sm:w-[64%] max-w-[220px] flex items-center justify-center">
             {/* Sliding Vinyl Record behind the sleeve */}
             {isVinyl && (
               <div
@@ -216,17 +216,17 @@ export default function ProductCard({
         </Link>
 
         {/* 2. CARD CONTENT & METADATA BELOW THE IMAGE BOX */}
-        <div className="pt-3.5 flex flex-col flex-grow justify-between">
+        <div className="pt-2.5 sm:pt-3.5 flex flex-col flex-grow justify-between">
           <div>
             {/* Album / Item Title */}
             <Link to={`/produto/${productId}`} className="block focus:outline-none">
-              <h3 className="font-['Inter'] text-lg sm:text-[19px] font-bold text-[#141512] leading-tight line-clamp-1 group-hover:underline underline-offset-4 decoration-2">
+              <h3 className="font-['Inter'] text-sm sm:text-lg lg:text-[19px] font-bold text-[#141512] leading-tight line-clamp-1 group-hover:underline underline-offset-4 decoration-2">
                 {name}
               </h3>
             </Link>
 
             {/* Clickable Creator / Store Name + Genre Metadata */}
-            <p className="font-['Inter'] text-xs sm:text-[13px] text-[#71736D] mt-1 mb-3.5 line-clamp-1">
+            <p className="font-['Inter'] text-[11px] sm:text-[13px] text-[#71736D] mt-0.5 sm:mt-1 mb-2.5 sm:mb-3.5 line-clamp-1">
               <Link
                 to={creatorHref}
                 className="font-['Inter'] font-medium text-[#141512]/80 hover:text-[#141512] hover:underline underline-offset-2 transition-colors"
@@ -236,7 +236,7 @@ export default function ProductCard({
               {genreMeta ? (
                 <>
                   <span className="text-[#71736D]">{' — '}</span>
-                  <span className="font-['IBM_Plex_Mono'] text-[11px] sm:text-xs font-medium uppercase tracking-wider text-[#71736D]">
+                  <span className="font-['IBM_Plex_Mono'] text-[10px] sm:text-xs font-medium uppercase tracking-wider text-[#71736D]">
                     {genreMeta}
                   </span>
                 </>
@@ -254,7 +254,7 @@ export default function ProductCard({
             e.stopPropagation();
             onAction && onAction(product);
           }}
-          className="w-full py-2.5 sm:py-3 px-4 border border-[#141512] font-['Inter'] text-xs sm:text-sm font-semibold flex items-center justify-center bg-transparent text-[#141512] hover:bg-[#C5F43B] hover:text-[#141512] transition-colors duration-150 cursor-pointer"
+          className="w-full py-2 sm:py-3 px-2 sm:px-4 border border-[#141512] font-['Inter'] text-[11px] sm:text-sm font-semibold whitespace-nowrap flex items-center justify-center bg-transparent text-[#141512] hover:bg-[#C5F43B] hover:text-[#141512] transition-colors duration-150 cursor-pointer"
           aria-label={`Adicionar ao carrinho: ${name}`}
         >
           <span>
