@@ -1,4 +1,4 @@
-# Projeto 1 — My Showcase
+# Projeto 1 — ZUNO (My Showcase)
 
 Uma vitrine de produtos para aprender Python, orientação a objetos (POO), Flask,
 Jinja, HTML, CSS e Git/GitHub. O esqueleto `1-product-showcase` já funciona com
@@ -13,6 +13,52 @@ pagamentos, login, banco de dados ou envio real de arquivos.
 **Idioma:** este README e os guias de orientação estão em português. Código,
 comentários, nomes de arquivos e repositórios, textos da página e exemplos de
 commit continuam em inglês.
+
+---
+
+## O que foi feito nesta versão — ZUNO
+
+Esta versão personaliza e expande o desafio original com o tema **ZUNO**, uma loja e curadoria independente de discos de vinil, objetos da cena musical e assinatura editorial (*Carta da Estante*), implementando todos os desafios opcionais (básico, intermediário e avançado) em uma arquitetura desacoplada **Backend (Python + Flask)** e **Frontend (React + Vite + Tailwind CSS v4)**.
+
+### 1. Identidade Visual e Tema (ZUNO)
+- **Conceito**: Vitrine musical focada em prensagens físicas de vinil, objetos culturais (bolsas, cartazes serigrafados, cadernos de escuta) e newsletter editorial.
+- **Paleta e Tipografia**: Estética Neo-Brutalista Editorial combinando Papel Quente (`#F4F2E9`), Preto Vinil (`#141512`), Verde Ácido (`#C5F43B`) e Cinza Concreto (`#DADCD3`), com títulos em `Anton`, leitura em `Inter` e metadados técnicos em `IBM Plex Mono`.
+
+### 2. Programação Orientada a Objetos (POO) e Extensões no Backend (`backend/`)
+Os quatro pilares de POO foram integralmente preservados e expandidos em `backend/models/product.py`:
+- **Abstração (`Product(ABC)`)**: Classe base abstrata que define a interface comum de qualquer produto (ID/slug automático, nome, descrição, preço, imagem, galeria, categoria, artista/loja e flags de curadoria como `featured`, `is_new` e `hot_100`) e exige a implementação do método abstrato `@abstractmethod def delivery(self)`.
+- **Encapsulamento (`@property def price`)**: O atributo privado `_price` é protegido por getter e setter que impedem valores negativos (`ValueError("The price cannot be negative.")`) tanto na instanciação quanto em alterações futuras, além do método `formatted_price()` no padrão monetário brasileiro (`R$ 380,00`).
+- **Herança em Múltiplos Níveis (`super().__init__()`)**:
+  - `PhysicalProduct(Product)`: Produtos físicos com local de retirada/envio (`pickup_location`).
+  - `VinylProduct(PhysicalProduct)`: Subclasse especializada de produto físico para discos de vinil, acrescentando gramatura (`weight_grams`), total de faixas (`tracks_count`), lista de faixas (`tracklist`) e metadados automáticos (`VINIL PRETO, 180 G, 18 FAIXAS`).
+  - `DigitalProduct(Product)`: Produtos digitais com especificação de formato (`file_format`).
+  - `SubscriptionProduct(DigitalProduct)`: Subclasse especializada para assinaturas periódicas (`frequency`), usada na *Carta da Estante Premium*.
+- **Polimorfismo (`delivery()` e `to_dict()`)**: Cada subclasse implementa sua própria regra de entrega (`delivery()`) e serialização (`to_dict()`) sem verificações de tipo (`isinstance`) nos templates ou nas rotas da API.
+- **Factory Pattern e Persistência em JSON (`Product.from_dict`)**: O catálogo completo (discos, objetos, assinaturas e coleções) é carregado dinamicamente de `backend/data/products.json` e instanciado nas subclasses corretas via método de fábrica.
+- **Descoberta Automática de Mídia Local (`discover_product_media`)**: O backend inspeciona automaticamente `backend/data/media/products/<id>/` (buscando `cover.*`, `vinyl.*` e `gallery/*`) e `backend/data/media/collections/<id>/banner.*`, servindo os arquivos na rota `/api/media/<path>` e mesclando-os ao JSON sem necessidade de configuração manual.
+
+### 3. Aplicação Frontend e Experiência de Navegação (`frontend/`)
+- **Home Page (`/`)**:
+  - **Hero Interativa**: Collage 16:9 com cluster dinâmico de capas e vinil (`AlbumCluster`), adaptada para desktop e dispositivos móveis.
+  - **Carrosséis Duplos**: Seção *"NOVOS HITS"* (filtrando automaticamente álbuns com `is_new: true` e `featured: true`) e seção *"NO TOPO DAS PARADAS / DIRETO DO BILLBOARD HOT 100"* (filtrando álbuns com `hot_100: true`).
+  - **Coleções Oficiais ZUNO**: Cards com recorte geométrico (`OffsetCutout`) que levam diretamente às seções correspondentes na página de coleções.
+  - **Disco da Semana (*Na Agulha*)**: Destaque integrado ao catálogo real do backend (`ICEMAN — Drake`), com vinil aparente, especificações técnicas e adição direta ao carrinho.
+  - **Produtos Oficiais & Banner da Carta da Estante**: Prévia dos objetos da cena e chamada para a página de assinatura.
+- **Catálogo e Busca Unificada (`/busca`, `/discos`, `/objetos`)**:
+  - Barra de pesquisa global na navbar com modal de sugestões em tempo real (encontrando tanto artistas e lojas quanto discos, faixas e objetos) e modal de lupa dedicado para telas de smartphone.
+  - Barra de filtros com modais dropdown customizados (`FilterDropdown`) por Tipo, Seção (*Novidades*, *Em destaque*), Categoria/Gênero, Artista/Loja, filtro rápido por termo e ordenação (Relevância, Menor/Maior Preço, A–Z, Z–A).
+- **Página de Detalhes do Produto (`/produto/:slug`)**:
+  - Galeria interativa de imagens com suporte a múltiplas fotos e visualização do disco de vinil quando o álbum possui imagem própria de vinil (`vinyl_image`).
+  - Breadcrumb dinâmico, seletor de quantidade com modal customizado (`1 a 5 unidades` ou `Mais de 5 unidades`), ficha técnica completa e lista de faixas (`tracklist`) numerada com durações.
+- **Diretório e Perfis de Artistas e Lojas (`/artista`, `/artista/:slug`, `/loja`, `/loja/:slug`)**:
+  - As rotas `/artista` e `/loja` listam todos os artistas e lojas cadastrados no catálogo com foto, selo identificador e contagem de itens.
+  - Cada artista ou loja possui sua própria página de perfil com filtro de categorias e ordenação dos seus produtos (discos e/ou objetos).
+- **Coleções (`/colecoes`)**: Exibe as curadorias temáticas com banners personalizados (`banner.png`) e grade dos discos pertencentes a cada seleção.
+- **Newsletter (`/newsletter`)**: Comparativo entre os planos Gratuito e Premium da *Carta da Estante*, com inscrição simulada e adição da assinatura ao carrinho.
+- **Carrinho Demonstrativo (`/carrinho`)**: Tela visual seguindo o mesmo sistema de design da loja para visualizar os itens adicionados, ajustar quantidades, remover itens e conferir o resumo de valores.
+- **Responsividade Mobile & Tablet**: Grades de produtos com 2 itens por linha (`grid-cols-2`) em telas mobile, modais compactos de filtros e busca para smartphones, e desativação da abertura automática do vinil em dispositivos de toque.
+
+---
 
 ## Comece por aqui
 
