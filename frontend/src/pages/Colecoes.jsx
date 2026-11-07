@@ -28,7 +28,7 @@ export default function Colecoes({
   return (
     <div className="max-w-[1440px] mx-auto px-6 sm:px-12 lg:px-16 py-12 lg:py-16">
       {/* Page header */}
-      <div className="mb-8 pb-6 border-b-2 border-[#141512]">
+      <div className="mb-12 pb-6 border-b-2 border-[#141512]">
         <span className="font-['IBM_Plex_Mono'] text-xs font-semibold text-[#141512] uppercase tracking-[0.08em] block mb-2">
           NÃO É UM GÊNERO, É UM PONTO DE PARTIDA.
         </span>
@@ -39,22 +39,6 @@ export default function Colecoes({
           Seleções montadas pela curadoria da ZUNO para você explorar a música por clima, não por rótulo.
         </p>
       </div>
-
-      {/* Collection quick index */}
-      <nav
-        aria-label="Coleções"
-        className="mb-12 flex flex-wrap gap-3"
-      >
-        {collections.map((col) => (
-          <a
-            key={col.id}
-            href={`#${col.id}`}
-            className="font-['IBM_Plex_Mono'] text-xs font-semibold uppercase tracking-wider px-4 py-2 border-2 border-[#141512] bg-[#FFFFFF] text-[#141512] hover:bg-[#141512] hover:text-[#F4F2E9] transition-colors"
-          >
-            {col.title}
-          </a>
-        ))}
-      </nav>
 
       {/* Collections */}
       <div className="flex flex-col gap-16">

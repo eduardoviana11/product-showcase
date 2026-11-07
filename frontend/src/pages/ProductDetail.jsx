@@ -255,21 +255,22 @@ export default function ProductDetail({
         >
           {isVinyl ? 'Discos' : 'Objetos'}
         </Link>
-        {category && (
-          <>
-            <span>&gt;</span>
-            <Link
-              to={
-                isVinyl
-                  ? `/discos?category=${encodeURIComponent(category)}`
-                  : '/objetos'
-              }
-              className="hover:text-[#141512] hover:underline transition-colors"
-            >
-              {category}
-            </Link>
-          </>
-        )}
+        {category &&
+          category.trim().toLowerCase() !== (isVinyl ? 'discos' : 'objetos') && (
+            <>
+              <span>&gt;</span>
+              <Link
+                to={
+                  isVinyl
+                    ? `/discos?category=${encodeURIComponent(category)}`
+                    : `/objetos?category=${encodeURIComponent(category)}`
+                }
+                className="hover:text-[#141512] hover:underline transition-colors"
+              >
+                {category}
+              </Link>
+            </>
+          )}
         <span>&gt;</span>
         <span className="text-[#141512] font-medium truncate max-w-[240px] sm:max-w-md">
           {name}

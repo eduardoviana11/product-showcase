@@ -160,22 +160,7 @@ export default function ProductCard({
 
   const creatorName = getCreatorName(product);
   const creatorHref = getCreatorHref(product);
-
-  // Build clean format/category spec next to the creator name
-  let specSuffix = '';
-  if (isVinyl) {
-    specSuffix = [
-      category ? category.toLowerCase() : 'vinil preto',
-      weight_grams ? `${weight_grams} g` : '180 g',
-    ]
-      .filter(Boolean)
-      .join(', ');
-  } else {
-    specSuffix =
-      specs_meta ||
-      delivery ||
-      (category ? `Objetos - ${category}` : 'Edição ZUNO');
-  }
+  const genreMeta = isVinyl && category ? category.trim().toUpperCase() : '';
 
   const resolvedCoverSrc = resolveAssetUrl(image);
   const hasRealImage = Boolean(resolvedCoverSrc) && !imageError;
@@ -240,15 +225,22 @@ export default function ProductCard({
               </h3>
             </Link>
 
-            {/* Clickable Creator / Store Name + Specs */}
+            {/* Clickable Creator / Store Name + Genre Metadata */}
             <p className="font-['Inter'] text-xs sm:text-[13px] text-[#71736D] mt-1 mb-3.5 line-clamp-1">
               <Link
                 to={creatorHref}
-                className="font-medium text-[#141512]/80 hover:text-[#141512] hover:underline underline-offset-2 transition-colors"
+                className="font-['Inter'] font-medium text-[#141512]/80 hover:text-[#141512] hover:underline underline-offset-2 transition-colors"
               >
                 {creatorName}
               </Link>
-              {specSuffix ? <span>{` - ${specSuffix}`}</span> : null}
+              {genreMeta ? (
+                <>
+                  <span className="text-[#71736D]">{' — '}</span>
+                  <span className="font-['IBM_Plex_Mono'] text-[11px] sm:text-xs font-medium uppercase tracking-wider text-[#71736D]">
+                    {genreMeta}
+                  </span>
+                </>
+              ) : null}
             </p>
           </div>
         </div>
